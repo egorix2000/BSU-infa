@@ -21,8 +21,29 @@ input			output
 
 using namespace std;
 
+void coutDate(int day, int month, int year){
+    if (day < 10) {
+			cout << "0";
+		}
+		cout << day << ".";
+		if (month < 10) {
+			cout << "0";
+		}
+		cout << month << ".";
+		if (year < 1000) {
+			cout << "0";
+		}
+		if (year < 100) {
+			cout << "0";
+		}
+		if (year < 10) {
+			cout << "0";
+		}
+		cout << year << endl;
+}
 
-void main()
+
+int main()
 {
 	int daysInMonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	int day;
@@ -47,70 +68,19 @@ void main()
 	}
 	day++;
 	if (day <= daysInMonth[month-1]) {
-		if (day < 10) {
-			cout << "0";
-		}
-		cout << day << ".";
-		if (month < 10) {
-			cout << "0";
-		}
-		cout << month << ".";
-		if (year < 1000) {
-			cout << "0";
-		}
-		if (year < 100) {
-			cout << "0";
-		}
-		if (year < 10) {
-			cout << "0";
-		}
-		cout << year << endl;
+		coutDate(day, month, year);
 	}
 	else {
 		day = 1;
 		month++;
 		if (month <= 12) {
-			if (day < 10) {
-				cout << "0";
-			}
-			cout << day << ".";
-			if (month < 10) {
-				cout << "0";
-			}
-			cout << month << ".";
-			if (year < 1000) {
-				cout << "0";
-			}
-			if (year < 100) {
-				cout << "0";
-			}
-			if (year < 10) {
-				cout << "0";
-			}
-			cout << year << endl;
+			coutDate(day, month, year);
 		}
 		else {
 			month = 1;
 			year++;
-			if (day < 10) {
-				cout << "0";
-			}
-			cout << day << ".";
-			if (month < 10) {
-				cout << "0";
-			}
-			cout << month << ".";
-			if (year < 1000) {
-				cout << "0";
-			}
-			if (year < 100) {
-				cout << "0";
-			}
-			if (year < 10) {
-				cout << "0";
-			}
-			cout << year << endl;
+			coutDate(day, month, year);
 		}
 	}
-	system("pause");
+	return 0;
 }
