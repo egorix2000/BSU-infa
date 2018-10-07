@@ -15,18 +15,18 @@ void coutArray(int *a, int n){
     cout << endl;
 }
 
+void coutArrayInReverseOrder(int *a, int n){
+    for (int t = n-1; t >= 0; t--){
+        cout << a[t] << " ";
+    }
+    cout << endl;
+}
+
 void swapElements(int &a, int& b){
     int *temp = new int;
     *temp = a;
     a = b;
     b = *temp;
-    delete temp;
-}
-
-void swapPointers(int *a, int *b){
-    int *temp = a;
-    a = b;
-    b = temp;
     delete temp;
 }
 
@@ -54,3 +54,14 @@ void sortArray(int *a, int n, bool (*comparator)(int, int)){
     }
 }
 
+void fillArrayWithZeros(int *a, int n){
+    for (int t = 0; t < n; t++){
+        a[t] = 0;
+    }
+}
+
+void reverseArray(int *a, int n){
+    for (int t = 0; t < n/2; t++){
+        swapElements(a[t], a[n-t-1]);
+    }
+}
