@@ -75,8 +75,6 @@ int main()
     mult = new int[multLength];
     fillArrayWithZeros(mult, multLength);
     fillArrayWithZeros(sum, multLength);
-    coutArray(firstPolynom, n);
-    coutArray(secondPolynom, n);
 
     for (int t = 0; t < n; t++){
         sum[t] += firstPolynom[t];

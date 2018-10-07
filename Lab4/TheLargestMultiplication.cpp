@@ -35,6 +35,7 @@ int main()
     bool ifZeroExist = false;
     int ans;
     int nextMult;
+    int *a;
     cout << "Enter array length" << endl;
     cin >> n;
     while (n < 3){
@@ -42,7 +43,7 @@ int main()
         cin >> n;
     }
 
-    int *a = new int[n];
+    a = new int[n];
     cout << "Enter array elements" << endl;
     enterArray(a, n);
 

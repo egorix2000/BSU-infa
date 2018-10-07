@@ -32,10 +32,11 @@ int main()
 {
     int n;
     int ans;
+    int *a;
     cout << "Enter array length" << endl;
     cin >> n;
 
-    int *a = new int[n];
+    a = new int[n];
     cout << "Enter array elements" << endl;
     enterArray(a, n);
 

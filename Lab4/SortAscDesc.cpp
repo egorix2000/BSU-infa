@@ -12,7 +12,7 @@ input			            output
 3 5 1 4 3 6 10              2
 
 1                           1
-1                           1
+1                           0
 
 5                           1 2 3 5 7
 1 5 3 7 2                   0
@@ -52,10 +52,11 @@ int main()
 {
     int n;
     int minIndex;
+    int *a;
     cout << "Enter array length" << endl;
     cin >> n;
 
-    int *a = new int[n];
+    a = new int[n];
     cout << "Enter array elements" << endl;
     enterArray(a, n);
 

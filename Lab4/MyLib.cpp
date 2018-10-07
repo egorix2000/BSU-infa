@@ -65,3 +65,11 @@ void reverseArray(int *a, int n){
         swapElements(a[t], a[n-t-1]);
     }
 }
+
+int gcd(int a, int b){
+    if (b == 0){
+        return a;
+    } else {
+        return gcd(b, a % b);
+    }
+}

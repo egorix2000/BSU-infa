@@ -13,3 +13,5 @@ void swapElements(int &a, int &b);
 void fillArrayWithZeros(int *a, int n);
 
 void reverseArray(int *a, int n);
+
+int gcd(int a, int b);
