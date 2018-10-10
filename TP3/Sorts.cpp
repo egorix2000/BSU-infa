@@ -68,20 +68,14 @@ int selectionSort(int a[], int n){
 
 int bubbleSort(int a[], int n){
     startTime = getCPUTime( );
-    bool isSorted;
     swapNum = 0;
     compareNum = 0;
     for (int i = 0; i < n - 1; i++) {
-        isSorted = true;
         for (int j = 0; j < n - i - 1; j++) {
             compareNum++;
             if (comparator(a[j], a[j + 1])) {
-                isSorted = false;
                 swapElements(a[j], a[j+1]);
             }
-        }
-        if (isSorted){
-            break;
         }
     }
     endTime = getCPUTime( );
@@ -109,37 +103,41 @@ int insertionSort(int a[], int n){
 
 int cocktailSort(int a[], int n){
     startTime = getCPUTime( );
-    bool isSorted;
+    int lastSwap = 0;
     swapNum = 0;
     compareNum = 0;
     int left = 0;
     int right = n - 1;
     while(left <= right){
-        isSorted = true;
+        lastSwap = -1;
         for (int i = left; i < right; i++){
             compareNum++;
             if (comparator(a[i], a[i+1])){
-                isSorted = false;
+                lastSwap = i;
                 swapElements(a[i], a[i+1]);
             }
         }
-        right--;
 
-        if (isSorted){
+        if (lastSwap == -1){
             break;
         }
+
+        right = lastSwap;
+        lastSwap = -1;
+
         for (int i = right; i > left; i--){
             compareNum++;
             if (comparator(a[i-1], a[i])) {
-                isSorted = false;
+                lastSwap = i;
                 swapElements(a[i], a[i-1]);
             }
         }
-        left++;
 
-        if (isSorted){
+        if (lastSwap == -1){
             break;
         }
+
+        left = lastSwap;
     }
     endTime = getCPUTime( );
     return 0;
@@ -228,7 +226,7 @@ int callAllSorts(int a[], int n, int aCopy[]){
 
 int main(){
     srand(time(NULL));
-    int n = 10;
+    int n = 10000;
     int *a = new int[n];
     int *aCopy = new int[n];
     cout << fixed << setprecision(6);
