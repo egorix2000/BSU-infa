@@ -41,6 +41,29 @@ output
 
 input
 
+4
+0 0 0 0
+1 1 1 1
+2 2 2 2
+3 4 5 6
+3 3
+
+output
+
+1 1 1 1
+1 1 1 1
+1 1 1 1
+1 1 1 1
+
+1 0 0 0
+1 0 0 0
+1 0 0 0
+1 1 1 1
+
+-----------------------------------------
+
+input
+
 3
 1 1 1
 1 1 1
@@ -133,7 +156,6 @@ output
 
 
 #include <iostream>
-#include <queue>
 #include "TwoDimensionalArrayLib.h"
 
 using namespace std;
@@ -144,44 +166,51 @@ struct square{
 };
 
 square findAllSquaresToGo(int **heightMap, int n, bool **whereWeCanGo, square start, square **ancestors){
-    queue<square> squares;
+    square *squares = new square[n*n];
+    int iFront = 0;
+    int elementsLeft = 0;
     square mostDistant = {start.x, start.y};
     square next;
     square current;
-    squares.push(start);
+    squares[elementsLeft] = start;
+    elementsLeft++;
 
-    while (!squares.empty()){
-        current.x = squares.front().x;
-        current.y = squares.front().y;
+    while (iFront < elementsLeft){
+        current.x = squares[iFront].x;
+        current.y = squares[iFront].y;
         if (current.x < n-1 && !whereWeCanGo[current.x+1][current.y] && heightMap[current.x+1][current.y] < heightMap[current.x][current.y]){
             next.x = current.x + 1;
             next.y = current.y;
             ancestors[next.x][next.y] = current;
-            squares.push(next);
+            squares[elementsLeft] = next;
+            elementsLeft++;
         }
         if (current.x > 0 && !whereWeCanGo[current.x-1][current.y] && heightMap[current.x-1][current.y] < heightMap[current.x][current.y]){
             next.x = current.x - 1;
             next.y = current.y;
             ancestors[next.x][next.y] = current;
-            squares.push(next);
+            squares[elementsLeft] = next;
+            elementsLeft++;
         }
         if (current.y < n-1 && !whereWeCanGo[current.x][current.y+1] && heightMap[current.x][current.y+1] < heightMap[current.x][current.y]){
             next.x = current.x;
             next.y = current.y + 1;
             ancestors[next.x][next.y] = current;
-            squares.push(next);
+            squares[elementsLeft] = next;
+            elementsLeft++;
         }
         if (current.y > 0 && !whereWeCanGo[current.x][current.y-1] && heightMap[current.x][current.y-1] < heightMap[current.x][current.y]){
             next.x = current.x;
             next.y = current.y - 1;
             ancestors[next.x][next.y] = current;
-            squares.push(next);
+            squares[elementsLeft] = next;
+            elementsLeft++;
         }
         whereWeCanGo[current.x][current.y] = true;
         if (abs(start.x - current.x) + abs(start.y - current.y) > abs(start.x - mostDistant.x) + abs(start.y - mostDistant.y)){
             mostDistant = current;
         }
-        squares.pop();
+        iFront++;
     }
     return mostDistant;
 }
