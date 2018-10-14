@@ -39,6 +39,22 @@ void printTwoDimensionalBooleanArray(bool **a, int n){
     }
 }
 
+bool hasEqualElements(int **a, int n){
+    bool hasEqual = false;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            for (int k = 0; k < n; k++){
+                for (int m = 0; m < n; m++){
+                    if (a[i][j] == a[k][m] && (i != k || j != m)){
+                        hasEqual = true;
+                    }
+                }
+            }
+        }
+    }
+    return hasEqual;
+}
+
 void printFormattedTwoDimensionalArray(int **a, int n, int width){
     for (int t = 0; t < n; t++){
         for (int i = 0; i < n; i++){

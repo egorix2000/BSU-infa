@@ -17,7 +17,7 @@ input			            output
 3
 0 0 0
 0 0 0
-0 0 0                       Magic square
+0 0 0                       Not magic square
 
 3
 4 9 2
@@ -51,15 +51,21 @@ int main()
     cout << "Enter matrix" << endl;
     enterTwoDimensionalArray(matrix, n);
 
-    sum = sumInRow(matrix, n, 0);
+    if(hasEqualElements(matrix, n)){
+        isMagic = false;
+    }
 
-    for (int t = 0; t < n; t++){
-        if (sum != sumInRow(matrix, n, t) ||
-                sum != sumInColumn(matrix, n, t) ||
-                    sum != sumInFirstDiagonal(matrix, n) ||
-                        sum != sumInSecondDiagonal(matrix, n)) {
-            isMagic = false;
-            break;
+    if (isMagic){
+        sum = sumInRow(matrix, n, 0);
+
+        for (int t = 0; t < n; t++){
+            if (sum != sumInRow(matrix, n, t) ||
+                    sum != sumInColumn(matrix, n, t) ||
+                        sum != sumInFirstDiagonal(matrix, n) ||
+                            sum != sumInSecondDiagonal(matrix, n)) {
+                isMagic = false;
+                break;
+            }
         }
     }
 

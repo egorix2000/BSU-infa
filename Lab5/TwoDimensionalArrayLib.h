@@ -2,6 +2,8 @@
 
 void printTwoDimensionalArray(int **a, int n);
 
+bool hasEqualElements(int **a, int n);
+
 void fillRandomTwoDimensionalArray(int **a, int n);
 
 void printTwoDimensionalBooleanArray(bool **a, int n);
