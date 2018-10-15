@@ -38,6 +38,11 @@ input			            output
 1 5 2 3 4                   Array B isn't a substring of array A
 6
 1 5 2 3 4 6
+
+4                           Array B isn't a subset of array A
+1 2 3 4                     Array B isn't a substring of array A
+4
+1 1 1 1
 **/
 
 
@@ -47,6 +52,10 @@ input			            output
 using namespace std;
 
 bool isSubset(int *a, int n, int *b, int m){
+    bool *used = new bool[n];
+    for (int i = 0; i < n; i++){
+        used[i] = false;
+    }
     if (m > n){
         return false;
     }
@@ -54,7 +63,8 @@ bool isSubset(int *a, int n, int *b, int m){
     for (int t = 0; t < m; t++){
         currentElement = false;
         for (int i = 0; i < n; i++){
-            if (b[t] == a[i]){
+            if (b[t] == a[i] && !used[i]){
+                used[i] = true;
                 currentElement = true;
             }
         }
