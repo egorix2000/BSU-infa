@@ -123,7 +123,7 @@ int main()
 {
     int n;
     int* a;
-    arrayWithLength (*func) (int*, int);
+    arrayWithLength (*func[3]) (int*, int) = {&simpleNumbers, &evenNumbers, &modThreeNumbers};
     arrayWithLength ansArray;
     int c;
     cout << "Enter length of array" << endl;
@@ -136,26 +136,7 @@ int main()
     cout << "Print 0 to exit" << endl;
     cin >> c;
     while (c != 0){
-        switch(c){
-        case 1:
-            {
-                func = &simpleNumbers;
-                break;
-            }
-        case 2:
-            {
-                func = &evenNumbers;
-                break;
-            }
-        case 3:
-            {
-                func = &modThreeNumbers;
-                break;
-            }
-        default:
-            func = &simpleNumbers;
-        }
-        ansArray = getArray(a, n, func);
+        ansArray = getArray(a, n, func[c-1]);
         printArray(ansArray.a, ansArray.n);
         cout << "Enter length of array" << endl;
         cin >> n;

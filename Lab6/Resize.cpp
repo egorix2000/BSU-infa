@@ -184,7 +184,7 @@ int main()
     int index;
     int** a;
     int choice;
-    int** (*func) (int**, int&, int&, int);
+    int** (*func[4]) (int**, int&, int&, int) = {&insertRow, &insertColumn, &deleteRow, &deleteColumn};
     cout << "Enter matrix size" << endl;
     cin >> n >> m;
     a = new int*[n];
@@ -204,31 +204,7 @@ int main()
     cin >> choice;
 
     while(choice != 0){
-        switch(choice){
-        case 1:
-            {
-                func = &insertRow;
-                break;
-            }
-        case 2:
-            {
-                func = &insertColumn;
-                break;
-            }
-        case 3:
-            {
-                func = &deleteRow;
-                break;
-            }
-        case 4:
-            {
-                func = &deleteColumn;
-                break;
-            }
-        default:
-            func = &insertRow;
-        }
-        a = controller(a, n, m, index, func);
+        a = controller(a, n, m, index, func[choice-1]);
         printFormattedTwoDimensionalArray(a, n, m, 3);
         cout << "Enter where to insert/delete row/column" << endl;
         cin >> index;
