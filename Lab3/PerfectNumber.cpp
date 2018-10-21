@@ -7,7 +7,7 @@ input			output
 6               No numbers
 7               6
 10000           6 28 496 8128
-0				number must be more than 0. Write number
+0				Number must be more than 0. Enter number
 */
 
 
@@ -16,18 +16,23 @@ input			output
 
 using namespace std;
 
-long long n;
-
-void numInput() {
-	cout << "Enter number" << endl;
-	cin >> n;
+bool validateNumber(long long n) {
+	bool isValidate = true;
+	if (n <= 0){
+        isValidate = false;
+	}
+	return isValidate;
 }
 
-void validateNumber() {
-	while (n <= 0) {
-		cout << "number must be more than 0. Write number" << endl;
-		cin >> n;
+int numInput() {
+	long long n;
+	cout << "Enter number" << endl;
+	cin >> n;
+	while (!validateNumber(n)){
+        cout << "Number must be more than 0. Enter number" << endl;
+        cin >> n;
 	}
+	return n;
 }
 
 long long DividerSum(long long n){
@@ -40,11 +45,12 @@ long long DividerSum(long long n){
     return ans;
 }
 
-void main()
+int main()
 {
+    long long n;
     bool isExist = false;
-	numInput();
-	validateNumber();
+
+	n = numInput();
 
     for (long long t = 2; t < n; t++){
         if (t == DividerSum(t)){
@@ -56,5 +62,5 @@ void main()
         cout << "No numbers";
     }
     cout << endl;
-	system("pause");
+	return 0;
 }

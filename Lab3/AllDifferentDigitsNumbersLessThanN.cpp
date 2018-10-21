@@ -4,75 +4,72 @@ Egor Bychenok
 
 input			output
 -------------------------------
-5				5
-12				11
+1               1
+10              10
+11				10
+12              11
 265				207
-0				number must be more than 0. Write number
+0				Number must be more than 0. Enter number
 
 */
 
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-vector<bool> digits;
+bool validateNumber(int n) {
+	bool isValidate = true;
+	if (n <= 0){
+        isValidate = false;
+	}
+	return isValidate;
+}
 
 int numInput() {
 	int n;
 	cout << "Enter number" << endl;
 	cin >> n;
-	return n;
-}
-
-int validateNumber(int n1) {
-	int n = n1;
-	while (n <= 0) {
-		cout << "number must be more than 0. Write number" << endl;
-		cin >> n;
+	while (!validateNumber(n)){
+        cout << "Number must be more than 0. Enter number" << endl;
+        cin >> n;
 	}
 	return n;
 }
 
-bool checkNumber(int n){
-	while (n > 0) {
-		if (digits[n % 10]) {
+bool checkNumber(bool digits[], int number){
+	while (number > 0) {
+		if (digits[number % 10]) {
 			return false;
 		} else {
-			digits[n % 10] = true;
-			n /= 10;
+			digits[number % 10] = true;
+			number /= 10;
 		}
 	}
 	return true;
 }
 
-void initArray() {
-	for (int t = 0; t < 10; t++) {
-		digits.push_back(false);
+void fillArray(bool digits[], int n, bool b) {
+	for (int t = 0; t < n; t++) {
+		digits[t] = b;
 	}
 }
 
-void fillArray() {
-	for (int t = 0; t < 10; t++) {
-		digits[t] = false;
-	}
-}
-
-void main()
+int main()
 {
 	int n;
 	int ans = 0;
-	initArray();
+	bool digits[10];
+
+    fillArray(digits, 10, false);
 
 	n = numInput();
-	n = validateNumber(n);
 
 	for (int t = 1; t <= n; t++) {
-		if (checkNumber(t)) {
+		if (checkNumber(digits, t)) {
 			ans++;
 		}
-		fillArray();
+		fillArray(digits, 10, false);
 	}
 	cout << ans << endl;
-	system("pause");
+	return 0;
 }

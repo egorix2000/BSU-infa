@@ -7,7 +7,7 @@ input			output
 1				0/1 1/1
 2				0/1 1/2 1/1
 7               0/1 1/7 1/6 1/5 1/4 2/7 1/3 2/5 3/7 1/2 4/7 3/5 2/3 5/7 3/4 4/5 5/6 6/7 1/1
-0				number must be more than 0. Write number
+0				number must be more than 0. Enter number
 */
 
 
@@ -16,27 +16,32 @@ input			output
 
 using namespace std;
 
-int n;
-
 struct fraction
 {
 	double p;
 	double q;
 };
 
-void numInput() {
+bool validateNumber(int n) {
+	bool isValidate = true;
+	if (n <= 0){
+        isValidate = false;
+	}
+	return isValidate;
+}
+
+int numInput() {
+	int n;
 	cout << "Enter number" << endl;
 	cin >> n;
-}
-
-void validateNumber() {
-	while (n <= 0) {
-		cout << "number must be more than 0. Write number" << endl;
-		cin >> n;
+	while (!validateNumber(n)){
+        cout << "Number must be more than 0. Enter number" << endl;
+        cin >> n;
 	}
+	return n;
 }
 
-fraction nextFraction(fraction prew, fraction current) {
+fraction nextFraction(fraction prew, fraction current, int n) {
 	fraction next;
 	int k = floor((n + prew.q) / current.q);
 	next.p = k * current.p - prew.p;
@@ -45,14 +50,14 @@ fraction nextFraction(fraction prew, fraction current) {
 }
 
 
-void main()
+int main()
 {
+    int n;
 	fraction prew;
 	fraction current;
 	fraction temp;
 
-	numInput();
-	validateNumber();
+	n = numInput();
 
 	prew.p = 0;
 	prew.q = 1;
@@ -65,9 +70,9 @@ void main()
 	while (current.q != 1 || current.p != 1) {
 		temp = prew;
 		prew = current;
-		current = nextFraction(temp, prew);
+		current = nextFraction(temp, prew, n);
 		cout << current.p << "/" << current.q << " ";
 	}
 	cout << endl;
-	system("pause");
+	return 0;
 }

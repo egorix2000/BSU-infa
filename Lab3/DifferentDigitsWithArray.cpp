@@ -1,4 +1,4 @@
-/*Найти количество различных цифр в записи заданного натурального числа. 
+/*Найти количество различных цифр в записи заданного натурального числа.
 
 Egor Bychenok
 
@@ -7,36 +7,40 @@ input			output
 1				1
 11				1
 1544			3
-0				number must be more than 0. Write number
+15234           5
+111332          3
+0				Number must be more than 0. Enter number
 
 */
 
 #include <iostream>
-#include <vector>
 
 using namespace std;
+
+bool validateNumber(int n) {
+	bool isValidate = true;
+	if (n <= 0){
+        isValidate = false;
+	}
+	return isValidate;
+}
 
 int numInput() {
 	int n;
 	cout << "Enter number" << endl;
 	cin >> n;
-	return n;
-}
-
-int validateNumber(int n1) {
-	int n = n1;
-	while (n <= 0) {
-		cout << "number must be more than 0. Write number" << endl;
-		cin >> n;
+	while (!validateNumber(n)){
+        cout << "Number must be more than 0. Enter number" << endl;
+        cin >> n;
 	}
 	return n;
 }
 
-int findDifferentDigits(vector<bool> digits, int n){
+int findDifferentDigits(bool digits[], int number){
 	int ans = 0;
-	while (n > 0) {
-		digits[n % 10] = true;
-		n /= 10;
+	while (number > 0) {
+		digits[number % 10] = true;
+		number /= 10;
 	}
 	for (int t = 0; t < 10; t++) {
 		if (digits[t]) {
@@ -46,19 +50,22 @@ int findDifferentDigits(vector<bool> digits, int n){
 	return ans;
 }
 
-void main()
+void fillArray(bool digits[], int n, bool b) {
+	for (int t = 0; t < n; t++) {
+		digits[t] = b;
+	}
+}
+
+int main()
 {
 	int n;
 	int ans;
-	vector<bool> digits;
-	for (int t = 0; t < 10; t++) {
-		digits.push_back(false);
-	}
+	bool digits[10];
 
+    fillArray(digits, 10, false);
 	n = numInput();
-	n = validateNumber(n);
 
 	ans = findDifferentDigits(digits, n);
 	cout << ans << endl;
-	system("pause");
+	return 0;
 }

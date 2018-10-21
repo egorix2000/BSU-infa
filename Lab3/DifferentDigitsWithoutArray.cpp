@@ -3,11 +3,14 @@
 Egor Bychenok
 
 input			output
+
 -------------------------------
 1				1
 11				1
 1544			3
-0				number must be more than 0. Write number
+15234           5
+111332          3
+0				Number must be more than 0. Enter number
 
 */
 
@@ -15,23 +18,28 @@ input			output
 
 using namespace std;
 
-long long n;
+bool validateNumber(int n) {
+	bool isValidate = true;
+	if (n <= 0){
+        isValidate = false;
+	}
+	return isValidate;
+}
 
-void numInput() {
+int numInput() {
+	int n;
 	cout << "Enter number" << endl;
 	cin >> n;
-}
-
-void validateNumber() {
-	while (n <= 0) {
-		cout << "number must be more than 0. Write number" << endl;
-		cin >> n;
+	while (!validateNumber(n)){
+        cout << "Number must be more than 0. Enter number" << endl;
+        cin >> n;
 	}
+	return n;
 }
 
-long long differentDigits() {
-	long long copyN;
-	long long ans = 0;
+int differentDigits(int n) {
+	int copyN;
+	int ans = 0;
 	while (n > 0) {
 		ans++;
 		copyN = n;
@@ -48,11 +56,14 @@ long long differentDigits() {
 	return ans;
 }
 
-void main()
+int main()
 {
-	numInput();
-	validateNumber();
+    int n;
+    int ans;
 
-	cout << differentDigits() << endl;
-	system("pause");
+	n = numInput();
+    ans = differentDigits(n);
+
+	cout << ans << endl;
+	return 0;
 }
