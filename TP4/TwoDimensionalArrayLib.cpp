@@ -13,6 +13,14 @@ void enterTwoDimensionalArray(int** a, int n, int m){
     }
 }
 
+void enterTwoDimensionalArrayFromFile(int** a, int n, int m, ifstream& fin){
+    for (int t = 0; t < n; t++){
+        for (int i = 0; i < m; i++){
+            fin >> a[t][i];
+        }
+    }
+}
+
 void fillRandomTwoDimensionalArray(int **a, int n, int m){
     srand(time(NULL));
     for (int t = 0; t < n; t++){
@@ -56,7 +64,16 @@ bool hasEqualElements(int **a, int n){
     return hasEqual;
 }
 
-void printFormattedTwoDimensionalArray(int **a, int n, int m, int width, ofstream& fout){
+void printFormattedTwoDimensionalArray(int **a, int n, int m, int width){
+    for (int t = 0; t < n; t++){
+        for (int i = 0; i < m; i++){
+            cout << setw(width) << a[t][i];
+        }
+        cout << endl;
+    }
+}
+
+void printFormattedTwoDimensionalArrayToFile(int **a, int n, int m, int width, ofstream& fout){
     for (int t = 0; t < n; t++){
         for (int i = 0; i < m; i++){
             fout << setw(width) << a[t][i];
@@ -95,4 +112,15 @@ int sumInSecondDiagonal(int **matrix, int n){
         sum += matrix[t][n-t-1];
     }
     return sum;
+}
+
+int translateIntoOneDemencionalArray(int** a, int* oneDemensionalA, int n, int m){
+    int k = 0;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < m; j++){
+            oneDemensionalA[k] = a[i][j];
+            k++;
+        }
+    }
+    return 0;
 }

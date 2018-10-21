@@ -62,7 +62,7 @@ int main()
             a[i] = new int[m];
         }
         fillRandomWithoutEqual(a, n, m);
-        printFormattedTwoDimensionalArray(a, n, m, 4, fout);
+        printFormattedTwoDimensionalArrayToFile(a, n, m, 4, fout);
         fout << endl;
     }
     return 0;
