@@ -18,18 +18,8 @@ using namespace std;
 ifstream fin("Downloads/A/tests/equalNeighbors/input.txt");
 ofstream fout("Downloads/A/tests/equalNeighbors/output.txt");
 
-int findNumberOfEqualNeighbors(int** a, int n, int m){
+int findNumberOfEqualNeighborsInColumns(int** a, int n, int m){
     int ans = 0;
-
-    //in rows
-    for (int i = 0; i < n; i++){
-        for (int j = 1; j < m; j++){
-            if (a[i][j] == a[i][j-1]){
-                ans++;
-            }
-        }
-    }
-
     //in columns
     for (int j = 0; j < m; j++){
         for (int i = 1; i < n; i++){
@@ -38,7 +28,19 @@ int findNumberOfEqualNeighbors(int** a, int n, int m){
             }
         }
     }
+    return ans;
+}
 
+int findNumberOfEqualNeighborsInRows(int** a, int n, int m){
+    int ans = 0;
+    //in rows
+    for (int i = 0; i < n; i++){
+        for (int j = 1; j < m; j++){
+            if (a[i][j] == a[i][j-1]){
+                ans++;
+            }
+        }
+    }
     return ans;
 }
 
@@ -46,7 +48,8 @@ int main()
 {
     srand(time(NULL));
     int nTests;
-    int ans;
+    int equalInRows;
+    int equalInColumns;
     int n, m;
     int** a;
     fin >> nTests;
@@ -60,8 +63,9 @@ int main()
 
         enterTwoDimensionalArrayFromFile(a, n, m, fin);
 
-        ans = findNumberOfEqualNeighbors(a, n, m);
-        fout << ans << endl;
+        equalInRows = findNumberOfEqualNeighborsInRows(a, n, m);
+        equalInColumns = findNumberOfEqualNeighborsInColumns(a, n, m);
+        fout << equalInRows << " " << equalInColumns << endl;
     }
     return 0;
 }
