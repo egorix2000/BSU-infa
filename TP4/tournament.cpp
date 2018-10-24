@@ -15,15 +15,18 @@
 #include <iomanip>
 #include "TwoDimensionalArrayLib.h"
 #include "OneDimensionalArrayLib.h"
+#include "FileLib.h"
 
 using namespace std;
 
-//change file paths to yours
-ifstream fin("Downloads/A/tests/tournament/input.txt");
-ofstream fout("Downloads/A/tests/tournament/output.txt");
+const int MAX_STRING_LENGTH = 1024;
 
 int main()
 {
+    //change file paths to yours
+    ifstream fin;
+    ofstream fout;
+    char error[MAX_STRING_LENGTH];
     int nTests;
     int maxPoints;
     int minPoints;
@@ -31,31 +34,43 @@ int main()
     int n;
     int* teams;
     int** a;
-    fin >> nTests;
 
-    for (int i = 0; i < nTests; i++){
-        fin >> n;
-        maxPoints = 0;
-        minPoints = 3*n;
-        teams = new int[n];
-        a = new int*[n];
-        for (int i = 0; i < n; i++){
-            a[i] = new int[n];
-        }
+    fin.open("Downloads/A/tests/tournament/input.txt");
 
-        enterTwoDimensionalArrayFromFile(a, n, n, fin);
-        for (int i = 0; i < n; i++){
-            teams[i] = sumInRow(a, n, i);
-            if (teams[i] > maxPoints){
-                maxPoints = teams[i];
+    if(validateFile(fin, error)){
+        fout.open("Downloads/A/tests/tournament/output.txt");
+
+        fin >> nTests;
+
+        for (int i = 0; i < nTests; i++){
+            fin >> n;
+            maxPoints = 0;
+            minPoints = 3*n;
+            teams = new int[n];
+            a = new int*[n];
+            for (int i = 0; i < n; i++){
+                a[i] = new int[n];
             }
-            if (teams[i] < minPoints){
-                minPoints = teams[i];
-                lastTeam = i;
-            }
-        }
 
-        fout << maxPoints << " " << lastTeam << endl;
+            enterTwoDimensionalArrayFromFile(a, n, n, fin);
+            for (int i = 0; i < n; i++){
+                teams[i] = sumInRow(a, n, i);
+                if (teams[i] > maxPoints){
+                    maxPoints = teams[i];
+                }
+                if (teams[i] < minPoints){
+                    minPoints = teams[i];
+                    lastTeam = i;
+                }
+            }
+
+            fout << maxPoints << " " << lastTeam << endl;
+        }
+    } else {
+        cout << error << endl;
     }
+
+    fin.close();
+    fout.close();
     return 0;
 }
