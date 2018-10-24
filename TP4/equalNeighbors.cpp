@@ -1,4 +1,4 @@
-﻿/**
+/**
 
 Дан двумерный массив (n x m). Найти:
 а) число пар одинаковых соседних элементов в каждой строке;
@@ -54,7 +54,7 @@ int main()
     int** a;
     fin >> nTests;
 
-    for (int i = 0; i < nTests; i++){
+    for (int j = 0; j < nTests; j++){
         fin >> n >> m;
         a = new int*[n];
         for (int i = 0; i < n; i++){
