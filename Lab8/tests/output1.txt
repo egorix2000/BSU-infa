@@ -1,0 +1,2 @@
+Index of max: 3
+Index of min: 0
