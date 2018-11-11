@@ -13,17 +13,17 @@
 #include "FileLib.h"
 #include "ComplexNumber.h"
 #include "ComplexNumberOperators.h"
-#include "ComplexNumberStack.h"
-#include "ComplexNumberQueue.h"
+#include "Stack.h"
+#include "Queue.h"
 
 using namespace std;
 
 const int MAX_STRING_LENGTH = 1024;
 //change file paths to yours
-const char* INPUT_FILE = "Downloads/A/tests/input1.txt";
-const char* OUTPUT_FILE = "Downloads/A/tests/output1.txt";
+const char* INPUT_FILE = "Downloads/A/tests/input3.txt";
+const char* OUTPUT_FILE = "Downloads/A/tests/output3.txt";
 
-void stackTest(ComplexNumberStack stack){
+void stackTest(Stack<ComplexNumber> stack){
     ComplexNumber* cn1 = new ComplexNumber(1, 1);
     ComplexNumber* cn2 = new ComplexNumber(2, 2);
     ComplexNumber* copyCn2 = new ComplexNumber(*cn2); // 2 2 created
@@ -48,7 +48,7 @@ void stackTest(ComplexNumberStack stack){
     cout << "pop, is empty:" << stack.isEmpty() << " size:" << stack.getSize() << endl;
 }
 
-void queueTest(ComplexNumberQueue queue){
+void queueTest(Queue<ComplexNumber> queue){
     ComplexNumber* cn1 = new ComplexNumber(1, 1);
     ComplexNumber* cn2 = new ComplexNumber(2, 2);
     ComplexNumber* copyCn2 = new ComplexNumber(*cn2); // 2 2 created
@@ -103,8 +103,8 @@ int main()
     ofstream fout;
     char error[MAX_STRING_LENGTH];
 
-    ComplexNumberStack myStack;
-    ComplexNumberQueue myQueue;
+    Stack<ComplexNumber> myStack;
+    Queue<ComplexNumber> myQueue;
     ComplexNumber* cn;
     ComplexNumber** numbers;
     int n;
