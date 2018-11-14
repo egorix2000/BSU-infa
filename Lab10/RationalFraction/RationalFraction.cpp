@@ -64,7 +64,9 @@ RationalFraction* RationalFraction::div(const RationalFraction& rf){
 }
 
 int RationalFraction::compare(const RationalFraction& rf){
-    return this->numerator * rf.denominator - this->denominator * rf.numerator;
+    int numerator = this->numerator * rf.denominator - this->denominator * rf.numerator;
+    int denominator = this->denominator * rf.denominator;
+    return numerator * denominator;
 }
 
 void RationalFraction::print(){
