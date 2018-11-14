@@ -13,6 +13,7 @@
 #include <cstring>
 
 #include "Stack.h"
+#include "List.h"
 #include "FileLib.h"
 
 using namespace std;
@@ -48,29 +49,7 @@ int getOperatorPriority (char op) {
     }
 }
 
-void calc (Stack<int>& st, char op) {
-	int r = st.getTop();
-	st.pop();
-	int l = st.getTop();
-	st.pop();
-	switch (op) {
-		case '+':
-		    st.push(l + r);
-		    break;
-		case '-':
-		    st.push(l - r);
-		    break;
-		case '*':
-		    st.push(l * r);
-		    break;
-		case '/':
-		    st.push(l / r);
-		    break;
-	}
-}
-
-int getValueOfExpression (char* s) {
-	Stack<int> st;
+List* translateToRpn (char* s, List& rpn) {
 	Stack<char> op;
 	for (int i = 0; i < strlen(s); i++){
 		if (!isSpace(s[i])){
@@ -79,7 +58,7 @@ int getValueOfExpression (char* s) {
 			}
 			else if (s[i] == ')') {
 				while (op.getTop() != '('){
-					calc(st, op.getTop());
+					rpn.add(op.getTop());
                     op.pop();
 				}
 				op.pop();
@@ -87,7 +66,7 @@ int getValueOfExpression (char* s) {
 			else if (isOperator(s[i])) {
 				char currentOperator = s[i];
 				while (!op.isEmpty() && getOperatorPriority(op.getTop()) >= getOperatorPriority(currentOperator)){
-                    calc(st, op.getTop());
+                    rpn.add(op.getTop());
 					op.pop();
 				}
 				op.push(currentOperator);
@@ -101,15 +80,25 @@ int getValueOfExpression (char* s) {
 					i++;
 				}
 				i--;
-				st.push(atoi(number));
+				rpn.add(atoi(number));
 			}
 		}
 	}
 	while (!op.isEmpty()){
-		calc (st, op.getTop());
+		rpn.add(op.getTop());
         op.pop();
 	}
-	return st.getTop();
+	return &rpn;
+}
+
+int getValueOfRpnExpression(List& rpn){
+    Item* item = rpn.getHead();
+    int value;
+    while (item != 0){
+        value = item->calc();
+        item = item->getNext();
+    }
+    return value;
 }
 
 int main()
@@ -119,6 +108,7 @@ int main()
     char error[MAX_STRING_LENGTH];
 
     char s[MAX_STRING_LENGTH];
+    List rpn;
     int value;
 
     fin.open(INPUT_FILE);
@@ -127,7 +117,9 @@ int main()
         fout.open(OUTPUT_FILE);
 
         while (fin.getline(s, MAX_STRING_LENGTH)){
-            value = getValueOfExpression(s);
+            rpn.reset();
+            translateToRpn(s, rpn);
+            value = getValueOfRpnExpression(rpn);
             fout << value << endl;
         }
     } else {
