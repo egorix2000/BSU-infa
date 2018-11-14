@@ -23,11 +23,12 @@ const int MAX_STRING_LENGTH = 1024;
 const char* INPUT_FILE = "Downloads/A/tests/input.txt";
 const char* OUTPUT_FILE = "Downloads/A/tests/output.txt";
 
-int findWhichWillBecomeEmptyFirst(Queue<int>& q1, Queue<int>& q2){
+int howMuchSteps(Queue<int>& q1, Queue<int>& q2){
     int x;
     int y;
+    int ans = 0;
     while(!q1.isEmpty() && !q2.isEmpty()){
-        cout << "do";
+        ans++;
         x = q1.getFront();
         y = q2.getFront();
         q1.pop_front();
@@ -38,12 +39,7 @@ int findWhichWillBecomeEmptyFirst(Queue<int>& q1, Queue<int>& q2){
             q2.push_back(x - y);
         }
     }
-    cout << endl;
-    if (q1.isEmpty()){
-        return 1;
-    } else{
-        return 2;
-    }
+    return ans;
 }
 
 int main()
@@ -75,12 +71,8 @@ int main()
                 fin >> x;
                 q2.push_back(x);
             }
-            ans = findWhichWillBecomeEmptyFirst(q1, q2);
-            if (ans == 1){
-                fout << "q1" << endl;
-            } else{
-                fout << "q2" << endl;
-            }
+            ans = howMuchSteps(q1, q2);
+            fout << ans << endl;
         }
     } else {
         cout << error << endl;
