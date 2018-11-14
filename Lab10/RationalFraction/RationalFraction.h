@@ -5,11 +5,10 @@
 class RationalFraction {
     private:
         RationalFraction* reduce();
-
-    public:
         int numerator;
         int denominator;
 
+    public:
         RationalFraction();
         RationalFraction(const RationalFraction& rf);
         RationalFraction(int numerator, int denominator);
