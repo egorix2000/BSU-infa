@@ -42,21 +42,21 @@ RationalFraction* RationalFraction::reduce(){
     return this;
 }
 
-RationalFraction* RationalFraction::add(const RationalFraction& rf){
+RationalFraction* RationalFraction::operator+=(const RationalFraction& rf){
     this->numerator = this->numerator * rf.denominator + this->denominator * rf.numerator;
     this->denominator *= rf.denominator;
     this->reduce();
     return this;
 }
 
-RationalFraction* RationalFraction::mult(const RationalFraction& rf){
+RationalFraction* RationalFraction::operator*=(const RationalFraction& rf){
     this->numerator *= rf.numerator;
     this->denominator *= rf.denominator;
     this->reduce();
     return this;
 }
 
-RationalFraction* RationalFraction::div(const RationalFraction& rf){
+RationalFraction* RationalFraction::operator/=(const RationalFraction& rf){
     this->numerator *= rf.denominator;
     this->denominator *= rf.numerator;
     this->reduce();

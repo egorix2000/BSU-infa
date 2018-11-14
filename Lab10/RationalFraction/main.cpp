@@ -33,15 +33,15 @@ void testRationalNumbers(){
     d.setNumerator(2);
     d.setDenominator(1);
 
-    a.add(b);
+    a += b;
     cout << "a += b: ";
     a.print();
 
-    b.mult(c);
+    b *= c;
     cout << "b *= c: ";
     b.print();
 
-    c.div(d);
+    c /= d;
     cout << "c /= d: ";
     c.print();
 

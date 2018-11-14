@@ -17,9 +17,9 @@ class RationalFraction {
         RationalFraction* setDenominator(int denominator);
         int getNumerator();
         RationalFraction* setNumerator(int numerator);
-        RationalFraction* add(const RationalFraction& rf);
-        RationalFraction* mult(const RationalFraction& rf);
-        RationalFraction* div(const RationalFraction& rf);
+        RationalFraction* operator+=(const RationalFraction& rf);
+        RationalFraction* operator*=(const RationalFraction& rf);
+        RationalFraction* operator/=(const RationalFraction& rf);
         int compare(const RationalFraction& rf);
         void print();
 };
