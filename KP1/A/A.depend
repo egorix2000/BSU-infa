@@ -1,0 +1,182 @@
+# depslib dependency file v1.0
+1543217172 source:/Users/apple/Downloads/A/main.cpp
+	<iostream>
+	<cctype>
+	<exception>
+	<cstring>
+	<iomanip>
+
+1461466878 source:/Users/apple/Downloads/A/getCPUTime.c
+	<Windows.h>
+	<unistd.h>
+	<sys/resource.h>
+	<sys/times.h>
+	<time.h>
+
+1461466878 /Users/apple/Downloads/A/getCPUTime.c
+	<Windows.h>
+	<unistd.h>
+	<sys/resource.h>
+	<sys/times.h>
+	<time.h>
+
+1538494065 source:/Users/apple/Downloads/A/Sort.cpp
+	<iostream>
+	"getCPUTime.c"
+
+1538840693 source:/Users/apple/Downloads/A/myLib.cpp
+
+1538898755 /Users/apple/Downloads/A/MyLib.h
+
+1538898774 source:/Users/apple/Downloads/A/MyLib.cpp
+
+1538852922 source:/Users/apple/Downloads/A/EvenTimes.cpp
+	<iostream>
+	"MyLib.h"
+
+1538852915 source:/Users/apple/Downloads/A/SortAscDesc.cpp
+	<iostream>
+	"MyLib.h"
+
+1538852899 source:/Users/apple/Downloads/A/TheLargestMultiplication.cpp
+	<iostream>
+	"MyLib.h"
+
+1540112384 source:/Users/apple/Downloads/A/TwoDimensionalArrayLib.cpp
+	<fstream>
+	<iomanip>
+	<ctime>
+
+1540112313 /Users/apple/Downloads/A/TwoDimensionalArrayLib.h
+
+1540995939 source:/Users/apple/Downloads/A/OneDimensionalArrayLib.cpp
+	<fstream>
+	<ctime>
+
+1540996006 /Users/apple/Downloads/A/OneDimensionalArrayLib.h
+
+1540391868 source:/Users/apple/Downloads/A/FileLib.cpp
+	<cstring>
+
+1542014639 /Users/apple/Downloads/A/FileLib.h
+
+1541322631 source:/Users/apple/Downloads/A/ComplexNumber.cpp
+	"ComplexNumber.h"
+
+1541328788 /Users/apple/Downloads/A/ComplexNumber.h
+
+1541328845 source:/Users/apple/Downloads/A/ComplexNumberOperators.cpp
+	"ComplexNumberOperators.h"
+	"ComplexNumber.h"
+
+1541347949 /Users/apple/Downloads/A/ComplexNumberOperators.h
+	"ComplexNumber.h"
+
+1541342304 source:/Users/apple/Downloads/A/ComplexNumberStack.cpp
+	"ComplexNumberStack.h"
+	"ComplexNumberStackNode.h"
+	"ComplexNumber.h"
+
+1541340523 /Users/apple/Downloads/A/ComplexNumberStack.h
+	"ComplexNumber.h"
+	"ComplexNumberStackNode.h"
+
+1541339234 /Users/apple/Downloads/A/ComplexNumberStackNode.h
+	"ComplexNumber.h"
+
+1541339225 source:/Users/apple/Downloads/A/ComplexNumberStackNode.cpp
+	"ComplexNumberStackNode.h"
+	"ComplexNumber.h"
+
+1541341629 source:/Users/apple/Downloads/A/ComplexNumberQueueNode.cpp
+	"ComplexNumberQueueNode.h"
+	"ComplexNumber.h"
+
+1541341638 /Users/apple/Downloads/A/ComplexNumberQueueNode.h
+	"ComplexNumber.h"
+
+1541341980 /Users/apple/Downloads/A/ComplexNumberQueue.h
+	"ComplexNumberQueueNode.h"
+	"ComplexNumber.h"
+
+1541342776 source:/Users/apple/Downloads/A/ComplexNumberQueue.cpp
+	"ComplexNumberQueue.h"
+	"ComplexNumberQueueNode.h"
+	"ComplexNumber.h"
+
+1541939160 /Users/apple/Downloads/A/Stack.h
+	"Node.h"
+
+1541939019 /Users/apple/Downloads/A/Node.h
+
+1541943121 /Users/apple/Downloads/A/Queue.h
+	"Node.h"
+
+1542179568 source:/Users/apple/Downloads/A/RationalFraction.cpp
+	<iostream>
+	"RationalFraction.h"
+	"Math.h"
+
+1542180245 /Users/apple/Downloads/A/RationalFraction.h
+
+1542014902 source:/Users/apple/Downloads/A/Math.cpp
+
+1542014880 /Users/apple/Downloads/A/Math.h
+
+1542235367 source:/Users/apple/Downloads/A/Item.cpp
+	"Item.h"
+
+1542235631 /Users/apple/Downloads/A/Item.h
+
+1542235427 source:/Users/apple/Downloads/A/List.cpp
+	"List.h"
+	"Number.h"
+	"Operator.h"
+
+1542235065 /Users/apple/Downloads/A/List.h
+	"Item.h"
+
+1542234926 /Users/apple/Downloads/A/Number.h
+	"Item.h"
+
+1542234852 /Users/apple/Downloads/A/Operator.h
+	"Item.h"
+
+1542234925 source:/Users/apple/Downloads/A/Number.cpp
+	"Number.h"
+
+1542235613 source:/Users/apple/Downloads/A/Operator.cpp
+	<iostream>
+	"Operator.h"
+	"Number.h"
+
+1542531717 source:/Users/apple/Downloads/A/Point.cpp
+	"Point.h"
+
+1542531760 /Users/apple/Downloads/A/Point.h
+
+1542534483 source:/Users/apple/Downloads/A/Triangle.cpp
+	"Triangle.h"
+	"Point.h"
+
+1542534422 /Users/apple/Downloads/A/Triangle.h
+	"Point.h"
+
+1542548325 /Users/apple/Downloads/A/Vector.h
+	<iostream>
+
+1543088521 source:/Users/apple/Downloads/A/Book.cpp
+	"Book.h"
+
+1543085206 /Users/apple/Downloads/A/Book.h
+
+1543090549 source:/Users/apple/Downloads/A/HomeLibrary.cpp
+	<string.h>
+	<utility>
+	<iostream>
+	"HomeLibrary.h"
+
+1543087478 /Users/apple/Downloads/A/HomeLibrary.h
+	<utility>
+	"Book.h"
+
