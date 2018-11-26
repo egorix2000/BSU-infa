@@ -13,3 +13,5 @@
 *.depend\
 *.cbp\
 *.zip}
+A/obj
+A/bin
