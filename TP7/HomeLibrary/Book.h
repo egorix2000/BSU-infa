@@ -7,7 +7,9 @@ class Book {
         char* name_;
         char* author_;
     public:
+        Book();
         Book(char* name, char* author);
+        Book(Book& book);
         ~Book();
         char* getName();
         char* getAuthor();

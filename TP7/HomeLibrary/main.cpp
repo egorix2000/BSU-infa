@@ -44,14 +44,14 @@ void displayAllBooksInLibrary(HomeLibrary* library){
 
 void addBook(HomeLibrary* library){
     char name[MAX_STRING_LENGTH];
-    char author[MAX_STRING_LENGTH] = "a";
+    char author[MAX_STRING_LENGTH];
     cout << "Enter name: ";
     cin >> name;
     cout << "Enter author: ";
     cin >> author;
 
     Book* book = new Book(name, author);
-    library->addBook(book);
+    library->addBook(*book);
 }
 
 void deleteBook(HomeLibrary* library){

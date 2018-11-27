@@ -12,14 +12,14 @@ class HomeLibrary {
 
         void deleteBooks(); // delete books_
         HomeLibrary* sortBooks(bool (*comparator) (Book*, Book*));
-        //bool nameComparator(Book* a, Book* b);
-        //bool authorComparator(Book* a, Book* b);
+        static bool nameComparator(Book* a, Book* b);
+        static bool authorComparator(Book* a, Book* b);
     public:
         HomeLibrary();
         ~HomeLibrary();
         Book** getAllBooks();
         int getNumberOfBooks();
-        void addBook(Book* book);
+        void addBook(Book& book);
         void deleteBook(char* name);
         std::pair<Book**, int> findBooksByAuthor(char* author);
         HomeLibrary* sortByName();
