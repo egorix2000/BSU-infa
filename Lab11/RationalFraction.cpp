@@ -1,43 +1,44 @@
+#include <string>
 #include "RationalFraction.h"
 #include "Math.h"
 
 RationalFraction::RationalFraction() {
-    this->numerator = 0;
-    this->denominator = 0;
+    numerator_ = 0;
+    denominator_ = 0;
 }
 
 RationalFraction::RationalFraction(const RationalFraction& sourse) {
-    this->numerator = sourse.getNumerator();
-    this->denominator = sourse.getDenominator();
+    numerator_ = sourse.getNumerator();
+    denominator_ = sourse.getDenominator();
 }
 
 RationalFraction::RationalFraction(int numerator, int denominator) {
-    this->numerator = numerator;
-    this->denominator = denominator;
+    numerator_ = numerator;
+    denominator_ = denominator;
 }
 
 int RationalFraction::getDenominator() const{
-    return this->denominator;
+    return denominator_;
 }
 
 RationalFraction* RationalFraction::setDenominator(int denominator) {
-    this->denominator = denominator;
+    denominator_ = denominator;
     return this;
 }
 
 int RationalFraction::getNumerator() const{
-    return this->numerator;
+    return numerator_;
 }
 
 RationalFraction* RationalFraction::setNumerator(int numerator) {
-    this->numerator = numerator;
+    numerator_ = numerator;
     return this;
 }
 
 RationalFraction* RationalFraction::reduce() {
-    int gcd = calcGcd(abs(this->numerator), abs(this->denominator));
-    this->numerator /= gcd;
-    this->denominator /= gcd;
+    int gcd = calcGcd(abs(numerator_), abs(denominator_));
+    numerator_ /= gcd;
+    denominator_ /= gcd;
     return this;
 }
 
@@ -48,33 +49,41 @@ int RationalFraction::compare(const RationalFraction& rf) {
 }
 
 RationalFraction RationalFraction::operator+(const RationalFraction& rf) const{
-    int numerator = this->numerator * rf.getDenominator() + this->denominator * rf.getNumerator();
-    int denominator = this->denominator * rf.getDenominator();
+    int numerator = numerator_ * rf.getDenominator() + denominator_ * rf.getNumerator();
+    int denominator = denominator_ * rf.getDenominator();
     RationalFraction rationalFraction (numerator, denominator);
     rationalFraction.reduce();
     return rationalFraction;
 }
 
 RationalFraction RationalFraction::operator-(const RationalFraction& rf) const{
-    int numerator = this->numerator * rf.getDenominator() - this->denominator * rf.getNumerator();
-    int denominator = this->denominator * rf.getDenominator();
+    int numerator = numerator_ * rf.getDenominator() - denominator_ * rf.getNumerator();
+    int denominator = denominator_ * rf.getDenominator();
     RationalFraction rationalFraction (numerator, denominator);
     rationalFraction.reduce();
     return rationalFraction;
 }
 
 RationalFraction RationalFraction::operator*(const RationalFraction& rf) const{
-    int numerator = this->numerator * rf.getNumerator();
-    int denominator = this->denominator * rf.getDenominator();
+    int numerator = numerator_ * rf.getNumerator();
+    int denominator = denominator_ * rf.getDenominator();
     RationalFraction rationalFraction (numerator, denominator);
     rationalFraction.reduce();
     return rationalFraction;
 }
 
 RationalFraction RationalFraction::operator/(const RationalFraction& rf) const{
-    int numerator = this->numerator * rf.getDenominator();
-    int denominator = this->denominator * rf.getNumerator();
+    int numerator = numerator_ * rf.getDenominator();
+    int denominator = denominator_ * rf.getNumerator();
     RationalFraction rationalFraction (numerator, denominator);
     rationalFraction.reduce();
     return rationalFraction;
+}
+
+std::string RationalFraction::toString(){
+    std::string s = std::to_string(numerator_);
+    if (denominator_ != 1) {
+        s += "/" + std::to_string(denominator_);
+    }
+    return s;
 }

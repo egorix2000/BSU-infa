@@ -35,6 +35,6 @@ Operator* RationalFractionOperation::getOperator() const{
 }
 
 std::string RationalFractionOperation::toString() {
-    std::string s = std::to_string(rf1_.getNumerator()) + "/" + std::to_string(rf1_.getDenominator()) + " " + std::to_string(rf2_.getNumerator()) + "/" + std::to_string(rf2_.getDenominator());
+    std::string s = rf1_.toString() + " " + op_->toChar() + " " + rf2_.toString();
     return s;
 }

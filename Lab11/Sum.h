@@ -8,6 +8,7 @@
 class Sum : public Operator {
     public:
         RationalFraction calculate(const RationalFraction& rf1, const RationalFraction& rf2);
+        char toChar();
 };
 
 #endif // SUM_H_INCLUDED

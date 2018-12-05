@@ -2,6 +2,8 @@
 #ifndef RATIONALFRACTION_H_INCLUDED
 #define RATIONALFRACTION_H_INCLUDED
 
+#include <string>
+
 class RationalFraction {
     public:
         RationalFraction();
@@ -17,9 +19,10 @@ class RationalFraction {
         RationalFraction operator/(const RationalFraction& rf) const;
         int compare(const RationalFraction& rf);
         RationalFraction* reduce();
+        std::string toString();
     private:
-        int numerator;
-        int denominator;
+        int numerator_;
+        int denominator_;
 
 };
 

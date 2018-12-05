@@ -49,7 +49,7 @@ bool ExpressionsManager::read(std::string fileName, std::string pathToFile) {
 bool ExpressionsManager::write(std::string fileName) {
     fileManager_->setFile(fileName);
     for (int i = 0; i < results_.size(); i++) {
-        fileManager_->writeLine(std::to_string(results_[i].getNumerator()) + "/" + std::to_string(results_[i].getDenominator()));
+        fileManager_->writeLine(results_[i].toString());
     }
     fileManager_->setFile(logFile_);
     time_t now = time(0);

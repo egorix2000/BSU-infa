@@ -7,6 +7,7 @@
 class Operator {
     public:
         virtual RationalFraction calculate(const RationalFraction& rf1, const RationalFraction& rf2) = 0;
+        virtual char toChar() = 0;
 };
 
 #endif // OPERATOR_H_INCLUDED

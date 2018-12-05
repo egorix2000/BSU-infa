@@ -8,6 +8,7 @@
 class Division : public Operator {
     public:
         RationalFraction calculate(const RationalFraction& rf1, const RationalFraction& rf2);
+        char toChar();
 };
 
 #endif // DIVISION_H_INCLUDED
