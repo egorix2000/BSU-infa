@@ -17,7 +17,7 @@ RationalFraction::RationalFraction(int numerator, int denominator){
     this->denominator = denominator;
 }
 
-int RationalFraction::getDenominator(){
+int RationalFraction::getDenominator() const{
     return this->denominator;
 }
 
@@ -26,7 +26,7 @@ RationalFraction* RationalFraction::setDenominator(int denominator){
     return this;
 }
 
-int RationalFraction::getNumerator(){
+int RationalFraction::getNumerator() const{
     return this->numerator;
 }
 
@@ -37,35 +37,40 @@ RationalFraction* RationalFraction::setNumerator(int numerator){
 
 RationalFraction* RationalFraction::reduce(){
     int gcd = calcGcd(this->numerator, this->denominator);
+    if (gcd == 0){
+        //std::cout << "zero division";
+        //throw "zero division";
+        return NAN;
+    }
     this->numerator /= gcd;
     this->denominator /= gcd;
     return this;
 }
 
 RationalFraction* RationalFraction::operator+=(const RationalFraction& rf){
-    this->numerator = this->numerator * rf.denominator + this->denominator * rf.numerator;
-    this->denominator *= rf.denominator;
+    this->numerator = this->numerator * rf.getDenominator() + this->denominator * rf.getNumerator();
+    this->denominator *= rf.getDenominator();
     this->reduce();
     return this;
 }
 
 RationalFraction* RationalFraction::operator*=(const RationalFraction& rf){
-    this->numerator *= rf.numerator;
-    this->denominator *= rf.denominator;
+    this->numerator *= rf.getNumerator();
+    this->denominator *= rf.getDenominator();
     this->reduce();
     return this;
 }
 
 RationalFraction* RationalFraction::operator/=(const RationalFraction& rf){
-    this->numerator *= rf.denominator;
-    this->denominator *= rf.numerator;
+    this->numerator *= rf.getDenominator();
+    this->denominator *= rf.getNumerator();
     this->reduce();
     return this;
 }
 
 int RationalFraction::compare(const RationalFraction& rf){
-    int numerator = this->numerator * rf.denominator - this->denominator * rf.numerator;
-    int denominator = this->denominator * rf.denominator;
+    int numerator = this->numerator * rf.getDenominator() - this->denominator * rf.getNumerator();
+    int denominator = this->denominator * rf.getDenominator();
     return numerator * denominator;
 }
 

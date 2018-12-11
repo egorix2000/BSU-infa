@@ -12,9 +12,9 @@ class RationalFraction {
         RationalFraction();
         RationalFraction(const RationalFraction& rf);
         RationalFraction(int numerator, int denominator);
-        int getDenominator();
+        int getDenominator() const;
         RationalFraction* setDenominator(int denominator);
-        int getNumerator();
+        int getNumerator() const;
         RationalFraction* setNumerator(int numerator);
         RationalFraction* operator+=(const RationalFraction& rf);
         RationalFraction* operator*=(const RationalFraction& rf);

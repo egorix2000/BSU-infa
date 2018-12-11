@@ -14,11 +14,11 @@ class Queue{
         Queue(const T& firstElementValue);
         void pop_front();
         void push_back(const T& value);
-        T getFront();
-        T getBack();
-        bool isEmpty();
+        T getFront() const;
+        T getBack() const;
+        bool isEmpty() const;
         void reset();
-        int getSize();
+        int getSize() const;
 
 };
 
@@ -36,7 +36,7 @@ Queue<T>::Queue(const T& firstElementValue){
 }
 
 template <class T>
-int Queue<T>::getSize(){
+int Queue<T>::getSize() const{
     int queueSize = 0;
     Node<T>* current = this->front;
     while (current){
@@ -49,9 +49,11 @@ int Queue<T>::getSize(){
 
 template <class T>
 void Queue<T>::pop_front(){
+    Node<T>* temp = this->front;
     if(this->front){
         this->front = this->front->next;
     }
+    delete temp;
 }
 
 template <class T>
@@ -67,26 +69,30 @@ void Queue<T>::push_back(const T& value){
 }
 
 template <class T>
-T Queue<T>::getFront(){
+T Queue<T>::getFront() const{
     return this->front->value;
 }
 
 template <class T>
-T Queue<T>::getBack(){
+T Queue<T>::getBack() const{
     return this->back->value;
 }
 
 template <class T>
-bool Queue<T>::isEmpty(){
-    if (this->front){
-        return false;
-    } else {
-        return true;
-    }
+bool Queue<T>::isEmpty() const{
+    return this->front == 0;
 }
 
 template <class T>
 void Queue<T>::reset(){
+    Node<T>* current = this->front;
+    while (current){
+        Node<T>* temp = current;
+        if(current){
+            current = current->next;
+        }
+        delete temp;
+    }
     this->front = 0;
     this->back = 0;
 }

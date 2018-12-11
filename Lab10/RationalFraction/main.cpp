@@ -24,17 +24,17 @@ using namespace std;
 
 void testRationalNumbers(){
     RationalFraction a, b, c, d;
-    a.setNumerator(2);
+    a.setNumerator(0);
     a.setDenominator(4);
-    b.setNumerator(5);
+    b.setNumerator(0);
     b.setDenominator(3);
     c.setNumerator(6);
     c.setDenominator(7);
     d.setNumerator(2);
     d.setDenominator(1);
 
-    a += b;
-    cout << "a += b: ";
+    a /= b;
+    cout << "a /= b: ";
     a.print();
 
     b *= c;
