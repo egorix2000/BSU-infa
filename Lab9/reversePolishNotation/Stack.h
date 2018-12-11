@@ -13,10 +13,10 @@ class Stack{
         Stack(const T& top);
         void pop();
         void push(const T& value);
-        T getTop();
-        bool isEmpty();
+        T& getTop() const;
+        bool isEmpty() const;
         void reset();
-        int getSize();
+        int getSize() const;
 };
 
 template <class T>
@@ -31,7 +31,7 @@ Stack<T>::Stack(const T& top){
 }
 
 template <class T>
-int Stack<T>::getSize(){
+int Stack<T>::getSize() const{
     int stackSize = 0;
     Node<T>* current = this->top;
     while (current){
@@ -44,9 +44,11 @@ int Stack<T>::getSize(){
 
 template <class T>
 void Stack<T>::pop(){
+    Node<T>* temp = this->top;
     if(this->top){
         this->top = this->top->next;
     }
+    delete temp;
 }
 
 template <class T>
@@ -56,21 +58,23 @@ void Stack<T>::push(const T& value){
 }
 
 template <class T>
-T Stack<T>::getTop(){
+T& Stack<T>::getTop() const{
     return this->top->value;
 }
 
 template <class T>
-bool Stack<T>::isEmpty(){
-    if (this->top){
-        return false;
-    } else {
-        return true;
-    }
+bool Stack<T>::isEmpty() const{
+    return this->top == 0;
 }
 
 template <class T>
 void Stack<T>::reset(){
+    Node<T>* current = this->top;
+    while (current){
+        Node<T>* temp = current;
+        current = current->next;
+        delete temp;
+    }
     this->top = 0;
 }
 
