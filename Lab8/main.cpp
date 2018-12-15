@@ -31,19 +31,19 @@ void stackTest(Stack<ComplexNumber> stack){
 
     stack.pop(); // nothing happened cause no elements in stack
     stack.push(*cn1);
-    cout << "push 1, top real:" << stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout << "push 1, top:" << stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.push(*cn2);
-    cout << "push 2, top real:" << stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout << "push 2, top:" << stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.pop();
-    cout  << "pop, top real:"<< stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout  << "pop, top:"<< stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.push(*copyCn2);
-    cout  << "push 2, top real:"<< stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout  << "push 2, top:"<< stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.push(*cn3);
-    cout << "push 3, top real:" << stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout << "push 3, top:" << stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.pop();
-    cout << "pop, top real:" << stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout << "pop, top:" << stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.pop();
-    cout << "pop, top real:" << stack.getTop().real << " size:" << stack.getSize() << endl;
+    cout << "pop, top:" << stack.getTop().real << " size:" << stack.getSize() << endl;
     stack.pop();
     cout << "pop, is empty:" << stack.isEmpty() << " size:" << stack.getSize() << endl;
 }
@@ -56,19 +56,21 @@ void queueTest(Queue<ComplexNumber> queue){
 
     queue.pop_front(); // nothing happened cause no elements in stack
     queue.push_back(*cn1);
-    cout << "push_back 1, front real:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    cout << "push_back 1, front:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
     queue.push_back(*cn2);
-    cout << "push_back 2, front real:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    cout << "push_back 2, front:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
     queue.pop_front();
     cout  << "pop_front, top real:"<< queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
     queue.push_back(*copyCn2);
-    cout  << "push_back 2, front real:"<< queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    cout  << "push_back 2, front:"<< queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
     queue.push_back(*cn3);
-    cout << "push_back 3, front real:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    cout << "push_back 3, front:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
     queue.pop_front();
-    cout << "pop_front, front real:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    cout << "pop_front, front:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
     queue.pop_front();
-    cout << "pop_front, front real:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    cout << "pop_front, front:" << queue.getFront().real << " back real:" << queue.getBack().real << " size:" << queue.getSize() << endl;
+    queue.pop_front();
+    cout << "pop_front, is empty:" << queue.isEmpty() << " size:" << queue.getSize() << endl;
     queue.pop_front();
     cout << "pop_front, is empty:" << queue.isEmpty() << " size:" << queue.getSize() << endl;
 }
