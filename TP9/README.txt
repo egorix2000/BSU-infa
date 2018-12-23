@@ -1,0 +1,1 @@
+Для начала работы, необходимо скачать googletest и скопировать папку с googletest в папки MinMax и Triangle
