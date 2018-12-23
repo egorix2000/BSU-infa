@@ -74,7 +74,7 @@ int main()
                 isSuccessful = true;
                 foundItem = new Node<double>(manager->findItem(item, isSuccessful));
                 if (isSuccessful) {
-                    cout << item << " found. Frequency: " << foundItem->getCounter() << endl;
+                    cout << "Item: '" << item << "' found. Frequency: " << foundItem->getCounter() << endl;
                 }
                 break;
             case 3:
