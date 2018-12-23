@@ -11,6 +11,6 @@ endif (APPLE)
 add_subdirectory(googletest)
 include_directories(googletest/googletest/include)
 
-add_executable(Lab tests.cpp Triangle.h)
+add_executable(Lab Node.h Stack.h tests.cpp findValueOfExpression.h)
 
 target_link_libraries(Lab gtest gtest_main)
