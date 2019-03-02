@@ -11,7 +11,7 @@ using namespace sf;
 int main(int, char**)
 {
     srand(time(0));
-    Game game(320, 480, 10, 20, 4, 0.3, 0.05, "/Users/apple/Downloads/Tetris/Tetris/");
+    Game game(320, 480, 10, 20, 4, 0.3, 0.05, "/Users/apple/Documents/BSU/Инфа/BSU_Infa/2_Sem/Games/Tetris/Tetris/");
     game.launchGame();
     return 0;
 }

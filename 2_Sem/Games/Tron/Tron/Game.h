@@ -17,6 +17,7 @@ private:
     int width_;
     int height_;
     int speed_;
+    std::string pathToProject_;
     Texture backgroundTexture_;
     Sprite background_;
     Field *field_;
@@ -32,7 +33,7 @@ private:
     Player *winner_;
     CircleShape circle_;
 public:
-    Game(int width, int height, int speed);
+    Game(int width, int height, int speed, std::string pathToProjec);
     Game& launchGame();
     Player addRandomPlayer(Color, int *control, std::string name);
     Player& changePlayerRandomly(Player& player, Color color, int width, int height, std::string name);
@@ -41,14 +42,15 @@ public:
     void tick(Player& player);
 };
 
-Game::Game(int width, int height, int speed) {
+Game::Game(int width, int height, int speed, std::string pathToProject) {
     width_ = width;
     height_ = height;
     speed_ = speed;
+    pathToProject_ = pathToProject;
     
-    backgroundTexture_.loadFromFile("/Users/apple/Downloads/Tron/Tron/images/background.jpg");
+    backgroundTexture_.loadFromFile(pathToProject_ + "images/background.jpg");
     background_.setTexture(backgroundTexture_);
-    font_.loadFromFile("/Users/apple/Downloads/Tron/Tron/arial.ttf");
+    font_.loadFromFile(pathToProject_ + "arial.ttf");
     
     field_ = &Field::getInstance(width_, height_);
     
