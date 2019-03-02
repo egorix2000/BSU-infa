@@ -28,17 +28,17 @@ private:
     Text gameOverText_;
     Text pressAnyKey_;
     bool isGameOver_;
-    bool startGame_;
+    bool isGameStarted_;
     Player *winner_;
     CircleShape circle_;
 public:
     Game(int width, int height, int speed);
-    Game& startGame();
+    Game& launchGame();
     Player addRandomPlayer(Color, int *control, std::string name);
     Player& changePlayerRandomly(Player& player, Color color, int width, int height, std::string name);
     Game& restart();
     Game& gameOver();
-    void tick(Player& player, int width, int height);
+    void tick(Player& player);
 };
 
 Game::Game(int width, int height, int speed) {
@@ -63,7 +63,7 @@ Game::Game(int width, int height, int speed) {
     pressAnyKey_.setString("Press space to restart game");
     
     isGameOver_ = false;
-    startGame_ = false;
+    isGameStarted_ = false;
     
     circle_.setRadius(1);
 }
@@ -86,7 +86,7 @@ Player& Game::changePlayerRandomly(Player& player, Color color, int width, int h
     return player;
 }
 
-Game& Game::startGame() {
+Game& Game::launchGame() {
     window_.create(VideoMode(width_, height_), "The Tron Game!");
     window_.setFramerateLimit(60);
     
@@ -99,11 +99,11 @@ Game& Game::startGame() {
             }
         }
         
-        if (Keyboard::isKeyPressed(Keyboard::Space) && !startGame_) {
+        if (Keyboard::isKeyPressed(Keyboard::Space) && !isGameStarted_) {
             restart();
         }
         
-        if (startGame_) {
+        if (isGameStarted_) {
             for (int i = 0; i < players_.size(); i++) {
                 if (e.key.code == players_[i].getControlDirection(0)) {
                     if (players_[i].getDirection() != 2) {
@@ -134,7 +134,7 @@ Game& Game::startGame() {
             continue;
         }
         
-        if (!startGame_) {
+        if (!isGameStarted_) {
             window_.clear();
             window_.draw(sprite_);
             pressAnyKey_.setString("Press space to start game");
@@ -144,7 +144,7 @@ Game& Game::startGame() {
             for(int i = 0; i < speed_; i++) {
                 for (int i = 0; i < players_.size(); i++) {
                     if (players_[i].getIsInGame()) {
-                        tick(players_[i], width_, height_);
+                        tick(players_[i]);
                         if (field_->getElement(players_[i].getX(), players_[i].getY()) == 1) {
                             players_[i].setIsInGame(false);
                             if (count_if(players_.begin(), players_.end(), [](Player& player){
@@ -183,7 +183,7 @@ Game& Game::startGame() {
 }
 
 Game& Game::restart() {
-    startGame_ = true;
+    isGameStarted_ = true;
     isGameOver_ = false;
     field_->clear();
     for (int i = 0; i < players_.size(); i++) {
@@ -198,7 +198,7 @@ Game& Game::restart() {
 }
 
 Game& Game::gameOver() {
-    startGame_ = false;
+    isGameStarted_ = false;
     window_.clear();
     window_.draw(sprite_);
     gameOverText_.setFillColor(winner_->getColor());
@@ -209,16 +209,16 @@ Game& Game::gameOver() {
     return *this;
 }
 
-void Game::tick(Player& player, int width, int height) {
+void Game::tick(Player& player) {
     if (player.getDirection() == 0) player.moveDown(1);
     if (player.getDirection() == 1) player.moveLeft(1);
     if (player.getDirection() == 2) player.moveRight(1);
     if (player.getDirection() == 3) player.moveUp(1);
     
-    if (player.getX() >= width) player.setX(0);
-    if (player.getX() < 0) player.setX(width-1);
-    if (player.getY() >= height) player.setY(0);
-    if (player.getY() < 0) player.setY(height-1);
+    if (player.getX() >= width_) player.setX(0);
+    if (player.getX() < 0) player.setX(width_-1);
+    if (player.getY() >= height_) player.setY(0);
+    if (player.getY() < 0) player.setY(height_-1);
 }
 
 

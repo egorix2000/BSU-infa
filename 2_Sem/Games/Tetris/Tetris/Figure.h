@@ -35,8 +35,7 @@ Figure::Figure(int n, Tile *tiles, int color) {
     color_ = color;
     tiles_ = new Tile[n];
     for (int i = 0; i < n; i++) {
-        tiles_[i].x = tiles[i].x;
-        tiles_[i].y = tiles[i].y;
+        tiles_[i] = tiles[i];
     }
 }
 
@@ -44,6 +43,7 @@ Figure::Figure(const Figure& source) {
     n_ = source.getN();
     color_ = source.getColor();
     int a = 0;
+    tiles_ = new Tile[n_];
     for (int i = 0; i < n_; i++) {
         tiles_[i] = source.getTiles()[i];
     }

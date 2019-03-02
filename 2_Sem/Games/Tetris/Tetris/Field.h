@@ -16,9 +16,10 @@ public:
     static Field& getInstance(int width, int height);
     int getWidth() const;
     int getHeight() const;
-    void removeFullLines();
+    int removeFullLines();
     void setTile(const Tile& tile, int color);
     int getTile(int x, int y) const;
+    void clear();
 };
 
 Field& Field::getInstance(int width, int height) {
@@ -61,7 +62,8 @@ int Field::getHeight() const {
     return height_;
 }
 
-void Field::removeFullLines() {
+int Field::removeFullLines() {
+    int points = 0;
     int k = height_ - 1;
     int count = 0;
     for (int i = height_ - 1; i > 0; i--) {
@@ -72,8 +74,20 @@ void Field::removeFullLines() {
             }
             field_[j][k] = field_[j][i];
         }
+        if (count == width_) {
+            points++;
+        }
         if (count < width_) {
             k--;
+        }
+    }
+    return points;
+}
+
+void Field::clear() {
+    for (int i = 0; i < width_; i++) {
+        for (int j = 0; j < height_; j++) {
+            field_[i][j] = 0;
         }
     }
 }

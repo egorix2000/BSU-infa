@@ -12,6 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		18113678222A97B20010959E /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		18703FBD22200E0600C53156 /* Tile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tile.h; sourceTree = "<group>"; };
 		18703FBE22200E6C00C53156 /* Figure.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Figure.h; sourceTree = "<group>"; };
 		18703FBF22200FFA00C53156 /* FigureFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FigureFactory.h; sourceTree = "<group>"; };
@@ -81,6 +82,7 @@
 				18703FBE22200E6C00C53156 /* Figure.h */,
 				18703FBF22200FFA00C53156 /* FigureFactory.h */,
 				18931E7B2223CD530004D125 /* Field.h */,
+				18113678222A97B20010959E /* Game.h */,
 			);
 			path = Tetris;
 			sourceTree = "<group>";
