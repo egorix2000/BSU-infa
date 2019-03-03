@@ -1,0 +1,5 @@
+1 circle a b r a
+22 rectangle a a a a a a
+34 circle r b o k
+5 circle
+100 rhombus g e a
