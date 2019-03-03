@@ -1,0 +1,6 @@
+fish1 fish2 fish3 fish4 shark snake goldFish dog
+shark fish3 goldFish shark shark dog fish1
+dog dog dog fish1 dog dog dog
+fish1 fish2 fish1 fish3 fish3 fish3 dog
+fish1 dog
+shark dog fish1

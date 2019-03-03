@@ -59,9 +59,9 @@ int FlowerBed::getNumberOfDifferentFlowers() const {
 }
 
 std::ostream &operator<<(std::ostream &stream, const FlowerBed &flowerBed) {
-    cout << flowerBed.getFlowerBedNumber() << " " << flowerBed.getShape();
+    stream << flowerBed.getFlowerBedNumber() << " " << flowerBed.getShape();
     for (int i = 0; i < flowerBed.getFlowers().size(); i++) {
-        cout << " " << flowerBed.getFlowers()[i];
+        stream << " " << flowerBed.getFlowers()[i];
     }
     return stream;
 }
