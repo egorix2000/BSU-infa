@@ -17,8 +17,8 @@ int main() {
 
     game.addRandomPlayer(Color::Red, control1, "Red");
     game.addRandomPlayer(Color::Green, control2, "Green");
-    game.addRandomPlayer(Color::White, control3, "White");
-    game.addRandomPlayer(Color::Yellow, control4, "Yellow");
+    //game.addRandomPlayer(Color::White, control3, "White");
+    //game.addRandomPlayer(Color::Yellow, control4, "Yellow");
     
     game.launchGame();
 
