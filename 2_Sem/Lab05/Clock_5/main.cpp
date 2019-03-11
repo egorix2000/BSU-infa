@@ -4,11 +4,10 @@
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	MSG msg;
 	
-	KWnd mainWnd("Window 2_3", hInstance, nCmdShow, WndProc);
+	KWnd mainWnd("Window 1", hInstance, nCmdShow, WndProc);
 
 	while (GetMessage(&msg, NULL, 0, 0)) {
 		TranslateMessage(&msg);
@@ -23,14 +22,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 	HDC hDC;
 	PAINTSTRUCT ps;
 	RECT clientRect;
-	LPTSTR line;
 
 	switch (message) {
 	case WM_PAINT:
 		hDC = BeginPaint(hwnd, &ps);
 		GetClientRect(hwnd, &clientRect);
 
-
+		
 
 		EndPaint(hwnd, &ps);
 		break;
