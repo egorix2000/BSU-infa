@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{3A5396B2-F33C-414B-AB92-5B33D2B852B0}</ProjectGuid>
-    <RootNamespace>Clock</RootNamespace>
+    <ProjectGuid>{BDA7BF15-DE3E-4DCE-9DA1-862B0545BAFD}</ProjectGuid>
+    <RootNamespace>Balls</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -115,13 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Ball.cpp" />
     <ClCompile Include="KWnd.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clock.h" />
+    <ClInclude Include="Ball.h" />
     <ClInclude Include="KWnd.h" />
+    <ClInclude Include="Point.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

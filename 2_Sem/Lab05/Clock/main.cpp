@@ -2,6 +2,9 @@
 #include <windows.h>
 #include <string>
 #include "KWnd.h"
+#include "Clock.h"
+
+#define TIMER_SEC 1
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -23,34 +26,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	PAINTSTRUCT ps;
 	RECT clientRect;
 	int radius;
+	static Clock clock;
+	TCHAR outputSeconds[20];
 
 	switch (uMsg) {
 	case WM_CREATE:
-		hDC = GetDC(hWnd);
-		ReleaseDC(hWnd, hDC); 
+		SetTimer(hWnd, TIMER_SEC, 1000, NULL);
 		break;
-	
+	case WM_KEYDOWN:
+		if (wParam == 83) {
+			clock.setSeconds(0);
+		}
+		break;
 	case WM_CHAR:
 		GetClientRect(hWnd, &clientRect);
 		switch (wParam) {
 		case '+':
-			if (lf.lfHeight < clientRect.bottom - 10
-				&& 1.5*lf.lfWidth * text.size() < clientRect.right - 2) {
-				text += (char) '+';
-				lf.lfHeight += 5;
-				lf.lfWidth += 2;
-			} else {
-				MessageBox(hWnd, "Font is too large", "Error", MB_OK);
-			}
+			clock.setIsActive(true);
 			break;
 		case '-':
-			if (lf.lfHeight > 5 && lf.lfWidth > 2) {
-				text += (char) '-';
-				lf.lfHeight -= 5;
-				lf.lfWidth -= 2;
-			} else {
-				MessageBox(hWnd, "Font is too small", "Error", MB_OK);
-			}
+			clock.setIsActive(false);
 			break;
 		}
 		InvalidateRect(hWnd, NULL, TRUE);
@@ -59,12 +54,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		hDC = BeginPaint(hWnd, &ps);
 		SelectObject(hDC, GetStockObject(SYSTEM_FIXED_FONT));
 		GetClientRect(hWnd, &clientRect);
-		radius = min(clientRect.bottom, clientRect.right);
-		Ellipse(hDC, );
-		DrawText(hDC, , -1, &clientRect, DT_CENTER | DT_VCENTER);
-		EndPaint(hWnd, &ps); 
+		radius = min(clientRect.bottom, clientRect.right) / 2 - 10;
+		Ellipse(hDC, clientRect.right / 2 - radius, clientRect.bottom / 2 - radius, clientRect.right / 2 + radius, clientRect.bottom / 2 + radius);
+		sprintf_s(outputSeconds, "%d", clock.getSeconds());
+		DrawText(hDC, outputSeconds, -1, &clientRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+		EndPaint(hWnd, &ps);
+		break;
+	case WM_TIMER:
+		if (clock.getIsActive()) {
+			clock++;
+			InvalidateRect(hWnd, nullptr, NULL);
+		}
 		break;
 	case WM_DESTROY:
+		KillTimer(hWnd, TIMER_SEC);
 		PostQuitMessage(0);
 		break;
 	default:
