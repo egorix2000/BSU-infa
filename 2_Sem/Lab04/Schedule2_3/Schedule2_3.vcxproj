@@ -115,11 +115,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Day.cpp" />
+    <ClCompile Include="FileLib.cpp" />
     <ClCompile Include="KWnd.cpp" />
+    <ClCompile Include="Lesson.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Day.h" />
+    <ClInclude Include="FileLib.h" />
     <ClInclude Include="KWnd.h" />
+    <ClInclude Include="Lesson.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
