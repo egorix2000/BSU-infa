@@ -12,7 +12,7 @@ KWnd::KWnd(LPCTSTR windowName, HINSTANCE hInst, int cmdShow, LRESULT(WINAPI *pWn
 	wc.hInstance = hInst;
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
+	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wc.lpszMenuName = menuName;
 	wc.lpszClassName = szClassName;
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);

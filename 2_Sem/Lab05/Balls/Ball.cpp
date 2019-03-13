@@ -2,18 +2,23 @@
 #include "Point.h"
 #include <windows.h>
 
+Ball::Ball()
+{
+	center_.x = 0;
+	center_.y = 0;
+	radius_ = 0;
+}
+
 Ball::Ball(Point &center, int radius)
 {
-	center_.x = center.x;
-	center_.y = center.y;
+	center_ = center;
 	radius_ = radius;
 	color_ = RGB(rand() % 255, rand() % 255, rand() % 255);
 }
 
 Ball::Ball(const Ball & ball)
 {
-	center_.x = ball.getCenter().x;
-	center_.y = ball.getCenter().y;
+	center_ = ball.getCenter();
 	radius_ = ball.getRadius();
 	color_ = ball.getColor();
 }
@@ -37,4 +42,17 @@ Ball & Ball::increaseRadius(int n)
 COLORREF Ball::getColor() const
 {
 	return color_;
+}
+
+Ball & Ball::operator=(const Ball & ball)
+{
+	center_ = ball.getCenter();
+	radius_ = ball.getRadius();
+	color_ = ball.getColor();
+	return *this;
+}
+
+bool operator==(const Ball & ballLeft, const Ball & ballRight)
+{
+	return ballLeft.center_ == ballRight.center_;
 }

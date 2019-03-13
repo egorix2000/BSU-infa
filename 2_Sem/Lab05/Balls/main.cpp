@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <string>
 #include <algorithm> 
+#include <ctime>
 #include <vector>
 #include "KWnd.h"
 #include "Ball.h"
@@ -11,6 +12,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	MSG msg;
+	srand(time(NULL));
 	
 	KWnd mainWnd("Window 3", hInstance, nCmdShow, WndProc);
 
@@ -29,7 +31,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	static std::vector<Ball> balls;
 	bool isInsideBall;
 	Point mouseClick;
-	Ball* clickedBall;
+	Ball clickedBall;
 	int startRadius = 5;
 	int increaseRate = 3;
 
@@ -43,24 +45,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 				((*i).getCenter().y - mouseClick.y) * ((*i).getCenter().y - mouseClick.y) <
 				(*i).getRadius() * (*i).getRadius()) {
 				isInsideBall = true;
-				clickedBall = &(*i);
-				std::remove_if(i, ++i, [](const Ball&) {
-					return true;
-				});
-				clickedBall->increaseRadius(increaseRate);
-				balls.push_back(*clickedBall);
+				clickedBall = (*i);
+				balls.erase(i);
+				clickedBall.increaseRadius(increaseRate);
+				balls.insert(balls.begin(), clickedBall);
 				break;
 			}
 		}
 		if (!isInsideBall) {
-			balls.emplace_back(mouseClick, startRadius);
+			balls.insert(balls.begin(), Ball(mouseClick, startRadius));
 		}
 		InvalidateRect(hWnd, nullptr, NULL);
 		break;
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
 		GetClientRect(hWnd, &clientRect);
-		for (std::vector<Ball>::iterator i = balls.begin(); i != balls.end(); i++) {
+		for (std::vector<Ball>::reverse_iterator i = balls.rbegin(); i != balls.rend(); i++) {
 			SelectObject(hDC, CreateSolidBrush((*i).getColor()));
 			Ellipse(hDC, (*i).getCenter().x - (*i).getRadius(),
 				(*i).getCenter().y - (*i).getRadius(),

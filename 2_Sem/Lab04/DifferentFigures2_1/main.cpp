@@ -40,7 +40,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		SetRect(&rectangleRect, clientRect.right / 2, clientRect.top, clientRect.right, clientRect.bottom / 2);
 		SetRect(&sectorRect, clientRect.left, clientRect.bottom / 2, clientRect.right / 2, clientRect.bottom);
 		SetRect(&rhombusRect, clientRect.right / 2, clientRect.bottom / 2, clientRect.right, clientRect.bottom);
-
+		
 		MoveToEx(hDC, 0, clientRect.bottom / 2, nullptr);
 		LineTo(hDC, clientRect.right, clientRect.bottom / 2);
 		MoveToEx(hDC, clientRect.right / 2, 0, nullptr);

@@ -15,19 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="KWnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="KWnd.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Day.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lesson.cpp">
+    <ClCompile Include="FileLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileLib.cpp">
+    <ClCompile Include="Lesson.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,10 +38,10 @@
     <ClInclude Include="Day.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Lesson.h">
+    <ClInclude Include="FileLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileLib.h">
+    <ClInclude Include="Lesson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,8 +6,8 @@ private:
 	bool isActive_;
 public:
 	Clock();
-	int getSeconds();
-	bool getIsActive();
+	int getSeconds() const;
+	bool getIsActive() const;
 	void setIsActive(bool isActive);
 	void setSeconds(int seconds);
 	Clock& operator ++(int);

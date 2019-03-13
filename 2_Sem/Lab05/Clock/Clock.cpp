@@ -8,12 +8,12 @@ Clock::Clock()
 	isActive_ = true;
 }
 
-int Clock::getSeconds()
+int Clock::getSeconds() const
 {
 	return seconds_;
 }
 
-bool Clock::getIsActive()
+bool Clock::getIsActive() const
 {
 	return isActive_;
 }

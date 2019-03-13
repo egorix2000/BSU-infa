@@ -97,11 +97,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 
 		fin.close();
-		return 0;
+		break;
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
-		GetClientRect(hWnd, &clientRect);
 		SetBkMode(hDC, TRANSPARENT);
+		GetClientRect(hWnd, &clientRect);
 
 		for (int i = 0; i < days.size(); i++) {
 			MoveToEx(hDC, 0, i * clientRect.bottom / days.size(), nullptr);
@@ -119,7 +119,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				SetRect(&currentLessonRect, (j+1) * clientRect.right / (maxNumberOfLessons+1)+1, 
 					i * clientRect.bottom / days.size() + 1,
 					(j+2) * clientRect.right / (maxNumberOfLessons+1),
-					(i+1) * clientRect.bottom / days.size()) - 1;
+					(i+1) * clientRect.bottom / days.size());
 				SelectObject(hDC, CreateSolidBrush(getColor(days[i][j].getLessonType())));
 				FillRect(hDC, &currentLessonRect, NULL);
 				SetRect(&currentLessonRect, (j + 1) * clientRect.right / (maxNumberOfLessons + 1),
@@ -139,7 +139,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 		MoveToEx(hDC, 0, clientRect.bottom, nullptr);
 		LineTo(hDC, clientRect.right, clientRect.bottom);
-
+		MoveToEx(hDC, 0, clientRect.bottom / 2, nullptr);
+		LineTo(hDC, clientRect.right, clientRect.bottom / 2);
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
