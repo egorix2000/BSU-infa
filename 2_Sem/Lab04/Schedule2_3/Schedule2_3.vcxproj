@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Day.cpp" />
+    <ClCompile Include="draw.cpp" />
     <ClCompile Include="FileLib.cpp" />
     <ClCompile Include="KWnd.cpp" />
     <ClCompile Include="Lesson.cpp" />
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Day.h" />
+    <ClInclude Include="draw.h" />
     <ClInclude Include="FileLib.h" />
     <ClInclude Include="KWnd.h" />
     <ClInclude Include="Lesson.h" />

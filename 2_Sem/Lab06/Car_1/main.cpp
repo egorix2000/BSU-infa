@@ -1,16 +1,27 @@
 ﻿#undef UNICODE
 #include <windows.h>
+#include <sstream>
 #include "KWnd.h"
-#include "resource.h"
-#include "Clock.h"
 #include "draw.h"
+#include "Car.h"
 
-#define TIMER_SEC 1
+#define TIMER_CAR 1
+
+//start C:\BSU\2_Sem\Lab06\Debug\Car_1 '1 30'
+
+int mode;
+int speed;
+const int UPDATE_INTERVAL = 100;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	MSG msg;
+
+	std::stringstream ss(lpCmdLine);
+	ss >> mode >> speed;
+	mode = 1;
+	speed = 30;
 	
 	KWnd mainWnd("Window 1", hInstance, nCmdShow, WndProc);
 
@@ -24,35 +35,49 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	static HBITMAP hBmpClock;
-	static Clock clock(0, 0);
-	static BITMAP bm;
-	int lessSide;
+	static Car car;
 	HDC hDC;
 	PAINTSTRUCT ps;
 	RECT clientRect;
 
 	switch (message) {
 	case WM_CREATE:
-		hBmpClock = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_CLOCK));
-		GetObject(hBmpClock, sizeof(bm), (LPSTR)&bm);
-		SetTimer(hWnd, TIMER_SEC, 1000, NULL);
+		GetClientRect(hWnd, &clientRect);
+		SetTimer(hWnd, TIMER_CAR, UPDATE_INTERVAL, NULL);
 		break;
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
 		GetClientRect(hWnd, &clientRect);
-		lessSide = min(clientRect.bottom, clientRect.right);
 
-		DrawClock(hDC, lessSide * 0.05, lessSide * 0.05, lessSide*0.9, lessSide*0.9, hBmpClock, SRCCOPY, clock.getSeconds(), clock.getMinutes());
-
+		//DrawBitmap(hDC, car.getX(), car.getY(), car.getX() + car.getWidth(), car.getY() + car.getHeight(), hBmpCar, SRCCOPY);
+		
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_TIMER:
-		clock++;
+		GetClientRect(hWnd, &clientRect);
+		switch (car.getDirection()) {
+		case 1:
+			car += speed * UPDATE_INTERVAL / 1000;
+			break;
+		case 2:
+			car -= speed * 1000 / UPDATE_INTERVAL;
+			break;
+		}
+
+		if (car.getX() > clientRect.right || car.getX() < -car.getWidth()) {
+			switch (mode) {
+			case 1:
+				car.setX(-car.getWidth());
+				break;
+			case 2:
+				car.changeDirection();
+				break;
+			}
+		}
 		InvalidateRect(hWnd, nullptr, NULL);
 		break;
 	case WM_DESTROY:
-		KillTimer(hWnd, TIMER_SEC);
+		KillTimer(hWnd, TIMER_CAR);
 		PostQuitMessage(0);
 		break;
 	default:

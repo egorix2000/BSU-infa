@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{BE34F434-1ED8-4E13-8444-1620B22C346C}</ProjectGuid>
-    <RootNamespace>Clock5</RootNamespace>
+    <ProjectGuid>{6E7752BA-2BB4-4284-A0A9-CE462E6FA7EA}</ProjectGuid>
+    <RootNamespace>TrafficLight2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -115,22 +115,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
     <ClCompile Include="draw.cpp" />
+    <ClCompile Include="GreenLight.cpp" />
     <ClCompile Include="KWnd.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RedLight.cpp" />
+    <ClCompile Include="TrafficLight.cpp" />
+    <ClCompile Include="YellowLight.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clock.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="draw.h" />
+    <ClInclude Include="GreenLight.h" />
     <ClInclude Include="KWnd.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Clock_5.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="images\clockImage.bmp" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="LightFactory.h" />
+    <ClInclude Include="RedLight.h" />
+    <ClInclude Include="TrafficLight.h" />
+    <ClInclude Include="YellowLight.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

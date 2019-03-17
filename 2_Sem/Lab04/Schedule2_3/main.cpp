@@ -8,6 +8,7 @@
 #include "Day.h"
 #include "Lesson.h"
 #include "FileLib.h"
+#include "draw.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -120,17 +121,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					i * clientRect.bottom / days.size() + 1,
 					(j+2) * clientRect.right / (maxNumberOfLessons+1),
 					(i+1) * clientRect.bottom / days.size());
-				SelectObject(hDC, CreateSolidBrush(getColor(days[i][j].getLessonType())));
-				FillRect(hDC, &currentLessonRect, NULL);
-				SetRect(&currentLessonRect, (j + 1) * clientRect.right / (maxNumberOfLessons + 1),
-					i * clientRect.bottom / days.size() + 5,
-					(j + 2) * clientRect.right / (maxNumberOfLessons + 1),
-					(i + 1) * clientRect.bottom / days.size() - 5);
-				DeleteObject(SelectObject(hDC, GetStockObject(BLACK_BRUSH)));
-				DrawText(hDC, days[i][j].getLessonType().c_str(), -1, &currentLessonRect, DT_SINGLELINE | DT_CENTER | DT_TOP);
-				DrawText(hDC, days[i][j].getSubject().c_str(), -1, &currentLessonRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
-				DrawText(hDC, days[i][j].getAuditorium().c_str(), -1, &currentLessonRect, DT_SINGLELINE | DT_CENTER | DT_BOTTOM);
-			}
+				
+				DrawLesson(hDC, currentLessonRect, days[i][j].getLessonType().c_str(),
+					days[i][j].getSubject().c_str(), days[i][j].getAuditorium().c_str(), (getColor(days[i][j].getLessonType())));
+				}
 
 			for (int j = days[i].getNumberOfLessons(); j <= maxNumberOfLessons; j++) {
 				MoveToEx(hDC, (j+1) * clientRect.right / (maxNumberOfLessons+1), 0, nullptr);

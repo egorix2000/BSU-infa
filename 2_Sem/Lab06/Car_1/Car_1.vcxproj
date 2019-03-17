@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{BE34F434-1ED8-4E13-8444-1620B22C346C}</ProjectGuid>
-    <RootNamespace>Clock5</RootNamespace>
+    <ProjectGuid>{8C623661-F826-4C00-A227-205F1F1431C8}</ProjectGuid>
+    <RootNamespace>Car1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -115,22 +115,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Clock.cpp" />
+    <ClCompile Include="Car.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="KWnd.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clock.h" />
+    <ClInclude Include="Car.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="KWnd.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Clock_5.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="images\clockImage.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
