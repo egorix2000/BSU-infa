@@ -1,0 +1,6 @@
+#pragma once
+
+#define MARGIN_SMALL_CIRCLE 5
+#define MARGIN_BIG_CIRCLE 10
+#define MARGIN_TEN_PX 10
+#define MARGIN_TWENTY_PX 20

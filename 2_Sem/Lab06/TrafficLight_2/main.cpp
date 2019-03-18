@@ -11,6 +11,7 @@
 #include "YellowLight.h"
 #include "Light.h"
 #include "Circle.h"
+#include "style.h"
 
 //start C:\BSU\2_Sem\Lab06\Debug\TrafficLight_2 '10 5 10 3'
 
@@ -18,6 +19,7 @@
 #define TIMER_LIGHT 2
 #define TIMER_FLICKER 3
 #define TIMER_FLICKER_SIZE_INTERVAL 4
+#define SECOND 1000
 
 std::vector<int> timeColors;
 int timeFlicker;
@@ -32,13 +34,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	for (int i = 0; i < 3; i++) {
 		ss >> timeColor;
 		//timeColor = 10;
-		timeColor *= 1000;
+		timeColor *= SECOND;
 		timeColors.push_back(timeColor);
 	}
 	//timeColors[1] = 5000;
 	ss >> timeFlicker;
 	//timeFlicker = 3;
-	timeFlicker *= 1000;
+	timeFlicker *= SECOND;
 
 	KWnd mainWnd("Window 1", hInstance, nCmdShow, WndProc);
 
@@ -77,9 +79,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		hDC = BeginPaint(hWnd, &ps);
 		GetClientRect(hWnd, &clientRect);
 
-		trafficLightHeight = min(clientRect.bottom - 20, (clientRect.right - 20)*3);
+		trafficLightHeight = min(clientRect.bottom - MARGIN_TWENTY_PX, (clientRect.right - MARGIN_TWENTY_PX)*3);
 
-		SetRect(&trafficLightRect, 10, 10, 10 + trafficLightHeight / 3, 10 + trafficLightHeight);
+		SetRect(&trafficLightRect, MARGIN_TEN_PX, MARGIN_TEN_PX,
+			MARGIN_TEN_PX + trafficLightHeight / 3, MARGIN_TEN_PX + trafficLightHeight);
 
 		DrawTrafficLight(hDC, trafficLightRect, *trafficLight, circles);
 
@@ -104,7 +107,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			[](const Light* light) {
 			return light->getIsFlickerSize() == true;
 		}) != 0) {
-			SetTimer(hWnd, TIMER_FLICKER_SIZE_INTERVAL, 300, NULL);
+			SetTimer(hWnd, TIMER_FLICKER_SIZE_INTERVAL, SECOND / 3, NULL);
 		}
 		break;
 	case WM_TIMER:
@@ -124,7 +127,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			break;
 		case TIMER_FLICKER:
 			KillTimer(hWnd, TIMER_FLICKER);
-			SetTimer(hWnd, TIMER_FLICKER_INTERVAL, 500, NULL);
+			SetTimer(hWnd, TIMER_FLICKER_INTERVAL, SECOND / 2, NULL);
 			break;
 		case TIMER_FLICKER_SIZE_INTERVAL:
 			for (int i = 0; i < 3; i++) {

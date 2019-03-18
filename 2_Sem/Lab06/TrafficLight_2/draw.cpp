@@ -1,4 +1,5 @@
 #include "draw.h"
+#include "style.h"
 
 void DrawTrafficLight(HDC hDC, RECT trafficLightRect, const TrafficLight & trafficLight, Circle circles[3]) {
 	SelectObject(hDC, CreatePen(PS_SOLID, 2, RGB(0, 0, 0)));
@@ -16,16 +17,16 @@ void DrawTrafficLight(HDC hDC, RECT trafficLightRect, const TrafficLight & traff
 			SelectObject(hDC, CreateSolidBrush(trafficLight[i].getDarkColor()));
 		}
 		if (trafficLight[i].getIsFlickerSize() && circles[i].isBig) {
-			circles[i].xLeft = trafficLightRect.left + 10;
-			circles[i].yTop = trafficLightRect.top + i * trafficLightRect.bottom / 3 + 10;
-			circles[i].xRight = trafficLightRect.right - 10;
-			circles[i].yBottom = trafficLightRect.top + (i + 1) * (trafficLightRect.bottom / 3 - 10);
+			circles[i].xLeft = trafficLightRect.left + MARGIN_BIG_CIRCLE;
+			circles[i].yTop = trafficLightRect.top + i * trafficLightRect.bottom / 3 + MARGIN_BIG_CIRCLE;
+			circles[i].xRight = trafficLightRect.right - MARGIN_BIG_CIRCLE;
+			circles[i].yBottom = trafficLightRect.top + (i + 1) * (trafficLightRect.bottom / 3 - MARGIN_BIG_CIRCLE);
 			Ellipse(hDC, circles[i].xLeft, circles[i].yTop, circles[i].xRight, circles[i].yBottom);
 		} else {
-			circles[i].xLeft = trafficLightRect.left + 5;
-			circles[i].yTop = trafficLightRect.top + i * trafficLightRect.bottom / 3 + 5;
-			circles[i].xRight = trafficLightRect.right - 5;
-			circles[i].yBottom = trafficLightRect.top + (i + 1) * (trafficLightRect.bottom / 3 - 5);
+			circles[i].xLeft = trafficLightRect.left + MARGIN_SMALL_CIRCLE;
+			circles[i].yTop = trafficLightRect.top + i * trafficLightRect.bottom / 3 + MARGIN_SMALL_CIRCLE;
+			circles[i].xRight = trafficLightRect.right - MARGIN_SMALL_CIRCLE;
+			circles[i].yBottom = trafficLightRect.top + (i + 1) * (trafficLightRect.bottom / 3 - MARGIN_SMALL_CIRCLE);
 			Ellipse(hDC, circles[i].xLeft, circles[i].yTop, circles[i].xRight, circles[i].yBottom);
 		}
 		circles[i].type = trafficLight[i].getType();

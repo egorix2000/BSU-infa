@@ -24,14 +24,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	HFONT hFont;
 	static LOGFONT lf;
 	RECT clientRect;
+	const int startHeightFont = 20;
+	const int startWidthFont = 8;
+	const int changeHeightFont = 5;
+	const int changeWidthFont = 2;
 
 	static std::string text = "Test";
 
 	switch (uMsg) {
 	case WM_CREATE:
 		hDC = GetDC(hWnd);
-		lf.lfHeight = 20;
-		lf.lfWidth = 8;
+		lf.lfHeight = startHeightFont;
+		lf.lfWidth = startWidthFont;
 		hFont = CreateFontIndirect(&lf);
 		ReleaseDC(hWnd, hDC); 
 		break;
@@ -40,20 +44,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		GetClientRect(hWnd, &clientRect);
 		switch (wParam) {
 		case '+':
-			if (lf.lfHeight < clientRect.bottom - 10
-				&& 1.5*lf.lfWidth * text.size() < clientRect.right - 2) {
+			if (lf.lfHeight < clientRect.bottom
+				&& 1.5 * lf.lfWidth * text.size() < clientRect.right) {
 				text += (char) '+';
-				lf.lfHeight += 5;
-				lf.lfWidth += 2;
+				lf.lfHeight += changeHeightFont;
+				lf.lfWidth += changeWidthFont;
 			} else {
 				MessageBox(hWnd, "Font is too large", "Error", MB_OK);
 			}
 			break;
 		case '-':
-			if (lf.lfHeight > 5 && lf.lfWidth > 2) {
+			if (lf.lfHeight > changeHeightFont && lf.lfWidth > changeWidthFont) {
 				text += (char) '-';
-				lf.lfHeight -= 5;
-				lf.lfWidth -= 2;
+				lf.lfHeight -= changeHeightFont;
+				lf.lfWidth -= changeWidthFont;
 			} else {
 				MessageBox(hWnd, "Font is too small", "Error", MB_OK);
 			}

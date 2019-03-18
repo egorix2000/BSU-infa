@@ -31,6 +31,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	HDC hDC;
 	PAINTSTRUCT ps;
 	RECT clientRect;
+	int leftTopMargin;
+	int clockSide;
 
 	switch (message) {
 	case WM_CREATE:
@@ -43,7 +45,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hWnd, &clientRect);
 		lessSide = min(clientRect.bottom, clientRect.right);
 
-		DrawClock(hDC, lessSide * 0.05, lessSide * 0.05, lessSide*0.9, lessSide*0.9, hBmpClock, SRCCOPY, clock.getSeconds(), clock.getMinutes());
+		leftTopMargin = lessSide * 0.05;
+		clockSide = lessSide * 0.9;
+
+		DrawClock(hDC, leftTopMargin, leftTopMargin, clockSide, clockSide,
+			hBmpClock, SRCCOPY, clock.getSeconds(), clock.getMinutes());
 
 		EndPaint(hWnd, &ps);
 		break;

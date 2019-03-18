@@ -2,8 +2,9 @@
 #include <windows.h>
 #include <sstream>
 #include "KWnd.h"
+#include "style.h"
 
-// start C:\BSU\2_Sem\Lab05\Debug\Grid_4 '4 5'
+// start C:\BSU\2_Sem\TP05\Debug\Grid_4 '4 5'
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -52,8 +53,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 			for (int j = 1; j < N; j++) {
 				SelectObject(hDC, CreateSolidBrush(RGB(rand() % 255, rand() % 255, rand() % 255)));
 				Ellipse(hDC, 
-					j * clientRect.right / N - 10, i * clientRect.bottom / M - 10,
-					j * clientRect.right / N + 10, i * clientRect.bottom / M + 10);
+					j * clientRect.right / N - MARGIN_TEN_PX, i * clientRect.bottom / M - MARGIN_TEN_PX,
+					j * clientRect.right / N + MARGIN_TEN_PX, i * clientRect.bottom / M + MARGIN_TEN_PX);
 				DeleteObject(SelectObject(hDC, GetStockObject(BLACK_BRUSH)));
 			}
 		}

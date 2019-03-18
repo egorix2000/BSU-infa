@@ -32,6 +32,7 @@
     <ClInclude Include="FileLib.h" />
     <ClInclude Include="KWnd.h" />
     <ClInclude Include="Lesson.h" />
+    <ClInclude Include="style.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

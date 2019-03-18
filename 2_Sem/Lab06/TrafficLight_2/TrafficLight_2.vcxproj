@@ -132,6 +132,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightFactory.h" />
     <ClInclude Include="RedLight.h" />
+    <ClInclude Include="style.h" />
     <ClInclude Include="TrafficLight.h" />
     <ClInclude Include="YellowLight.h" />
   </ItemGroup>

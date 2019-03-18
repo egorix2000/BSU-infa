@@ -3,6 +3,7 @@
 #include <string>
 #include "KWnd.h"
 #include "Clock.h"
+#include "style.h"
 
 #define TIMER_SEC 1
 
@@ -23,6 +24,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hDC; 
+	HFONT hFont;
+	static LOGFONT lf;
 	PAINTSTRUCT ps;
 	RECT clientRect;
 	int radius;
@@ -52,12 +55,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		break;
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
-		SelectObject(hDC, GetStockObject(SYSTEM_FIXED_FONT));
+
 		GetClientRect(hWnd, &clientRect);
-		radius = min(clientRect.bottom, clientRect.right) / 2 - 10;
-		Ellipse(hDC, clientRect.right / 2 - radius, clientRect.bottom / 2 - radius, clientRect.right / 2 + radius, clientRect.bottom / 2 + radius);
+		radius = min(clientRect.bottom, clientRect.right) / 2 - MARGIN_TEN_PX;
+		lf.lfHeight = radius;
+		hFont = CreateFontIndirect(&lf);
+		SelectObject(hDC, hFont);
+		Ellipse(hDC, clientRect.right / 2 - radius, clientRect.bottom / 2 - radius, 
+			clientRect.right / 2 + radius, clientRect.bottom / 2 + radius);
 		sprintf_s(outputSeconds, "%d", clock.getSeconds());
 		DrawText(hDC, outputSeconds, -1, &clientRect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
+
+		DeleteObject(SelectObject(hDC, GetStockObject(SYSTEM_FIXED_FONT)));
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_TIMER:

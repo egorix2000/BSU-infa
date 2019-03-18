@@ -32,8 +32,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	bool isInsideBall;
 	Point mouseClick;
 	Ball clickedBall;
-	int startRadius = 5;
-	int increaseRate = 3;
+	const int startRadius = 5;
+	const int increaseRate = 3;
 
 	switch (uMsg) {
 	case WM_LBUTTONDOWN:

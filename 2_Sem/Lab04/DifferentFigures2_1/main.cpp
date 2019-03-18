@@ -35,6 +35,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 		hDC = BeginPaint(hwnd, &ps);
 		SetBkMode(hDC, TRANSPARENT);
 		GetClientRect(hwnd, &clientRect);
+
 		SetRect(&ellipseRect, clientRect.left, clientRect.top, clientRect.right / 2, clientRect.bottom / 2);
 		SetRect(&rectangleRect, clientRect.right / 2, clientRect.top, clientRect.right, clientRect.bottom / 2);
 		SetRect(&sectorRect, clientRect.left, clientRect.bottom / 2, clientRect.right / 2, clientRect.bottom);
