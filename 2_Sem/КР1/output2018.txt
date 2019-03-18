@@ -1,0 +1,30 @@
+Total fishermen weights
+       Kirillov          Jegor      5      530.5
+     Afanasjeva     Kapitolina     16        233
+     Gierasimov       Mitrofan     17     2054.5
+     Koshieliov        Jelizar     22     2169.5
+         Panova       Mielanja     26       1333
+
+The best fisherman under 18
+     Gierasimov       Mitrofan     17     2054.5
+
+The best fisherman from 18 to 30
+     Koshieliov        Jelizar     22     2169.5
+
+The best fisherman after 30
+No fishermen after 30
+
+
+Sorted fishermen by age
+       Kirillov          Jegor      5      530.5
+     Afanasjeva     Kapitolina     16        233
+     Gierasimov       Mitrofan     17     2054.5
+     Koshieliov        Jelizar     22     2169.5
+         Panova       Mielanja     26       1333
+
+New total weights with coefficients
+       Kirillov          Jegor      5     583.55
+     Afanasjeva     Kapitolina     16      256.3
+     Gierasimov       Mitrofan     17    2259.95
+     Koshieliov        Jelizar     22     2169.5
+         Panova       Mielanja     26       1333

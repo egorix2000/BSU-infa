@@ -1,0 +1,32 @@
+Total fishermen weights
+     Andriejeva     Fievronija     14        453
+     Koshieliov         Filipp     22     2169.5
+   Shchierbakov        Akindin     24      478.5
+       Abibokov           Maks     24        777
+    Krasilnikov         Andron     28     1289.5
+         Fokina       Ksienija     48       2980
+
+The best fisherman under 18
+     Andriejeva     Fievronija     14        453
+
+The best fisherman from 18 to 30
+     Koshieliov         Filipp     22     2169.5
+
+The best fisherman after 30
+         Fokina       Ksienija     48       2980
+
+Sorted fishermen by age
+     Andriejeva     Fievronija     14        453
+     Koshieliov         Filipp     22     2169.5
+       Abibokov           Maks     24        777
+   Shchierbakov        Akindin     24      478.5
+    Krasilnikov         Andron     28     1289.5
+         Fokina       Ksienija     48       2980
+
+New total weights with coefficients
+     Andriejeva     Fievronija     14      498.3
+     Koshieliov         Filipp     22     2169.5
+   Shchierbakov        Akindin     24      478.5
+       Abibokov           Maks     24        777
+    Krasilnikov         Andron     28     1289.5
+         Fokina       Ksienija     48       2682
