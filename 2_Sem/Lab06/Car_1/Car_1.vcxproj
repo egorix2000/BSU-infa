@@ -124,6 +124,14 @@
     <ClInclude Include="Car.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="KWnd.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Car_1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\carBackword.bmp" />
+    <Image Include="images\carForword.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

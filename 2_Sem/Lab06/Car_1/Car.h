@@ -1,4 +1,8 @@
 #pragma once
+
+#define FORWARD 1
+#define BACKWARD 2
+
 class Car
 {
 private:
@@ -25,7 +29,6 @@ public:
 	void setSpeed(int speed);
 	void setDirection(int direction);
 	void changeDirection();
-	Car& operator +=(int x);
-	Car& operator -=(int x);
+	Car& move(int x);
 };
 

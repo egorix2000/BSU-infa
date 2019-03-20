@@ -1,10 +1,10 @@
 #include "Car.h"
 
-
 Car::Car()
 {
 	x_ = 0;
 	y_ = 0;
+	direction_ = 0;
 	speed_ = 0;
 	width_ = 0;
 	height_ = 0;
@@ -86,22 +86,16 @@ void Car::setDirection(int direction)
 
 void Car::changeDirection()
 {
-	if (direction_ == 1) {
-		direction_ = 2;
+	if (direction_ == FORWARD) {
+		direction_ = BACKWARD;
 	}
 	else {
-		direction_ = 1;
+		direction_ = FORWARD;
 	}
 }
 
-Car & Car::operator+=(int x)
+Car & Car::move(int x)
 {
 	x_ += x;
-	return *this;
-}
-
-Car & Car::operator-=(int x)
-{
-	x_ -= x;
 	return *this;
 }
