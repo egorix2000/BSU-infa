@@ -25,8 +25,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	std::stringstream ss(lpCmdLine);
 	ss >> mode >> speed;
-	mode = FORWARD_MODE;
-	speed = 70;
+	//mode = FORWARD_MODE;
+	//speed = 70;
 	
 	KWnd mainWnd("Window 1", hInstance, nCmdShow, WndProc);
 
@@ -63,7 +63,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		GetClientRect(hWnd, &clientRect);
 		carWidth = bm.bmWidth * clientRect.bottom * CAR_SIZE_TO_WINDOW_SIZE / bm.bmHeight;
 		carHeight = clientRect.bottom * CAR_SIZE_TO_WINDOW_SIZE;
-		car = new Car(carWidth, clientRect.bottom/2, speed, FORWARD, carWidth, carHeight);
+		car = new Car(-carWidth, clientRect.bottom/2, speed, FORWARD, carWidth, carHeight);
 		SetTimer(hWnd, TIMER_CAR, UPDATE_INTERVAL, NULL);
 		break;
 	case WM_SIZE:
