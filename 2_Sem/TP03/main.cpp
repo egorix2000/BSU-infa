@@ -6,6 +6,7 @@
 #include <map>
 #include <set>
 #include <algorithm>
+#include <iterator>
 
 #include "FileLib.h"
 #include "FlowerBed.h"
@@ -30,9 +31,8 @@ FlowerBed& parseString(FlowerBed& flowerBed, string s) {
 }
 
 void printFlowerBeds(vector<FlowerBed>& flowerBeds) {
-    for (int i = 0; i < flowerBeds.size(); i++) {
-        cout << flowerBeds[i] << endl;
-    }
+    std::ostream_iterator<FlowerBed> out(std::cout, "\n");
+    std::copy ( flowerBeds.cbegin(), flowerBeds.cend(), out );
 }
 
 multimap<string, FlowerBed> fillMapFromVector(multimap<string, FlowerBed> &flowerBedsMap,
@@ -41,19 +41,27 @@ multimap<string, FlowerBed> fillMapFromVector(multimap<string, FlowerBed> &flowe
         flowerBedsMap.insert(pair<string, FlowerBed>(flowerBeds[i].getShape(), flowerBeds[i]));
     }
     return flowerBedsMap;
+
 }
 
 void printAllDifferentShapes(multimap<string, FlowerBed> &flowerBedsMap) {
     cout << "All different shapes:" << endl;
-    vector< pair<string, FlowerBed> > unique;
-    unique_copy(flowerBedsMap.begin(), flowerBedsMap.end(), inserter(unique, unique.begin()),
-            [](const pair<string, FlowerBed> &entry1,
-               const pair<string, FlowerBed> &entry2){
-        return (entry1.first == entry2.first);
+    vector<string> allShapes;
+    vector<string> unique;
+
+    transform(flowerBedsMap.begin(), flowerBedsMap.end(), inserter(allShapes, allShapes.begin()),
+              [](const std::multimap<string, FlowerBed>::value_type &pair) {
+                  return pair.first;
+              });
+
+    unique_copy(allShapes.begin(), allShapes.end(), inserter(unique, unique.begin()),
+            [](const string &entry1,
+               const string &entry2){
+        return (entry1 == entry2);
     });
-    for (vector< pair<string, FlowerBed> >::iterator it = unique.begin(); it != unique.end(); it++) {
-        cout << (*it).first << " ";
-    }
+
+    std::ostream_iterator<string> out(std::cout, "\n");
+    std::copy ( unique.cbegin(), unique.cend(), out );
     cout << endl;
 }
 
@@ -66,9 +74,12 @@ void printAllFlowersFromFlowerBed(vector<FlowerBed> &flowerBeds) {
     });
 
     cout << "All flowers from this flower bed: " << endl;
-    for (int i = 0; i < flowerBed.getFlowers().size(); i++) {
-        cout << flowerBed.getFlowers()[i] << " ";
-    }
+
+    vector<string> flowers = vector<string>(flowerBed.getFlowers());
+
+    std::ostream_iterator<string> out(std::cout, " ");
+    std::copy ( flowers.begin(), flowers.end(), out );
+
     cout << endl;
 }
 
@@ -105,10 +116,9 @@ void printBedWithGivenNumberOfFlowers(vector<FlowerBed> &flowerBeds) {
         return flowerBed.getFlowers().size() == n;
     });
     cout << "All beds with given number of flowers:" << endl;
-    for (vector<FlowerBed>::iterator i = flowerBedsWithGivenNumberOfFlowers.begin();
-            i != flowerBedsWithGivenNumberOfFlowers.end(); i++) {
-        cout << *i << endl;
-    }
+
+    std::ostream_iterator<FlowerBed> out(std::cout, "\n");
+    std::copy ( flowerBedsWithGivenNumberOfFlowers.begin(), flowerBedsWithGivenNumberOfFlowers.end(), out );
 }
 
 void printBedWithOnlyOneTypeOfFlower(vector<FlowerBed> &flowerBeds) {
