@@ -12,12 +12,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184D2D12225F2094002EAB18 /* FormSFML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormSFML.h; sourceTree = "<group>"; };
 		186F7C5222293D3D00943C52 /* Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
 		18931E632223C6F70004D125 /* Tron.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tron.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18931E672223C6F70004D125 /* Tron-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tron-Info.plist"; sourceTree = "<group>"; };
 		18931E6B2223C6F70004D125 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		18931E90222456DA0004D125 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
 		18931E92222459440004D125 /* Player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		18B8721D22687ECE0064CE79 /* Database.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Database.h; sourceTree = "<group>"; };
 		18FCD14E2227C4D800B2929F /* Field.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Field.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,12 +53,14 @@
 		18931E652223C6F70004D125 /* Tron */ = {
 			isa = PBXGroup;
 			children = (
+				184D2D12225F2094002EAB18 /* FormSFML.h */,
 				18931E90222456DA0004D125 /* images */,
 				18931E6B2223C6F70004D125 /* main.cpp */,
 				186F7C5222293D3D00943C52 /* Game.h */,
 				18931E662223C6F70004D125 /* Supporting Files */,
 				18931E92222459440004D125 /* Player.h */,
 				18FCD14E2227C4D800B2929F /* Field.h */,
+				18B8721D22687ECE0064CE79 /* Database.h */,
 			);
 			path = Tron;
 			sourceTree = "<group>";

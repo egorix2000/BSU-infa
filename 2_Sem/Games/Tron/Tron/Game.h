@@ -9,8 +9,11 @@
 
 #include "Player.h"
 #include "Field.h"
+#include "FormSFML.h"
+#include "Database.h"
 
 using namespace sf;
+using namespace form;
 
 class Game {
 private:
@@ -32,6 +35,10 @@ private:
     bool isGameStarted_;
     Player *winner_;
     CircleShape circle_;
+    bool doesEnterNameWindowActive_;
+    Button confirmNamesButton_;
+    std::vector<Input> inputNamePlayers_;
+    Database* database_;
 public:
     Game(int width, int height, int speed, std::string pathToProjec);
     Game& launchGame();
@@ -39,6 +46,7 @@ public:
     Player& changePlayerRandomly(Player& player, Color color, int width, int height, std::string name);
     Game& restart();
     Game& gameOver();
+    Game& enterPlayerNames();
     void tick(Player& player);
 };
 
@@ -50,9 +58,11 @@ Game::Game(int width, int height, int speed, std::string pathToProject) {
     
     backgroundTexture_.loadFromFile(pathToProject_ + "images/background.jpg");
     background_.setTexture(backgroundTexture_);
-    font_.loadFromFile(pathToProject_ + "arial.ttf");
+    font_.loadFromFile(pathToProject_ + "fonts/arial.ttf");
     
     field_ = &Field::getInstance(width_, height_);
+    database_ = &Database::getInstance(pathToProject_ + "results.txt");
+    database_->readScores();
     
     gameOverText_.setFont(font_);
     gameOverText_.setPosition(width_/3.3, height_/3);
@@ -66,6 +76,8 @@ Game::Game(int width, int height, int speed, std::string pathToProject) {
     
     isGameOver_ = false;
     isGameStarted_ = false;
+    doesEnterNameWindowActive_ = true;
+    confirmNamesButton_.setProberties(20, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Next", pathToProject_);
     
     circle_.setRadius(1);
 }
@@ -75,6 +87,8 @@ Player Game::addRandomPlayer(Color color, int *control, std::string name) {
     int y = rand() % height_;
     int direction = rand() % 4;
     players_.push_back(Player(x, y, direction, color, control, true, name));
+    inputNamePlayers_.push_back(Input(20, 20 + inputNamePlayers_.size() * 40, 200, 30, "", color));
+    confirmNamesButton_.setProberties(20, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Next", pathToProject_);
     return players_.back();
 }
 
@@ -101,7 +115,42 @@ Game& Game::launchGame() {
             }
         }
         
-        if (Keyboard::isKeyPressed(Keyboard::Space) && !isGameStarted_) {
+        if (doesEnterNameWindowActive_) {
+            if (e.type == sf::Event::MouseButtonPressed) {
+                if (e.mouseButton.button == sf::Mouse::Left) {
+                    Vector2i mouse = Mouse::getPosition(window_);
+                    
+                    if (confirmNamesButton_.select(mouse)) {
+                        doesEnterNameWindowActive_ = false;
+                        for (int i = 0; i < inputNamePlayers_.size(); i++) {
+                            players_[i].setName(inputNamePlayers_[i].readText());
+                        }
+                    }
+                    
+                    for (int i = 0; i < inputNamePlayers_.size(); i++) {
+                        inputNamePlayers_[i].select(mouse);
+                    }
+                }
+            }
+            if (e.type == sf::Event::TextEntered) {
+                sleep(milliseconds(300));
+                for (int i = 0; i < inputNamePlayers_.size(); i++) {
+                    if (inputNamePlayers_[i].select()) {
+                        inputNamePlayers_[i].reText(e.text.unicode);
+                    }
+                }
+                
+            }
+            enterPlayerNames();
+        }
+        
+        if (Keyboard::isKeyPressed(Keyboard::Space) && isGameOver_ && !doesEnterNameWindowActive_) {
+            isGameOver_ = false;
+            isGameStarted_ = false;
+            doesEnterNameWindowActive_ = true;
+        }
+        
+        if (Keyboard::isKeyPressed(Keyboard::Space) && !isGameStarted_ && !doesEnterNameWindowActive_) {
             restart();
         }
         
@@ -131,18 +180,18 @@ Game& Game::launchGame() {
             
         }
         
-        if (isGameOver_) {
+        if (isGameOver_ && !doesEnterNameWindowActive_) {
             gameOver();
             continue;
         }
         
-        if (!isGameStarted_) {
+        if (!isGameStarted_ && !doesEnterNameWindowActive_) {
             window_.clear();
             window_.draw(sprite_);
             pressAnyKey_.setString("Press space to start game");
             window_.draw(pressAnyKey_);
             window_.display();
-        } else {
+        } else if (!doesEnterNameWindowActive_) {
             for(int i = 0; i < speed_; i++) {
                 for (int i = 0; i < players_.size(); i++) {
                     if (players_[i].getIsInGame()) {
@@ -156,6 +205,8 @@ Game& Game::launchGame() {
                                     return player.getIsInGame() == true;
                                 }));
                                 isGameOver_ = true;
+                                database_->addPoint(winner_->getName());
+                                database_->writeScores();
                                 break;
                             }
                         }
@@ -196,6 +247,22 @@ Game& Game::restart() {
     sprite_.setTexture(textureLines_.getTexture());
     textureLines_.clear();
     textureLines_.draw(background_);
+    return *this;
+}
+
+Game& Game::enterPlayerNames() {
+    window_.clear();
+    
+    window_.draw(confirmNamesButton_.displayButton());
+    window_.draw(confirmNamesButton_.displayText());
+    
+    window_.draw(inputNamePlayers_[0].displayButton());
+    window_.draw(inputNamePlayers_[0].displayText());
+    for (int i = 0; i < inputNamePlayers_.size(); i++) {
+        window_.draw(inputNamePlayers_[i].displayButton());
+        window_.draw(inputNamePlayers_[i].displayText());
+    }
+    window_.display();
     return *this;
 }
 
