@@ -1,9 +1,13 @@
-﻿#undef UNICODE
-#include <windows.h>
+﻿#include <windows.h>
 #include <cmath>
 #include "KWnd.h"
+#include "draw.h"
 
 #define ID_EDITCHILD 100
+
+bool doesSelectionActive;
+RECT selection;
+const int MIN_SELECT = 10;
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
 
@@ -25,44 +29,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	HDC hDC;
 	PAINTSTRUCT ps;
 
-	static HWND hWndEdit;
-	static LOGFONT lf;
-	HFONT hFont;
 	RECT clientRect;
-	RECT equationRect;
-	RECT intervalRect;
 
 	switch (message) {
 	case WM_CREATE:
-		hWndEdit = CreateWindowEx(0, "EDIT", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER,
-			0, 0, 0, 0, hWnd, (HMENU)ID_EDITCHILD, (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE), NULL);
-		break;
-	case WM_SIZE:
-		MoveWindow(hWndEdit,
-			5, 0,
-			LOWORD(lParam) - 5,
-			HIWORD(lParam) / 10,
-			TRUE);
-		lf.lfHeight = HIWORD(lParam) / 15;
-		hFont = CreateFontIndirect(&lf);
-		SendMessage(hWnd, WM_SETFONT, WPARAM(hFont), TRUE);
+		doesSelectionActive = false;
 		break;
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
-		SetBkMode(hDC, TRANSPARENT);
 		GetClientRect(hWnd, &clientRect);
-
-		SetRect(&equationRect, 5, 0, clientRect.right - 5, clientRect.bottom / 10);
-		SetRect(&intervalRect, 5, clientRect.bottom / 10, clientRect.right - 5, 2 * clientRect.bottom / 10);
-
-		//SelectObject(hDC, hFont);
-
-		//DrawText(hDC, "equation", -1, &equationRect, DT_SINGLELINE | DT_LEFT | DT_VCENTER);
-		
-		//DrawText(hDC, "interval", -1, &intervalRect, DT_SINGLELINE | DT_LEFT | DT_VCENTER);
-
-		DeleteObject(SelectObject(hDC, GetStockObject(SYSTEM_FIXED_FONT)));
+		if (doesSelectionActive) {
+			drawRect(hDC, selection);
+		}
+		POINT origin = getOriginAtWindow(clientRect);
+		drawAxes(hDC, clientRect, origin);
+		drawScalesOfAxes(hDC, clientRect, origin);
+		drawPointerToAxes(hDC, clientRect, origin);
+		drawGraphic(hDC, clientRect);
+		drawPointAtGraph(hDC, clientRect, origin);
 		EndPaint(hWnd, &ps);
+		break;
+	case WM_MOUSEMOVE:
+		onMouseMove(hWnd, lParam);
+		break;
+	case WM_LBUTTONDOWN:
+		onLButtonDown(hWnd, lParam);
+		break;
+	case WM_LBUTTONUP:
+		onLButtonUp(hWnd, lParam);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -71,4 +65,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 	return 0;
+}
+
+void onLButtonDown(HWND& hwnd, LPARAM lParam) {
+	doesSelectionActive = true;
+	selection.left = LOWORD(lParam);
+	selection.top = HIWORD(lParam);
+}
+
+void onLButtonUp(HWND& hwnd, LPARAM lParam) {
+	if (doesSelectionActive) {
+		RECT rect;
+		GetClientRect(hwnd, &rect);
+		selection.right = LOWORD(lParam);
+		selection.bottom = HIWORD(lParam);
+		if (abs(selection.right - selection.left) >= MIN_SELECT
+			&& abs(selection.bottom - selection.top) >= MIN_SELECT) {
+			resizeAxes(rect);
+		}
+		doesSelectionActive = false;
+		InvalidateRect(hwnd, NULL, TRUE);
+	}
+}
+
+void onMouseMove(HWND& hwnd, LPARAM lParam) {
+	selection.right = LOWORD(lParam);
+	selection.bottom = HIWORD(lParam);
+	InvalidateRect(hwnd, NULL, TRUE);
 }
