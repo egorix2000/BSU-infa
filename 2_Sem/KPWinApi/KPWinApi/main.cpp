@@ -9,6 +9,7 @@
 
 #define TIMER_BALL 1
 #define UPDATE_INTERVAL 50
+#define SECOND 1000
 
 enum side {RIGHT, LEFT};
 enum direction {UP, DOWN};
@@ -21,10 +22,12 @@ const double START_ANGLE = 3.1415926535 / 3;
 const double PI = 3.1415926535;
 const int N = 4;
 
-int acceleration;
+double acceleration = 10;
 std::vector<Ball> balls;
 side currentSide;
 direction currentDirection;
+bool doesSystemActive;
+double currentSpeed;
 
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -77,13 +80,13 @@ void onClick(HWND hWnd, LPARAM lParam) {
 }
 
 void moveBall() {
-	if (currentDirection = )
-	if (currentSide == RIGHT) {
-
+	if (currentDirection == UP) {
+		currentSpeed -= acceleration * UPDATE_INTERVAL / SECOND;
 	}
 	else {
-
+		currentSpeed += acceleration * UPDATE_INTERVAL / SECOND;
 	}
+	balls[0].center.x += currentSpeed;
 }
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -97,6 +100,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_CREATE:
 		hInst = GetModuleHandle(NULL);
 		createBalls();
+		currentSide = LEFT;
+		currentDirection = DOWN;
+		doesSystemActive = true;
+		currentSpeed = 0;
 		SetTimer(hWnd, TIMER_BALL, UPDATE_INTERVAL, NULL);
 		break;
 
@@ -112,13 +119,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		case VK_F3:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG1), hWnd, ChangeAccelerationDlgProc);
 			break;
+		case 80:
+			if (doesSystemActive) {
+				KillTimer(hWnd, TIMER_BALL);
+				doesSystemActive = false;
+			}
+			else {
+				SetTimer(hWnd, TIMER_BALL, UPDATE_INTERVAL, NULL);
+				doesSystemActive = true;
+			}
+			break;
 		}
 	case WM_LBUTTONUP:
 		onClick(hWnd, lParam);
 		break;
 	case WM_TIMER:
 		moveBall();
-		//InvalidateRect(hWnd, nullptr, true);
+		InvalidateRect(hWnd, nullptr, true);
 		break;
 	case WM_DESTROY:
 		KillTimer(hWnd, TIMER_BALL);
