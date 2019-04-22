@@ -3,5 +3,5 @@
 #include <vector>
 #include "Ball.h"
 
-void drawRect(HDC& hdc, RECT rect);
+void drawRect(HDC& hdc, RECT rect, COLORREF color);
 void drawBallsWithRopes(HDC& hdc, std::vector<Ball> balls, POINT suspension);

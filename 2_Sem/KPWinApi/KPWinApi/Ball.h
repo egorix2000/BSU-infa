@@ -3,10 +3,13 @@
 
 class Ball {
 public:
-	POINT center;
-	int radius;
+	//polar coordinates
+	double angle;
+	double radius;
+
+	int ballRadius;
 	COLORREF color;
 
-	Ball(POINT sourceCenter, int sourceRadius, COLORREF sourceColor);
+	Ball(double sourceAngle, double sourceRadius, int sourceBallRadius, COLORREF sourceColor);
 	Ball& invertColor();
 };

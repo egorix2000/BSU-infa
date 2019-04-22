@@ -124,12 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="coordinates.cpp" />
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="KWnd.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="coordinates.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="KWnd.h" />
     <ClInclude Include="resource.h" />

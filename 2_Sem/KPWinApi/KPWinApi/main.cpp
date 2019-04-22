@@ -6,28 +6,31 @@
 #include "resource.h"
 #include "Ball.h"
 #include "draw.h"
+#include "coordinates.h"
 
 #define TIMER_BALL 1
 #define UPDATE_INTERVAL 50
 #define SECOND 1000
+#define METR 1000
 
-enum side {RIGHT, LEFT};
 enum direction {UP, DOWN};
 
-const int DIAMETR = 40;
+const int RADIUS = 20;
 const int ROPE_LENGTH = 120;
-const int SUSPENSION_Y = 10;
+const int MARGIN_TOP_RECT = 20;
+const int MARGIN_LEFT_RECT = 280;
+const int SUSPENSION_Y = 40;
 const int SUSPENSION_X = 200;
-const double START_ANGLE = 3.1415926535 / 3;
+const double START_ANGLE = 3.1415926535 * 11 / 10;
 const double PI = 3.1415926535;
-const int N = 5;
+const int N = 4;
 
-double acceleration = 10;
+double acceleration;
 std::vector<Ball> balls;
-side currentSide;
 direction currentDirection;
 bool doesSystemActive;
-double currentSpeed;
+int currentBallIndex;
+int neighbourIndex;
 
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam);
@@ -48,20 +51,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 void createBalls() {
-
-	int x = SUSPENSION_X + cos(1.5 * PI - START_ANGLE) * (ROPE_LENGTH + DIAMETR / 2);
-	int y = 2 *  SUSPENSION_Y - sin(1.5 * PI - START_ANGLE) * (ROPE_LENGTH + DIAMETR / 2);
 	balls.clear();
-	balls.push_back(Ball(POINT{x, y}, DIAMETR / 2,
+	balls.push_back(Ball(START_ANGLE, ROPE_LENGTH + RADIUS, RADIUS,
 		RGB(rand() % 256, rand() % 256, rand() % 256)));
 
-	double delta_angle = 2 * asin((DIAMETR / 2) / ((double)(ROPE_LENGTH + DIAMETR / 2)));
+	double delta_angle = 2 * asin((RADIUS) / ((double)(ROPE_LENGTH + RADIUS)));
 	double angle = 1.5 * PI - delta_angle * (N - 2) / 2.0;
 
 	for (int i = 1; i < N; i++) {
-		x = SUSPENSION_X + cos(angle) * (ROPE_LENGTH + DIAMETR / 2);
-		y = 2 * SUSPENSION_Y - sin(angle) * (ROPE_LENGTH + DIAMETR / 2);
-		balls.push_back(Ball(POINT{x, y}, DIAMETR / 2,
+		balls.push_back(Ball(angle, ROPE_LENGTH + RADIUS, RADIUS,
 			RGB(rand() % 256, rand() % 256, rand() % 256)));
 		angle += delta_angle;
 	}
@@ -69,9 +67,13 @@ void createBalls() {
 }
 
 void onClick(HWND hWnd, LPARAM lParam) {
+	POINT center;
+	int x = LOWORD(lParam);
+	int y = HIWORD(lParam);
 	for (std::vector<Ball>::iterator it = balls.begin(); it != balls.end(); it++) {
-		if (((*it).center.x - LOWORD(lParam)) * ((*it).center.x - LOWORD(lParam)) +
-			((*it).center.y - HIWORD(lParam)) * ((*it).center.y - HIWORD(lParam)) <= (DIAMETR * DIAMETR / 4)) {
+		center = polarToDecart((*it).angle, (*it).radius);
+		if ((center.x - LOWORD(lParam) + SUSPENSION_X) * (center.x - LOWORD(lParam) + SUSPENSION_X) +
+			(- center.y - HIWORD(lParam) + SUSPENSION_Y) * (- center.y - HIWORD(lParam) + SUSPENSION_Y) <= (RADIUS * RADIUS)) {
 			(*it).invertColor();
 			break;
 		}
@@ -80,65 +82,38 @@ void onClick(HWND hWnd, LPARAM lParam) {
 }
 
 void moveBall() {
-	if (currentDirection == UP) {
-		currentSpeed -= acceleration * UPDATE_INTERVAL / SECOND;
-		if (currentSpeed <= 0) {
-			currentDirection = DOWN;
-			currentSpeed = 0;
-			if (currentSide == LEFT) {
-				balls[0].center.x = SUSPENSION_X + cos(1.5 * PI - START_ANGLE) * (ROPE_LENGTH + DIAMETR / 2);
-				balls[0].center.y = 2 * SUSPENSION_Y - sin(1.5 * PI - START_ANGLE) * (ROPE_LENGTH + DIAMETR / 2);
-			}
-			else {
-				balls[N - 1].center.x += currentSpeed;
-				balls[N - 1].center.y =
-					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x))) +
-					3 * SUSPENSION_Y;
-			}
+	POINT centerNeighbour;
+	POINT center = polarToDecart(balls[currentBallIndex].angle, balls[currentBallIndex].radius);
+	centerNeighbour = polarToDecart(balls[neighbourIndex].angle, balls[neighbourIndex].radius);
+
+	if (balls[0].angle <= START_ANGLE) {
+		currentDirection = DOWN;
+		balls[0].angle = START_ANGLE;
+	}
+	if (balls[N - 1].angle >= 3 * PI - START_ANGLE) {
+		currentDirection = DOWN;
+		balls[N - 1].angle = 3 * PI - START_ANGLE;
+	}
+	if (calcSquaredDistance(center, centerNeighbour) <= 4 * RADIUS * RADIUS) {
+		currentDirection = UP;
+		if (currentBallIndex == 0) {
+			currentBallIndex = N - 1;
+			neighbourIndex = N - 2;
 		}
 		else {
-			if (currentSide == LEFT) {
-				balls[0].center.x -= currentSpeed;
-				balls[0].center.y = 
-					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x))) +
-					3 * SUSPENSION_Y;
-			}
-			else {
-				balls[N - 1].center.x += currentSpeed;
-				balls[N-1].center.y =
-					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x))) +
-					3 * SUSPENSION_Y;
-			}
-		}
-	}	
-	else {
-		currentSpeed += acceleration * UPDATE_INTERVAL / SECOND;
-			if (currentSide == LEFT) {
-				balls[0].center.x += currentSpeed;
-				if ((balls[0].center.x - balls[1].center.x) * (balls[0].center.x - balls[1].center.x) +
-					(balls[0].center.y - balls[1].center.y) * (balls[0].center.y - balls[1].center.y) <=
-					DIAMETR * DIAMETR) {
-					currentSide = RIGHT;
-					currentDirection = UP;
-				}
-				balls[0].center.y =
-					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x))) +
-					3 * SUSPENSION_Y;
-			}
-			else {
-				balls[N - 1].center.x -= currentSpeed;
-				if ((balls[N-1].center.x - balls[N-2].center.x)*(balls[N - 1].center.x - balls[N - 2].center.x) +
-					(balls[N - 1].center.y - balls[N - 2].center.y)* (balls[N - 1].center.y - balls[N - 2].center.y) <=
-					DIAMETR*DIAMETR) {
-					currentSide = LEFT;
-					currentDirection = UP;
-				}
-				balls[N - 1].center.y =
-					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x))) +
-					3 * SUSPENSION_Y;
-			}
+			currentBallIndex = 0;
+			neighbourIndex = 1;
 		}
 	}
+
+	if ((currentDirection == DOWN && currentBallIndex == 0) ||
+		(currentDirection == UP && currentBallIndex == N - 1)) {
+		balls[currentBallIndex].angle += acceleration * UPDATE_INTERVAL / (10*SECOND);
+	}
+	else {
+		balls[currentBallIndex].angle -= acceleration * UPDATE_INTERVAL / (10*SECOND);
+	}
+}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hDC;
@@ -151,18 +126,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	case WM_CREATE:
 		hInst = GetModuleHandle(NULL);
 		createBalls();
-		currentSide = LEFT;
 		currentDirection = DOWN;
 		doesSystemActive = true;
-		currentSpeed = 0;
+		currentBallIndex = 0; 
+		neighbourIndex = 1;
+		acceleration = 10;
 		SetTimer(hWnd, TIMER_BALL, UPDATE_INTERVAL, NULL);
 		break;
 
 	case WM_PAINT:
 		hDC = BeginPaint(hWnd, &ps);
 		GetClientRect(hWnd, &clientRect);
-		drawBallsWithRopes(hDC, balls, POINT{ SUSPENSION_X, 2 * SUSPENSION_Y });
-		drawRect(hDC, RECT{ SUSPENSION_X, SUSPENSION_Y, SUSPENSION_X + ROPE_LENGTH, 2 * SUSPENSION_Y });
+		drawBallsWithRopes(hDC, balls, POINT{ SUSPENSION_X, SUSPENSION_Y });
+		drawRect(hDC, RECT{ SUSPENSION_X, MARGIN_TOP_RECT, MARGIN_LEFT_RECT, SUSPENSION_Y }, RGB(0, 100, 200));
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_KEYDOWN:

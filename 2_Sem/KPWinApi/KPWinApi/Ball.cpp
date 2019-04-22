@@ -1,9 +1,9 @@
 #include "Ball.h"
 
-Ball::Ball(POINT sourceCenter, int sourceRadius, COLORREF sourceColor) {
-	center.x = sourceCenter.x;
-	center.y = sourceCenter.y;
+Ball::Ball(double sourceAngle, double sourceRadius, int sourceBallRadius, COLORREF sourceColor) {
+	angle = sourceAngle;
 	radius = sourceRadius;
+	ballRadius = sourceBallRadius;
 	color = sourceColor;
 }
 
