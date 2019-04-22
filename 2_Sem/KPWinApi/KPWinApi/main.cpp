@@ -85,18 +85,28 @@ void moveBall() {
 		if (currentSpeed <= 0) {
 			currentDirection = DOWN;
 			currentSpeed = 0;
+			if (currentSide == LEFT) {
+				balls[0].center.x = SUSPENSION_X + cos(1.5 * PI - START_ANGLE) * (ROPE_LENGTH + DIAMETR / 2);
+				balls[0].center.y = 2 * SUSPENSION_Y - sin(1.5 * PI - START_ANGLE) * (ROPE_LENGTH + DIAMETR / 2);
+			}
+			else {
+				balls[N - 1].center.x += currentSpeed;
+				balls[N - 1].center.y =
+					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x))) +
+					3 * SUSPENSION_Y;
+			}
 		}
 		else {
 			if (currentSide == LEFT) {
 				balls[0].center.x -= currentSpeed;
 				balls[0].center.y = 
-					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x)) +
+					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x))) +
 					3 * SUSPENSION_Y;
 			}
 			else {
 				balls[N - 1].center.x += currentSpeed;
 				balls[N-1].center.y =
-					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x)) +
+					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x))) +
 					3 * SUSPENSION_Y;
 			}
 		}
@@ -105,26 +115,26 @@ void moveBall() {
 		currentSpeed += acceleration * UPDATE_INTERVAL / SECOND;
 			if (currentSide == LEFT) {
 				balls[0].center.x += currentSpeed;
-				if (abs(balls[0].center.x - balls[1].center.x) <= DIAMETR) {
+				if ((balls[0].center.x - balls[1].center.x) * (balls[0].center.x - balls[1].center.x) +
+					(balls[0].center.y - balls[1].center.y) * (balls[0].center.y - balls[1].center.y) <=
+					DIAMETR * DIAMETR) {
 					currentSide = RIGHT;
 					currentDirection = UP;
-					balls[0].center.x = balls[1].center.x - DIAMETR;
-					currentSpeed += 0.07;
 				}
 				balls[0].center.y =
-					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x)) +
+					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x))) +
 					3 * SUSPENSION_Y;
 			}
 			else {
 				balls[N - 1].center.x -= currentSpeed;
-				if (abs(balls[N-1].center.x - balls[N-2].center.x) <= DIAMETR) {
+				if ((balls[N-1].center.x - balls[N-2].center.x)*(balls[N - 1].center.x - balls[N - 2].center.x) +
+					(balls[N - 1].center.y - balls[N - 2].center.y)* (balls[N - 1].center.y - balls[N - 2].center.y) <=
+					DIAMETR*DIAMETR) {
 					currentSide = LEFT;
 					currentDirection = UP;
-					balls[N-1].center.x = balls[N-2].center.x + DIAMETR;
-					currentSpeed += 0.07;
 				}
 				balls[N - 1].center.y =
-					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x)) +
+					sqrt(abs(((ROPE_LENGTH + DIAMETR / 2) * (ROPE_LENGTH + DIAMETR / 2)) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x))) +
 					3 * SUSPENSION_Y;
 			}
 		}
