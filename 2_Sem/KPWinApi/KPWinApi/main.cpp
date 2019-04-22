@@ -20,7 +20,7 @@ const int SUSPENSION_Y = 10;
 const int SUSPENSION_X = 200;
 const double START_ANGLE = 3.1415926535 / 3;
 const double PI = 3.1415926535;
-const int N = 4;
+const int N = 5;
 
 double acceleration = 10;
 std::vector<Ball> balls;
@@ -82,12 +82,53 @@ void onClick(HWND hWnd, LPARAM lParam) {
 void moveBall() {
 	if (currentDirection == UP) {
 		currentSpeed -= acceleration * UPDATE_INTERVAL / SECOND;
-	}
+		if (currentSpeed <= 0) {
+			currentDirection = DOWN;
+			currentSpeed = 0;
+		}
+		else {
+			if (currentSide == LEFT) {
+				balls[0].center.x -= currentSpeed;
+				balls[0].center.y = 
+					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x)) +
+					3 * SUSPENSION_Y;
+			}
+			else {
+				balls[N - 1].center.x += currentSpeed;
+				balls[N-1].center.y =
+					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x)) +
+					3 * SUSPENSION_Y;
+			}
+		}
+	}	
 	else {
 		currentSpeed += acceleration * UPDATE_INTERVAL / SECOND;
+			if (currentSide == LEFT) {
+				balls[0].center.x += currentSpeed;
+				if (abs(balls[0].center.x - balls[1].center.x) <= DIAMETR) {
+					currentSide = RIGHT;
+					currentDirection = UP;
+					balls[0].center.x = balls[1].center.x - DIAMETR;
+					currentSpeed += 0.07;
+				}
+				balls[0].center.y =
+					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[0].center.x) * (SUSPENSION_X - balls[0].center.x)) +
+					3 * SUSPENSION_Y;
+			}
+			else {
+				balls[N - 1].center.x -= currentSpeed;
+				if (abs(balls[N-1].center.x - balls[N-2].center.x) <= DIAMETR) {
+					currentSide = LEFT;
+					currentDirection = UP;
+					balls[N-1].center.x = balls[N-2].center.x + DIAMETR;
+					currentSpeed += 0.07;
+				}
+				balls[N - 1].center.y =
+					sqrt((ROPE_LENGTH * ROPE_LENGTH) - (SUSPENSION_X - balls[N - 1].center.x) * (SUSPENSION_X - balls[N - 1].center.x)) +
+					3 * SUSPENSION_Y;
+			}
+		}
 	}
-	balls[0].center.x += currentSpeed;
-}
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 	HDC hDC;
