@@ -25,6 +25,7 @@ public:
     void setResultFile(string resultFile);
     string getResultFile() const;
     Database& addPoint(string name);
+	string getFormattedResult();
 };
 
 Database& Database::getInstance(string resultFile) {
@@ -80,6 +81,19 @@ Database& Database::addPoint(string name) {
         scores_[name] = 1;
     }
     return *this;
+}
+
+string Database::getFormattedResult() {
+	string formattedResult = "";
+	multimap<int, string> orderedScores;
+
+	for (std::map<string, int>::iterator it = scores_.begin(); it != scores_.end(); it++) {
+		orderedScores.insert(std::pair<int, string>((*it).second, (*it).first));
+	}
+	for (std::map<int, string>::reverse_iterator it = orderedScores.rbegin(); it != orderedScores.rend(); it++) {
+		formattedResult = formattedResult + (*it).second + " " + to_string((*it).first) + '\n';
+	}
+	return formattedResult;
 }
 
 #endif /* Database_h */

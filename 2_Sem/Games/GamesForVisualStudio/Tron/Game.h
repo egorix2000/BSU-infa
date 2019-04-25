@@ -33,10 +33,14 @@ private:
     Text pressAnyKey_;
     bool isGameOver_;
     bool isGameStarted_;
+	bool isResultShown_;
     Player *winner_;
     CircleShape circle_;
     bool doesEnterNameWindowActive_;
     Button confirmNamesButton_;
+	Button backButton_;
+	Button showResultsButton_;
+	Text resultText_;
     std::vector<Input> inputNamePlayers_;
     Database* database_;
 public:
@@ -47,6 +51,7 @@ public:
     Game& restart();
     Game& gameOver();
     Game& enterPlayerNames();
+	Game& showResults();
     void tick(Player& player);
 };
 
@@ -73,12 +78,20 @@ Game::Game(int width, int height, int speed, std::string pathToProject) {
     pressAnyKey_.setCharacterSize(20);
     pressAnyKey_.setFillColor(Color::White);
     pressAnyKey_.setString("Press space to restart game");
+
+	resultText_.setFont(font_);
+	resultText_.setPosition(20, 60);
+	resultText_.setCharacterSize(20);
+	resultText_.setFillColor(Color::White);
     
     isGameOver_ = false;
     isGameStarted_ = false;
     doesEnterNameWindowActive_ = true;
+	isResultShown_ = false;
     confirmNamesButton_.setProberties(20, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Next", pathToProject_);
-    
+	backButton_.setProberties(20, 20, 70, 30, "Back", pathToProject_);
+	showResultsButton_.setProberties(310, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Show results", pathToProject_);
+
     circle_.setRadius(1);
 }
 
@@ -89,6 +102,7 @@ Player Game::addRandomPlayer(Color color, int *control, std::string name) {
     players_.push_back(Player(x, y, direction, color, control, true, name));
     inputNamePlayers_.push_back(Input(20, 20 + inputNamePlayers_.size() * 40, 200, 30, "", color));
     confirmNamesButton_.setProberties(20, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Next", pathToProject_);
+	showResultsButton_.setProberties(110, 20 + (inputNamePlayers_.size() + 1) * 40, 160, 30, "Show results", pathToProject_);
     return players_.back();
 }
 
@@ -114,11 +128,29 @@ Game& Game::launchGame() {
                 break;
             }
         }
+
+		if (isResultShown_) {
+			if (e.type == sf::Event::MouseButtonPressed) {
+				if (e.mouseButton.button == sf::Mouse::Left) {
+					Vector2i mouse = Mouse::getPosition(window_);
+					if (backButton_.select(mouse)) {
+						isResultShown_ = false;
+					}
+				}
+			}
+			showResults();
+			continue;
+		}
         
         if (doesEnterNameWindowActive_) {
             if (e.type == sf::Event::MouseButtonPressed) {
                 if (e.mouseButton.button == sf::Mouse::Left) {
                     Vector2i mouse = Mouse::getPosition(window_);
+
+					if (showResultsButton_.select(mouse)) {
+						isResultShown_ = true;
+						continue;
+					}
                     
                     if (confirmNamesButton_.select(mouse)) {
                         doesEnterNameWindowActive_ = false;
@@ -255,6 +287,8 @@ Game& Game::enterPlayerNames() {
     
     window_.draw(confirmNamesButton_.displayButton());
     window_.draw(confirmNamesButton_.displayText());
+	window_.draw(showResultsButton_.displayButton());
+	window_.draw(showResultsButton_.displayText());
     
     window_.draw(inputNamePlayers_[0].displayButton());
     window_.draw(inputNamePlayers_[0].displayText());
@@ -266,16 +300,24 @@ Game& Game::enterPlayerNames() {
     return *this;
 }
 
-Game& Game::gameOver() {
-    isGameStarted_ = false;
+Game& Game::showResults() {
     window_.clear();
-    window_.draw(sprite_);
-    gameOverText_.setFillColor(winner_->getColor());
-    gameOverText_.setString(winner_->getName() + " wins!");
-    window_.draw(gameOverText_);
-    window_.draw(pressAnyKey_);
+	resultText_.setString(database_->getFormattedResult());
+    window_.draw(resultText_);
+	window_.draw(backButton_.displayButton());
+	window_.draw(backButton_.displayText());
     window_.display();
     return *this;
+}
+
+Game& Game::gameOver() {
+	window_.clear();
+	window_.draw(sprite_);
+	gameOverText_.setFillColor(Color::White);
+	gameOverText_.setString(winner_->getName() + " wins!");
+	window_.draw(gameOverText_);
+	window_.draw(pressAnyKey_);
+	window_.display();
 }
 
 void Game::tick(Player& player) {
