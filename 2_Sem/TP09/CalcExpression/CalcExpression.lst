@@ -1,0 +1,120 @@
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/04/19 09:35:51
+AsmSource.asm						     Page 1 - 1
+
+
+				.386
+				PUBLIC _calcExpressionInt@8 ; calling convention: __stcall, data type - double word
+				PUBLIC	@calcExpressionShort@8 ; calling convention: __fastcall, data type - word
+				.model flat
+ 00000000			.code
+
+ 00000000			_calcExpressionInt@8 proc
+ 00000000  55				push ebp
+ 00000001  8B EC			mov ebp, esp
+ 00000003  8B 45 08			mov eax, [ebp + 8]
+ 00000006  8B 5D 0C			mov ebx, [ebp + 12]
+ 00000009  3B C3			cmp eax, ebx ; compare param1 and param2
+ 0000000B  7C 04			jl ALessB
+ 0000000D  74 10			je AEqualsB
+ 0000000F  7F 15			jg AGreaterB
+ 00000011			ALessB:
+ 00000011  8B 45 0C			mov eax, [ebp + 12] ; eax = b
+ 00000014  8B 5D 08			mov ebx, [ebp + 8]; ebx = a
+ 00000017  83 C3 01			add ebx, 1
+ 0000001A  99				cdq
+ 0000001B  F7 FB			idiv ebx
+ 0000001D  EB 1C			jmp _End
+ 0000001F			AEqualsB:
+ 0000001F  B8 00000004			mov eax, 4
+ 00000024  EB 15			jmp _End
+ 00000026			AGreaterB:
+ 00000026  8B 45 08			mov eax, [ebp + 8] ; eax = a
+ 00000029  8B 5D 0C			mov ebx, [ebp + 12]; ebx = b
+ 0000002C  8B 4D 08			mov ecx, [ebp + 8]; ecx = a
+ 0000002F  F7 E9			imul ecx
+ 00000031  F7 E9			imul ecx; eax = a^3
+ 00000033  83 E8 05			sub eax, 5
+ 00000036  99				cdq
+ 00000037  F7 FB			idiv ebx; eax = (a^3 - 5) / b
+ 00000039  EB 00			jmp _End
+ 0000003B			_End:
+ 0000003B  5D				pop ebp 
+ 0000003C  C2 0008			ret 8
+ 0000003F			_calcExpressionInt@8 endp
+
+
+ 0000003F			@calcExpressionShort@8 proc
+ 0000003F  66| 8B C1			mov ax, cx
+ 00000042  66| 8B DA			mov bx, dx
+ 00000045  66| 3B C3			cmp ax, bx
+ 00000048  7C 04			jl A_less_B
+ 0000004A  74 0F			je A_equals_to_B
+ 0000004C  7F 13			jg A_greater_B
+ 0000004E			A_less_B:
+ 0000004E  66| 93			xchg ax, bx ; ax = b, bx = a
+ 00000050  66| 83 C3 01			add bx, 1
+ 00000054  66| 99			cwd 
+ 00000056  66| F7 FB			idiv bx ; ax = b / (a + 1)
+ 00000059  EB 17			jmp _End
+ 0000005B			A_equals_to_B:
+ 0000005B  66| B8 0004			mov ax, 4
+ 0000005F  EB 11			jmp _End
+ 00000061			A_greater_B:
+ 00000061  66| F7 E8			imul ax ; ax = a^2
+ 00000064  66| F7 E9			imul cx
+ 00000067  66| 83 E8 05			sub ax, 5 ; ax = a^3 - 5
+ 0000006B  66| 99			cwd 
+ 0000006D  66| F7 FB			idiv bx ; ax = (a^3 - 5) / b
+ 00000070  EB 00			jmp _End
+ 00000072			_End:
+ 00000072  C3				ret
+ 00000073			@calcExpressionShort@8 endp
+
+				end
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/04/19 09:35:51
+AsmSource.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000073 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+@calcExpressionShort@8 . . . . .	P Near	 0000003F _TEXT	Length= 00000034 Public
+  A_less_B . . . . . . . . . . .	L Near	 0000004E _TEXT	
+  A_equals_to_B  . . . . . . . .	L Near	 0000005B _TEXT	
+  A_greater_B  . . . . . . . . .	L Near	 00000061 _TEXT	
+  _End . . . . . . . . . . . . .	L Near	 00000072 _TEXT	
+_calcExpressionInt@8 . . . . . .	P Near	 00000000 _TEXT	Length= 0000003F Public
+  ALessB . . . . . . . . . . . .	L Near	 00000011 _TEXT	
+  AEqualsB . . . . . . . . . . .	L Near	 0000001F _TEXT	
+  AGreaterB  . . . . . . . . . .	L Near	 00000026 _TEXT	
+  _End . . . . . . . . . . . . .	L Near	 0000003B _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+
+	   0 Warnings
+	   0 Errors

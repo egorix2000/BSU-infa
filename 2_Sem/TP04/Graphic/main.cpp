@@ -83,6 +83,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) 
 		case ID_GRAPHIC_CHANGEGRAPHIC:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG), hwnd, ChangeGraphicDlgProc);
 			InvalidateRect(hwnd, NULL, true);
+			break;
+		case ID_SETTINGS_DEFAULT:
+			graph.setLeftBorder(START_LEFT_BORDER);
+			graph.setRightBorder(START_RIGHT_BORDER);
+			graph.setTopBorder(START_TOP_BORDER);
+			graph.setBottomBorder(START_BOTTOM_BORDER);
+			InvalidateRect(hwnd, NULL, true);
+			break;
 		default:
 			break;
 		}
