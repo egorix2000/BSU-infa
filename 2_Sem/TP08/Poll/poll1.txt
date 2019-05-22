@@ -1,0 +1,32 @@
+First Poll
+#
+10
+One
+Cats can fly
+True
+-
+False
++
+#
+#
+55
+Mult
+Choose countries located in Africa
+Zimbabwe
++
+Belarus
+-
+Egypt
++
+Argentina
+-
+#
+#
+35
+One
+HTML is programming language
+True
+-
+False
++
+#
