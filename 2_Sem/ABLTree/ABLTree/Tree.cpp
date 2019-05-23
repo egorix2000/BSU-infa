@@ -77,7 +77,6 @@ Node* find(Node* p, int k) {
 	else {
 		return p;
 	}
-	return nullptr;
 }
 
 Node* findmin(Node* p)
