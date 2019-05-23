@@ -1,0 +1,14 @@
+Poll: First Poll
+Result: 10 from 100
+Question #1: Cats can fly
+Your Answer:   False
+Correct Answer:   False
+
+Question #2: Choose countries located in Africa
+Your Answer:   Zimbabwe   Belarus
+Correct Answer:   Zimbabwe   Egypt
+
+Question #3: HTML is programming language
+Your Answer:
+Correct Answer:   False
+
