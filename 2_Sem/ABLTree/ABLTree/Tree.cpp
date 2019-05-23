@@ -68,6 +68,18 @@ Node* insert(Node* p, int k)
 	return balance(p);
 }
 
+Node* find(Node* p, int k) {
+	if (!p) return nullptr;
+	if (k < p->key)
+		p->left = find(p->left, k);
+	else if (k > p->key)
+		p->right = find(p->right, k);
+	else {
+		return p;
+	}
+	return nullptr;
+}
+
 Node* findmin(Node* p)
 {
 	return p->left ? findmin(p->left) : p;

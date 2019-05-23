@@ -3,7 +3,7 @@ class Node
 {
 public:
 	int key;
-	unsigned char height;
+	int height;
 	Node* left;
 	Node* right;
 	Node(int k);

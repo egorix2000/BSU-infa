@@ -23,8 +23,10 @@ private:
 	Font font_;
 	CircleShape nodeCircle_;
 	Text valueText_;
+	Text foundNotFoundText_;
 	Button deleteButton_;
 	Button insertButton_;
+	Button findButton_;
 	Input nodeValueInput_;
 	Node* root_;
 public:
@@ -47,9 +49,15 @@ TreeVisualization::TreeVisualization(int width, int height, std::string pathToPr
 	valueText_.setCharacterSize(15);
 	valueText_.setFillColor(Color::Black);
 
+	foundNotFoundText_.setFont(font_);
+	foundNotFoundText_.setCharacterSize(15);
+	foundNotFoundText_.setFillColor(Color::Black);
+	foundNotFoundText_.setPosition(355, 20);
+
 	deleteButton_.setProberties(20, 20, 75, 30, "Delete", pathToProject_);
 	insertButton_.setProberties(115, 20, 70, 30, "Insert", pathToProject_);
-	nodeValueInput_.setProberties(205, 20, 40, 30, "", Color::Black);
+	findButton_.setProberties(205, 20, 70, 30, "Find", pathToProject_);
+	nodeValueInput_.setProberties(295, 20, 40, 30, "", Color::Black);
 	nodeCircle_.setRadius(circleRadius);
 	nodeCircle_.setOutlineColor(Color::Black);
 	nodeCircle_.setOutlineThickness(1);
@@ -84,6 +92,18 @@ TreeVisualization& TreeVisualization::launchTreeVisualization() {
 
 				if (insertButton_.select(mouse)) {
 					root_ = insert(root_, atoi(nodeValueInput_.readText().c_str()));
+					window_.clear(sf::Color(255, 255, 255));
+					draw();
+					window_.display();
+				}
+
+				if (findButton_.select(mouse)) {
+					if (find(root_, atoi(nodeValueInput_.readText().c_str())) != nullptr) {
+						foundNotFoundText_.setString("Found");
+					}
+					else {
+						foundNotFoundText_.setString("Not found");
+					}
 					window_.clear(sf::Color(255, 255, 255));
 					draw();
 					window_.display();
@@ -136,6 +156,10 @@ TreeVisualization& TreeVisualization::draw() {
 	window_.draw(deleteButton_.displayText());
 	window_.draw(insertButton_.displayButton());
 	window_.draw(insertButton_.displayText());
+	window_.draw(findButton_.displayButton());
+	window_.draw(findButton_.displayText());
+
+	window_.draw(foundNotFoundText_);
 
 	window_.draw(nodeValueInput_.displayButton());
 	window_.draw(nodeValueInput_.displayText());
