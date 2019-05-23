@@ -71,9 +71,9 @@ Node* insert(Node* p, int k)
 Node* find(Node* p, int k) {
 	if (!p) return nullptr;
 	if (k < p->key)
-		find(p->left, k);
+		return find(p->left, k);
 	else if (k > p->key)
-		find(p->right, k);
+		return find(p->right, k);
 	else {
 		return p;
 	}
