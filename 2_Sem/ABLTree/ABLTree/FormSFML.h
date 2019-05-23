@@ -78,7 +78,7 @@ namespace form {
 			BOX.setOutlineColor(Color(66, 66, 66));
 		}
 
-		Button& setProberties(double _x = 0, double _y = 0, double _width = 150, double _height = 30, string _text = "Button", std::string pathToProject = "")
+		virtual Button& setProberties(double _x = 0, double _y = 0, double _width = 150, double _height = 30, string _text = "Button", std::string pathToProject = "")
 		{
 			None.loadFromFile(pathToProject + "fonts/arial.ttf");
 
@@ -148,13 +148,33 @@ namespace form {
             BOX.setOutlineColor(color);
             BOX.setOutlineThickness(2);
 		}
-		
+		Input& setProberties(double _x = 0, double _y = 0, double _width = 150, double _height = 30, string _text = "", Color color = Color::White) {
+			x = _x;
+			y = _y;
+			width = _width;
+			height = _height;
+			text = _text;
+			focus = false;
+
+			TXT.setFont(None);
+			TXT.setCharacterSize(20);
+			TXT.setFillColor(Color::Black);
+			TXT.setPosition(x, y);
+
+			BOX.setSize(Vector2f(width, height));
+			BOX.setPosition(x, y);
+			BOX.setFillColor(Color::White);
+			BOX.setOutlineColor(color);
+			BOX.setOutlineThickness(2);
+		}
 		void reText(char _tmp)
 		{
             text.erase(text.size()-1);
             
             if(_tmp != 8){
-                text += _tmp;
+				if (text.size() < 2) {
+					text += _tmp;
+				}
             } else {
                 if(text.size() > 0){
                     text.erase(text.size()-1);

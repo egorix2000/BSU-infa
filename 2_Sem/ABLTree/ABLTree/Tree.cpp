@@ -1,30 +1,23 @@
 ﻿#include "Tree.h"
 
-
-
-Tree::Tree(Node* root)
-{
-	this->root = root;
-}
-
-unsigned char Tree::height(Node* p)
+unsigned char height(Node* p)
 {
 	return p ? p->height : 0;
 }
 
-int Tree::bfactor(Node* p)
+int bfactor(Node* p)
 {
 	return height(p->right) - height(p->left);
 }
 
-void Tree::fixheight(Node* p)
+void fixheight(Node* p)
 {
 	unsigned char hl = height(p->left);
 	unsigned char hr = height(p->right);
 	p->height = (hl > hr ? hl : hr) + 1;
 }
 
-Node* Tree::rotateright(Node* p)
+Node* rotateright(Node* p)
 {
 	Node* q = p->left;
 	p->left = q->right;
@@ -34,7 +27,7 @@ Node* Tree::rotateright(Node* p)
 	return q;
 }
 
-Node* Tree::rotateleft(Node* q)
+Node* rotateleft(Node* q)
 {
 	Node* p = q->right;
 	q->right = p->left;
@@ -44,7 +37,7 @@ Node* Tree::rotateleft(Node* q)
 	return p;
 }
 
-Node* Tree::balance(Node* p)
+Node* balance(Node* p)
 {
 	fixheight(p);
 	if (bfactor(p) == 2)
@@ -62,22 +55,25 @@ Node* Tree::balance(Node* p)
 	return p; // балансировка не нужна
 }
 
-Node* Tree::insert(Node* p, int k)
+Node* insert(Node* p, int k)
 {
 	if (!p) return new Node(k);
 	if (k < p->key)
 		p->left = insert(p->left, k);
-	else
+	else if (k > p->key)
 		p->right = insert(p->right, k);
+	else {
+		return p;
+	}
 	return balance(p);
 }
 
-Node* Tree::findmin(Node* p)
+Node* findmin(Node* p)
 {
 	return p->left ? findmin(p->left) : p;
 }
 
-Node* Tree::removemin(Node* p)
+Node* removemin(Node* p)
 {
 	if (p->left == 0)
 		return p->right;
@@ -85,7 +81,7 @@ Node* Tree::removemin(Node* p)
 	return balance(p);
 }
 
-Node* Tree::remove(Node* p, int k)
+Node* remove(Node* p, int k)
 {
 	if (!p) return 0;
 	if (k < p->key)
@@ -106,7 +102,3 @@ Node* Tree::remove(Node* p, int k)
 	return balance(p);
 }
 
-
-Tree::~Tree()
-{
-}

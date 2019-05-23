@@ -1,7 +1,10 @@
 e 16
 f 5
 gor 2
+v 1
 rokdk 1
+kljh 1
+jkhb 1
 g 1
 er 1
 a 1

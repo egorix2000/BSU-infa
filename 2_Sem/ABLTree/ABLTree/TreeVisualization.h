@@ -15,6 +15,7 @@ using namespace form;
 
 class TreeVisualization {
 private:
+	int circleRadius;
 	int width_;
 	int height_;
 	std::string pathToProject_;
@@ -25,37 +26,41 @@ private:
 	Button deleteButton_;
 	Button insertButton_;
 	Input nodeValueInput_;
-	Tree* tree_;
+	Node* root_;
 public:
 	TreeVisualization(int width, int height, std::string pathToProjec);
 	TreeVisualization& launchTreeVisualization();
 	TreeVisualization& draw();
-	TreeVisualization& drawTree();
+	void drawTree(Node* node, int xPosition, int yPosition, int prevX, int prevY);
 };
 
 TreeVisualization::TreeVisualization(int width, int height, std::string pathToProject) {
 	width_ = width;
 	height_ = height;
 	pathToProject_ = pathToProject;
+	circleRadius = 20;
+	root_ = nullptr;
 
 	font_.loadFromFile(pathToProject_ + "fonts/arial.ttf");
 
-	tree_ = new Tree(nullptr);
-
 	valueText_.setFont(font_);
-	valueText_.setCharacterSize(10);
+	valueText_.setCharacterSize(15);
 	valueText_.setFillColor(Color::Black);
 
-	deleteButton_.setProberties(20, 20, 70, 30, "Delete", pathToProject_);
-	insertButton_.setProberties(110, 20, 70, 30, "Insert", pathToProject_);
-	nodeValueInput_.setProberties(200, 20, 70, 30, "", color::Black)
-
-	nodeCircle_.setRadius(10);
+	deleteButton_.setProberties(20, 20, 75, 30, "Delete", pathToProject_);
+	insertButton_.setProberties(115, 20, 70, 30, "Insert", pathToProject_);
+	nodeValueInput_.setProberties(205, 20, 40, 30, "", Color::Black);
+	nodeCircle_.setRadius(circleRadius);
+	nodeCircle_.setOutlineColor(Color::Black);
+	nodeCircle_.setOutlineThickness(1);
 }
 
 TreeVisualization& TreeVisualization::launchTreeVisualization() {
 	window_.create(VideoMode(width_, height_), "ABL Tree!");
 	window_.setFramerateLimit(60);
+	window_.clear(sf::Color(255, 255, 255));
+	draw();
+	window_.display();
 
 	while (window_.isOpen()) {
 		Event e;
@@ -71,13 +76,17 @@ TreeVisualization& TreeVisualization::launchTreeVisualization() {
 				Vector2i mouse = Mouse::getPosition(window_);
 
 				if (deleteButton_.select(mouse)) {
-					tree_->remove(tree_->root, nodeValueInput_.readText());
-					drawTree();
+					root_ = remove(root_, atoi(nodeValueInput_.readText().c_str()));
+					window_.clear(sf::Color(255, 255, 255));
+					draw();
+					window_.display();
 				}
 
 				if (insertButton_.select(mouse)) {
-					tree->insert(tree_->root, nodeValueInput_.readText());
-					drawTree();
+					root_ = insert(root_, atoi(nodeValueInput_.readText().c_str()));
+					window_.clear(sf::Color(255, 255, 255));
+					draw();
+					window_.display();
 				}
 
 				nodeValueInput_.select(mouse);
@@ -87,36 +96,41 @@ TreeVisualization& TreeVisualization::launchTreeVisualization() {
 			sleep(milliseconds(300));
 			if (nodeValueInput_.select()) {
 				nodeValueInput_.reText(e.text.unicode);
+				window_.clear(sf::Color(255, 255, 255));
+				draw();
+				window_.display();
 			}
-		}
-
-		////// draw  ///////
-		window_.clear();
-		window_.draw(sprite_);
-		window_.display();
 		}
 	}
 	return *this;
 }
-
-TreeVisualization& TreeVisualization::drawTree(int xPosition) {
-	Node* node = tree_->root;
-	nodeCircle_.setPosition(xPosition, (tree-height() - node->height) * 30);
-	valueText_.setPosition(xPosition, (tree-height() - node->height) * 30);
-	valueText_.setText(node->key);
+void TreeVisualization::drawTree(Node* node, int xPosition, int yPosition, int prevX, int prevY) {
+	if (node == 0) {
+		return;
+	}
+	nodeCircle_.setPosition(xPosition, yPosition);
+	valueText_.setPosition(xPosition + circleRadius/2, yPosition + circleRadius / 2);
+	valueText_.setString(to_string(node->key));
 	window_.draw(nodeCircle_);
 	window_.draw(valueText_);
+
+	sf::Vertex line[] =
+	{
+		sf::Vertex(sf::Vector2f(prevX + circleRadius, prevY + circleRadius), Color::Black),
+		sf::Vertex(sf::Vector2f(xPosition + circleRadius, yPosition + circleRadius), Color::Black)
+	};
+	window_.draw(line, 2, sf::Lines);
+
 	if (node->right != 0) {
-		drawTree(node->right, xPoz + 20);
+		drawTree(node->right, xPosition + (node->height-1) * circleRadius*2, yPosition + circleRadius * 2, xPosition, yPosition);
 	}
 	if (node->left != 0) {
-		drawTree(node->left, xPoz - 20);
+		drawTree(node->left, xPosition - (node->height-1) * circleRadius*2, yPosition + circleRadius * 2, xPosition, yPosition);
 	}
-	drawTree();
 }
 
 TreeVisualization& TreeVisualization::draw() {
-	window_.clear();
+	window_.clear(sf::Color(255, 255, 255));
 
 	window_.draw(deleteButton_.displayButton());
 	window_.draw(deleteButton_.displayText());
@@ -126,7 +140,7 @@ TreeVisualization& TreeVisualization::draw() {
 	window_.draw(nodeValueInput_.displayButton());
 	window_.draw(nodeValueInput_.displayText());
 
-	drawTree(width_ / 2);
+	drawTree(root_, width_ / 2, 70, width_ / 2, 70);
 	window_.display();
 	return *this;
 }
