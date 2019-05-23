@@ -9,86 +9,52 @@
 #include <algorithm>
 
 #include "FormSFML.h"
+#include "Tree.h"
 
 using namespace sf;
 using namespace form;
 
-class Game {
+class TreeVisualization {
 private:
 	int width_;
 	int height_;
-	int speed_;
 	std::string pathToProject_;
-	Texture backgroundTexture_;
-	Sprite background_;
-	Field* field_;
-	std::vector<Player> players_;
+	Text valueText_;
 	RenderWindow window_;
 	Font font_;
-	RenderTexture textureLines_;
-	Sprite sprite_;
-	Text gameOverText_;
-	Text pressAnyKey_;
-	bool isGameOver_;
-	bool isGameStarted_;
-	bool isResultShown_;
-	Player* winner_;
-	CircleShape circle_;
-	bool doesEnterNameWindowActive_;
-	Button confirmNamesButton_;
-	Button backButton_;
-	Button showResultsButton_;
-	Text resultText_;
-	std::vector<Input> inputNamePlayers_;
-	Database* database_;
+	CircleShape node_;
+	Button deleteButton_;
+	Button insertButton_;
+	Input nodeValueInput_;
+	Tree* tree_;
 public:
-	Game(int width, int height, int speed, std::string pathToProjec);
-	Game& launchGame();
-	Player addRandomPlayer(Color, int* control, std::string name);
+	TreeVisualization(int width, int height, std::string pathToProjec);
+	TreeVisualization& launchGame();
+	TreeVisualization& draw();
+	/*Player addRandomPlayer(Color, int* control, std::string name);
 	Player& changePlayerRandomly(Player& player, Color color, int width, int height, std::string name);
-	Game& restart();
+	
 	Game& gameOver();
 	Game& enterPlayerNames();
 	Game& showResults();
-	void tick(Player& player);
+	void tick(Player& player);*/
 };
 
-Game::Game(int width, int height, int speed, std::string pathToProject) {
+TreeVisualization::TreeVisualization(int width, int height, std::string pathToProject) {
 	width_ = width;
 	height_ = height;
-	speed_ = speed;
 	pathToProject_ = pathToProject;
 
-	backgroundTexture_.loadFromFile(pathToProject_ + "images/background.jpg");
-	background_.setTexture(backgroundTexture_);
 	font_.loadFromFile(pathToProject_ + "fonts/arial.ttf");
 
-	field_ = &Field::getInstance(width_, height_);
-	database_ = &Database::getInstance(pathToProject_ + "results.txt");
-	database_->readScores();
+	tree_ = new Tree(nullptr);
 
-	gameOverText_.setFont(font_);
-	gameOverText_.setPosition(width_ / 3.3, height_ / 3);
-	gameOverText_.setCharacterSize(40);
+	valueText_.setFont(font_);
+	valueText_.setCharacterSize(20);
+	valueText_.setFillColor(Color::Black);
 
-	pressAnyKey_.setFont(font_);
-	pressAnyKey_.setPosition(width_ / 4, height_ / 2);
-	pressAnyKey_.setCharacterSize(20);
-	pressAnyKey_.setFillColor(Color::White);
-	pressAnyKey_.setString("Press space to restart game");
-
-	resultText_.setFont(font_);
-	resultText_.setPosition(20, 60);
-	resultText_.setCharacterSize(20);
-	resultText_.setFillColor(Color::White);
-
-	isGameOver_ = false;
-	isGameStarted_ = false;
-	doesEnterNameWindowActive_ = true;
-	isResultShown_ = false;
-	confirmNamesButton_.setProberties(20, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Next", pathToProject_);
-	backButton_.setProberties(20, 20, 70, 30, "Back", pathToProject_);
-	showResultsButton_.setProberties(310, 20 + (inputNamePlayers_.size() + 1) * 40, 70, 30, "Show results", pathToProject_);
+	deleteButton_.setProberties(20, 20, 70, 30, "Delete", pathToProject_);
+	insertButton_.setProberties(110, 20, 70, 30, "Insert", pathToProject_);
 
 	circle_.setRadius(1);
 }
