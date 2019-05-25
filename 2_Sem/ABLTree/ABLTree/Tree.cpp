@@ -1,6 +1,6 @@
 ﻿#include "Tree.h"
 
-unsigned char height(Node* p)
+int height(Node* p)
 {
 	return p ? p->height : 0;
 }

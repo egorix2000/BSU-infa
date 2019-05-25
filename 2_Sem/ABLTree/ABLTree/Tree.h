@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Node.h"
 
-unsigned char height(Node* p);
+int height(Node* p);
 int bfactor(Node* p);
 void fixheight(Node* p);
 Node* rotateright(Node* p); // правый поворот вокруг p
