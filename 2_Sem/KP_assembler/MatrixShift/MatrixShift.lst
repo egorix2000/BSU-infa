@@ -1,0 +1,64 @@
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/27/19 08:27:33
+AsmSource.asm						     Page 1 - 1
+
+
+				.386
+				.MODEL flat
+ 00000000			.DATA
+ 00000000 00000000		arraySize	dd	?
+ 00000004 00000000		k	dd	?
+ 00000000			.CODE
+
+ 00000000			_shift PROC
+ 00000000  55				push ebp
+ 00000001  8B EC			mov ebp, esp
+
+ 00000003  8B 45 0C			mov eax, [ebp+12] 
+ 00000006  8B 5D 10			mov ebx, [ebp+16]
+ 00000009  F7 E3			mul ebx
+
+ 0000000B  5D				pop ebp
+ 0000000C  C3				ret
+ 0000000D			_shift ENDP
+
+				END
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/27/19 08:27:33
+AsmSource.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000008 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000D DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+_shift . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000D Public
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+arraySize  . . . . . . . . . . .	DWord	 00000000 _DATA	
+k  . . . . . . . . . . . . . . .	DWord	 00000004 _DATA	
+
+	   0 Warnings
+	   0 Errors

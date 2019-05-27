@@ -1,0 +1,98 @@
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/27/19 07:24:06
+AsmSource.asm						     Page 1 - 1
+
+
+				.386
+				.MODEL flat
+ 00000000			.DATA
+ 00000000 00000000		gcd	dd	?
+ 00000000			.CODE
+
+ 00000000			@lcm@8 PROC
+ 00000000  8B FA			mov edi, edx
+					
+ 00000002  BE 00000000			mov esi, 0
+ 00000007  8B 04 B1			mov eax, [ecx + esi*4]
+ 0000000A  46				inc esi
+ 0000000B				begin_gcd_loop:
+
+ 0000000B  8B 1C B1				mov ebx, [ecx + esi*4]
+ 0000000E					begin_loop :
+ 0000000E  3B C3				cmp eax, ebx
+ 00000010  74 0A					jz end_loop
+
+ 00000012  7F 04					jg if_a_greater
+ 00000014  2B D8					sub ebx, eax
+ 00000016  EB F6					jmp begin_loop
+ 00000018						if_a_greater :
+ 00000018  2B C3				sub eax, ebx
+ 0000001A  EB F2					jmp begin_loop
+ 0000001C						end_loop :
+
+ 0000001C  46				inc esi
+ 0000001D  3B F7			cmp esi, edi
+ 0000001F  7C EA			jl begin_gcd_loop
+
+ 00000021  A3 00000000 R		mov gcd, eax
+					
+ 00000026  BE 00000000			mov esi, 0
+ 0000002B  B8 00000001			mov eax, 1
+
+ 00000030				begin_mul_loop:
+ 00000030  8B 1C B1			mov ebx, [ecx + esi*4]
+ 00000033  F7 EB			imul ebx
+ 00000035  46				inc esi
+ 00000036  3B F7			cmp esi, edi
+ 00000038  7C F6			jl begin_mul_loop
+					
+ 0000003A  99				cdq
+ 0000003B  F7 3D 00000000 R		idiv gcd
+
+ 00000041  C3				ret
+ 00000042			@lcm@8 ENDP
+
+				END
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/27/19 07:24:06
+AsmSource.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000004 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000042 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+@lcm@8 . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000042 Public
+  begin_gcd_loop . . . . . . . .	L Near	 0000000B _TEXT	
+  begin_loop . . . . . . . . . .	L Near	 0000000E _TEXT	
+  if_a_greater . . . . . . . . .	L Near	 00000018 _TEXT	
+  end_loop . . . . . . . . . . .	L Near	 0000001C _TEXT	
+  begin_mul_loop . . . . . . . .	L Near	 00000030 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+gcd  . . . . . . . . . . . . . .	DWord	 00000000 _DATA	
+
+	   0 Warnings
+	   0 Errors
