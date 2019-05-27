@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 
 using namespace std;
 
@@ -6,10 +6,19 @@ extern "C" int __cdecl shift(int** matrix, int n, int m, int k);
 
 int main() {
 	int arraySize;
+	int k;
 	int n = 3;
 	int m = 4;
-	int a[3][4] = { {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12} };
-	int k = 3;
+	int a[3][4];
+	cout << "Enter array" << endl;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			cin >> a[i][j];
+		}
+	}
+	cout << "Enter k" << endl;
+	cin >> k;
+
 	_asm {
 		mov ecx, a
 		mov edi, k
@@ -24,7 +33,7 @@ int main() {
 		cmp edi, 0
 		jl end_k_loop
 			
-		xor esi, esi; ??????
+		xor esi, esi; индекс
 		mov ebx, a[esi * 4]
 		begin_loop :
 			inc esi
