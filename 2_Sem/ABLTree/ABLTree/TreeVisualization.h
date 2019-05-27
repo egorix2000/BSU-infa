@@ -9,6 +9,7 @@
 
 #include "FormSFML.h"
 #include "Tree.h"
+#include "TreeManager.h"
 
 using namespace sf;
 using namespace form;
@@ -28,7 +29,7 @@ private:
 	Button insertButton_;
 	Button findButton_;
 	Input nodeValueInput_;
-	Node* root_;
+	Tree* tree_;
 public:
 	TreeVisualization(int width, int height, std::string pathToProjec);
 	TreeVisualization& launchTreeVisualization();
@@ -41,7 +42,8 @@ TreeVisualization::TreeVisualization(int width, int height, std::string pathToPr
 	height_ = height;
 	pathToProject_ = pathToProject;
 	circleRadius = 20;
-	root_ = nullptr;
+	tree_ = new Tree();
+	tree_->root = nullptr;
 
 	font_.loadFromFile(pathToProject_ + "fonts/arial.ttf");
 
@@ -84,21 +86,21 @@ TreeVisualization& TreeVisualization::launchTreeVisualization() {
 				Vector2i mouse = Mouse::getPosition(window_);
 
 				if (deleteButton_.select(mouse)) {
-					root_ = remove(root_, atoi(nodeValueInput_.readText().c_str()));
+					tree_->root = remove(tree_->root, atoi(nodeValueInput_.readText().c_str()));
 					window_.clear(sf::Color(255, 255, 255));
 					draw();
 					window_.display();
 				}
 
 				if (insertButton_.select(mouse)) {
-					root_ = insert(root_, atoi(nodeValueInput_.readText().c_str()));
+					tree_->root = insert(tree_->root, atoi(nodeValueInput_.readText().c_str()));
 					window_.clear(sf::Color(255, 255, 255));
 					draw();
 					window_.display();
 				}
 
 				if (findButton_.select(mouse)) {
-					if (find(root_, atoi(nodeValueInput_.readText().c_str())) != nullptr) {
+					if (find(tree_->root, atoi(nodeValueInput_.readText().c_str())) != nullptr) {
 						foundNotFoundText_.setString("Found");
 					}
 					else {
@@ -164,7 +166,7 @@ TreeVisualization& TreeVisualization::draw() {
 	window_.draw(nodeValueInput_.displayButton());
 	window_.draw(nodeValueInput_.displayText());
 
-	drawTree(root_, width_ / 2, 70, width_ / 2, 70);
+	drawTree(tree_->root, width_ / 2, 70, width_ / 2, 70);
 	window_.display();
 	return *this;
 }

@@ -27,15 +27,18 @@
     <ClInclude Include="TreeVisualization.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TreeManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp">
+    <ClCompile Include="Node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Node.cpp">
+    <ClCompile Include="TreeManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

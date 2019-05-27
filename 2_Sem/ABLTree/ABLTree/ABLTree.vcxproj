@@ -130,12 +130,13 @@
     <ClInclude Include="FormSFML.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="TreeManager.h" />
     <ClInclude Include="TreeVisualization.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="TreeManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
