@@ -1,0 +1,83 @@
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/30/19 11:55:38
+AsmSource.asm						     Page 1 - 1
+
+
+				.386
+				.MODEL FLAT
+ 00000000			.DATA?
+ 00000000 00000000		n		dd		?
+ 00000000			.CODE
+				;-----------Function definitions--------------------
+ 00000000			@isPalindrome@8 PROC
+ 00000000  89 15 00000000 R		mov n, edx
+ 00000006  B8 00000001			mov eax, 1
+ 0000000B  BE 00000000			mov esi, 0
+ 00000010  8B 3D 00000000 R		mov edi, n
+ 00000016  4F				dec edi
+ 00000017				begin_loop:
+ 00000017  8B 1C B1				mov ebx, [ecx + esi*4]
+ 0000001A  8B 14 B9				mov edx, [ecx + edi*4]
+ 0000001D  3B DA				cmp ebx, edx
+ 0000001F  74 02				je if_equal_start
+ 00000021  EB 08				jmp if_not_equal_start
+ 00000023					if_equal_start:
+ 00000023  46						inc esi
+ 00000024  4F						dec edi
+ 00000025  3B F7					cmp esi, edi
+ 00000027  7F 07					jg end_loop
+ 00000029  EB EC					jmp begin_loop
+ 0000002B					if_equal_end:
+ 0000002B					if_not_equal_start:
+ 0000002B  B8 00000000					mov eax, 0
+ 00000030					if_not_equal_end:
+ 00000030				end_loop:
+ 00000030  C3				ret
+ 00000031			@isPalindrome@8 ENDP
+				END
+ 
+Microsoft (R) Macro Assembler Version 14.20.27508.1	    05/30/19 11:55:38
+AsmSource.asm						     Symbols 2 - 1
+
+
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+_BSS . . . . . . . . . . . . . .	32 Bit	 00000004 DWord	  Public  'BSS'  
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000031 DWord	  Public  'CODE'	
+
+
+Procedures, parameters, and locals:
+
+                N a m e                 Type     Value    Attr
+
+@isPalindrome@8  . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000031 Public
+  begin_loop . . . . . . . . . .	L Near	 00000017 _TEXT	
+  if_equal_start . . . . . . . .	L Near	 00000023 _TEXT	
+  if_equal_end . . . . . . . . .	L Near	 0000002B _TEXT	
+  if_not_equal_start . . . . . .	L Near	 0000002B _TEXT	
+  if_not_equal_end . . . . . . .	L Near	 00000030 _TEXT	
+  end_loop . . . . . . . . . . .	L Near	 00000030 _TEXT	
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@Interface . . . . . . . . . . .	Number	 00000000h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+n  . . . . . . . . . . . . . . .	DWord	 00000000 _BSS	
+
+	   0 Warnings
+	   0 Errors
