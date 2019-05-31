@@ -7,6 +7,7 @@
 #include <set>
 #include <algorithm>
 #include <iterator>
+#include <numeric>
 
 #include "FileLib.h"
 #include "FlowerBed.h"
@@ -136,13 +137,13 @@ void printBedWithMaxTypesOfFlowers(vector<FlowerBed> &flowerBeds) {
 }
 
 void printNumberOfFlowersOnCircleBeds(multimap<string, FlowerBed> &flowerBedsMap) {
-    int n = 0;
+    int n;
     pair <std::multimap<string, FlowerBed>::iterator, std::multimap<string, FlowerBed>::iterator> ret;
     ret = flowerBedsMap.equal_range("circle");
-    for (std::multimap<string, FlowerBed>::iterator it = ret.first; it != ret.second; it++) {
-        n += (*it).second.getFlowers().size();
-    }
-    cout << "Number of flowers on circle beds: " << n << endl;
+    cout << "Number of flowers on circle beds: " << accumulate(ret.first, ret.second, 0,
+            [](int n, pair<string, FlowerBed> p1){
+        return n + p1.second.getFlowers().size();
+    }) << endl;
 }
 
 void printAllBedsWithGivenShape(multimap<string, FlowerBed> &flowerBedsMap) {
@@ -152,6 +153,7 @@ void printAllBedsWithGivenShape(multimap<string, FlowerBed> &flowerBedsMap) {
     cout << "Flower beds with shape '" << shape << "': " << endl;
     pair <std::multimap<string, FlowerBed>::iterator, std::multimap<string, FlowerBed>::iterator> ret;
     ret = flowerBedsMap.equal_range(shape);
+
     for (std::multimap<string, FlowerBed>::iterator it = ret.first; it != ret.second; it++) {
         cout << (*it).second << endl;
     }
