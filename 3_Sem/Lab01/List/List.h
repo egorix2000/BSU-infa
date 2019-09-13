@@ -256,18 +256,16 @@ List<T>& List<T>::operator=(List<T>&& source) {
 template  <class T>
 std::ostream& operator<<(std::ostream &stream, const List<T>& list) {
     Node<T>* current = list.head_;
-    stream << "{ ";
     while(current) {
         stream << current->getValue() << " ";
         current = current->getNext();
     }
-    stream << "}";
     return stream;
 }
 
 template  <class T>
 std::istream& operator>>(std::istream &stream, List<T>& list) {
-    //list.clear();
+    list.clear();
     std::string s;
     std::getline(stream, s);
     std::istringstream ss(s);
