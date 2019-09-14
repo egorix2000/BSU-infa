@@ -190,13 +190,14 @@ void List<T>::popBack() {
         delete tail_;
         head_ = nullptr;
         tail_ = nullptr;
-    } else {
+		size_--;
+    } else if (size_ != 0) {
         temp = tail_;
         tail_ = tail_->getPrev();
         tail_->setNext(nullptr);
         delete temp;
+		size_--;
     }
-    size_--;
 }
 
 template <class T>
@@ -206,13 +207,14 @@ void List<T>::popFront() {
         delete head_;
         head_ = nullptr;
         tail_ = nullptr;
-    } else {
+		size_--;
+    } else if (size_ != 0) {
         temp = head_;
         head_ = head_->getNext();
         head_->setPrev(nullptr);
         delete temp;
+		size_--;
     }
-    size_--;
 }
 
 template  <class T>
