@@ -60,10 +60,7 @@ List<T>::List() {
 }
 
 template <class T>
-List<T>::List(const List<T>& source) {
-    this->head_ = nullptr;
-    this->tail_ = nullptr;
-    size_ = 0;
+List<T>::List(const List<T>& source) : List() {
     Node<T>* current = source.getHead();
     while (current) {
         this->pushBack(current->getValue());
@@ -73,10 +70,7 @@ List<T>::List(const List<T>& source) {
 }
 
 template <class T>
-List<T>::List(std::initializer_list<T> args) {
-    this->head_ = nullptr;
-    this->tail_ = nullptr;
-    size_ = 0;
+List<T>::List(std::initializer_list<T> args) : List() {
     typename std::initializer_list<T>::iterator it = args.begin();
     while(it != args.end()){
         this->pushBack(*it);
@@ -85,28 +79,13 @@ List<T>::List(std::initializer_list<T> args) {
 }
 
 template <class T>
-List<T>::List(List<T>&& source) {
-    this->head_ = nullptr;
-    this->tail_ = nullptr;
-    size_ = 0;
-    Node<T>* current = source.getHead();
-    while (current) {
-        this->pushBack(current->getValue());
-        current = current->getNext();
-    }
-    size_ = source.size();
-    source.clear();
+List<T>::List(List<T>&& source) : List() {
+	swap(*this, source);
 }
 
 template <class T>
 List<T>::~List() {
-    Node<T>* temp = head_;
-    while(head_) {
-        temp = temp->getNext();
-        delete head_;
-        head_ = temp;
-    }
-    size_ = 0;
+	this->clear();
 }
 
 template <class T>
@@ -234,6 +213,9 @@ List<T>& List<T>::operator+=(const List<T>& list) {
 
 template  <class T>
 List<T>& List<T>::operator=(const List<T>& source) {
+	if (this == &source) {
+		return *this;
+	}
     this->clear();
     Node<T>* current = source.getHead();
     while (current) {
@@ -245,13 +227,11 @@ List<T>& List<T>::operator=(const List<T>& source) {
 
 template  <class T>
 List<T>& List<T>::operator=(List<T>&& source) {
+	if (this == &source) {
+		return *this;
+	}
     this->clear();
-    Node<T>* current = source.getHead();
-    while (current) {
-        this->pushBack(current->getValue());
-        current = current->getNext();
-    }
-    source.clear();
+	swap(*this, source);
     return *this;
 }
 
