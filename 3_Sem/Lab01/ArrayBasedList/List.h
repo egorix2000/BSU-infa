@@ -6,14 +6,15 @@
 #include <string>
 #include <sstream>
 #include <initializer_list>
-#include "Node.h"
+
+const int DELTA_CAPACITY = 30;
 
 template <class T>
 class List {
 private:
 	size_t size_;
-	Node<T>* head_;
-	Node<T>* tail_;
+	size_t capacity_;
+	T* array_;
 public:
 	List();
 	List(const List<T>& source);
@@ -24,14 +25,19 @@ public:
 	bool isEmpty() const;
 	T& front() const;
 	T& back() const;
-	Node<T>* getHead() const;
-	Node<T>* getTail() const;
+	T& getElement(int index) const;
+	T* getArray() const;
+	size_t getCapacity() const;
 	void clear();
 	void pushBack(const T value);
 	void pushFront(const T value);
 	void popBack();
 	void popFront();
 	void setSize(size_t newSize);
+	void setCapacity(size_t newCapacity);
+	void setElement(int index, const T& value);
+	void setArray(T* source);
+	void resize();
 
 	List<T>& operator+=(const List<T>& list);
 	List<T>& operator=(const List<T>& source);
@@ -54,19 +60,20 @@ public:
 
 template <class T>
 List<T>::List() {
-	this->head_ = nullptr;
-	this->tail_ = nullptr;
+	array_ = nullptr;
 	size_ = 0;
+	capacity_ = DELTA_CAPACITY;
 }
 
 template <class T>
 List<T>::List(const List<T>& source) : List() {
-	Node<T>* current = source.getHead();
-	while (current) {
-		this->pushBack(current->getValue());
-		current = current->getNext();
-	}
 	size_ = source.size();
+	capacity_ = source.getCapacity();
+	array_ = new T(capacity_);
+
+	for (int i = 0; i < source.size(); i++) {
+		array_[i] = source[i];
+	}
 }
 
 template <class T>
@@ -94,108 +101,86 @@ size_t List<T>::size() const {
 }
 
 template <class T>
+size_t List<T>::getCapacity() const {
+	return capacity_;
+}
+
+template <class T>
 bool List<T>::isEmpty() const {
 	return size_ == 0;
 }
 
 template <class T>
 T& List<T>::front() const {
-	return head_->getValue();
+	if (size_ > 0) {
+		return array_[0];
+	}
 }
 
 template <class T>
 T& List<T>::back() const {
-	return tail_->getValue();
+	if (size_ > 0) {
+		return array_[size_ - 1];
+	}
 }
 
 template <class T>
-Node<T>* List<T>::getHead() const {
-	return head_;
+T& List<T>::getElement(int index) const {
+	return array_[index];
 }
 
+
 template <class T>
-Node<T>* List<T>::getTail() const {
-	return tail_;
+T* List<T>::getArray() const {
+	return array_;
 }
 
 template <class T>
 void List<T>::clear() {
-	Node<T>* temp = head_;
-	while (head_) {
-		temp = temp->getNext();
-		delete head_;
-		head_ = temp;
+	if (array_) {
+		delete[] array_;
 	}
-	head_ = nullptr;
-	tail_ = nullptr;
 	size_ = 0;
+	capacity_ = 0;
 }
 
 template <class T>
 void List<T>::pushBack(const T value) {
-	Node<T>* newNode;
-	if (size_ == 0) {
-		newNode = new Node<T>(value, nullptr, nullptr);
-		head_ = newNode;
-		tail_ = newNode;
-	}
-	else {
-		newNode = new Node<T>(value, tail_, nullptr);
-		tail_->setNext(newNode);
-		tail_ = newNode;
-	}
 	size_++;
+	if (size_ > capacity_) {
+		capacity_ += DELTA_CAPACITY;
+		this->resize();
+	}
+	array_[size_ - 1] = value;
 }
 
 
 template <class T>
 void List<T>::pushFront(const T value) {
-	Node<T>* newNode;
-	if (size_ == 0) {
-		newNode = new Node<T>(value, nullptr, nullptr);
-		head_ = newNode;
-		tail_ = newNode;
-	}
-	else {
-		newNode = new Node<T>(value, nullptr, head_);
-		head_->setPrev(newNode);
-		head_ = newNode;
-	}
 	size_++;
+	if (size_ > capacity_) {
+		capacity_ += DELTA_CAPACITY;
+		this->resize();
+	}
+	for (int i = size_ - 1; i > 0; i--) {
+		array_[i] = array_[i - 1];
+	}
+	array_[0] = value;
 }
 
 template <class T>
 void List<T>::popBack() {
-	Node<T>* temp;
-	if (size_ == 1) {
-		delete tail_;
-		head_ = nullptr;
-		tail_ = nullptr;
-		size_--;
-	}
-	else if (size_ != 0) {
-		temp = tail_;
-		tail_ = tail_->getPrev();
-		tail_->setNext(nullptr);
-		delete temp;
+	if (size_ != 0) {
 		size_--;
 	}
 }
 
 template <class T>
 void List<T>::popFront() {
-	Node<T>* temp;
-	if (size_ == 1) {
-		delete head_;
-		head_ = nullptr;
-		tail_ = nullptr;
-		size_--;
-	}
-	else if (size_ != 0) {
-		temp = head_;
-		head_ = head_->getNext();
-		head_->setPrev(nullptr);
-		delete temp;
+	if (size_ != 0) {
+		for (int i = 0; i < size_ - 1; i++) {
+			array_[i] = array_[i + 1];
+		}
 		size_--;
 	}
 }
@@ -206,11 +191,34 @@ void List<T>::setSize(size_t newSize) {
 }
 
 template  <class T>
+void List<T>::setCapacity(size_t newCapacity) {
+	capacity_ = newCapacity;
+}
+
+template  <class T>
+void List<T>::setElement(int index, const T& value) {
+	array_[index] = value;
+}
+
+template  <class T>
+void List<T>::setArray(T* source) {
+	array_ = source;
+}
+
+template  <class T>
+void List<T>::resize() {
+	int* oldArray = array_;
+	array_ = new T(capacity_);
+	for (int i = 0; i < size_; i++) {
+		array_[i] = oldArray[i];
+	}
+	delete [] oldArray;
+}
+
+template  <class T>
 List<T>& List<T>::operator+=(const List<T>& list) {
-	Node<T>* current = list.getHead();
-	while (current) {
-		this->pushBack(current->getValue());
-		current = current->getNext();
+	for (int i = 0; i < list.size(); i++) {
+		this->pushBack(list.getElement(i));
 	}
 	return *this;
 }
@@ -221,10 +229,12 @@ List<T>& List<T>::operator=(const List<T>& source) {
 		return *this;
 	}
 	this->clear();
-	Node<T>* current = source.getHead();
-	while (current) {
-		this->pushBack(current->getValue());
-		current = current->getNext();
+	size_ = source.size();
+	capacity_ = source.getCapacity();
+	array_ = new T(capacity_);
+
+	for (int i = 0; i < source.size(); i++) {
+		array_[i] = source.getElement(i);
 	}
 	return *this;
 }
@@ -241,10 +251,8 @@ List<T>& List<T>::operator=(List<T>&& source) {
 
 template  <class T>
 std::ostream& operator<<(std::ostream& stream, const List<T>& list) {
-	Node<T>* current = list.head_;
-	while (current) {
-		stream << current->getValue() << " ";
-		current = current->getNext();
+	for (int i = 0; i < list.size(); i++) {
+		stream << list.getElement(i) << " ";
 	}
 	return stream;
 }
@@ -265,17 +273,15 @@ std::istream& operator>>(std::istream& stream, List<T>& list) {
 template <class T>
 const List<T> operator+(const List<T>& left, const List<T>& right) {
 	List<T> result;
-	Node<T>* current = left.getHead();
-	while (current) {
-		result.pushBack(current->getValue());
-		current = current->getNext();
+	result.setArray(new T(left.getCapacity() + right.getCapacity()));
+	for (int i = 0; i < left.size(); i++) {
+		result.setElement(i, left.getElement(i));
 	}
 
-	current = right.getHead();
-	while (current) {
-		result.pushBack(current->getValue());
-		current = current->getNext();
+	for (int i = 0; i < right.size(); i++) {
+		result.setElement(left.size() + i, right.getElement(i));
 	}
+
 	return result;
 }
 
@@ -285,15 +291,10 @@ bool operator==(const List<T>& left, const List<T>& right) {
 		return false;
 	}
 
-	Node<T>* tempLeft = left.head_;
-	Node<T>* tempRight = right.head_;
-
-	while (tempLeft) {
-		if (tempLeft->getValue() != tempRight->getValue()) {
+	for (int i = 0; i < left.size(); i++) {
+		if (left.getElement(i) != right.getElement(i)) {
 			return false;
 		}
-		tempLeft = tempLeft->getNext();
-		tempRight = tempRight->getNext();
 	}
 	return true;
 }
@@ -304,37 +305,31 @@ bool operator!=(const List<T>& left, const List<T>& right) {
 		return true;
 	}
 
-	Node<T>* tempLeft = left.head_;
-	Node<T>* tempRight = right.head_;
-
-	while (tempLeft) {
-		if (tempLeft->getValue() != tempRight->getValue()) {
+	for (int i = 0; i < left.size(); i++) {
+		if (left.getElement(i) != right.getElement(i)) {
 			return true;
 		}
-		tempLeft = tempLeft->getNext();
-		tempRight = tempRight->getNext();
 	}
 	return false;
 }
 
 template <class T>
 void swap(List<T>& firstList, List<T>& secondList) {
-	Node<T>* temp;
-	size_t tempSize;
+	size_t temp;
+	T* tempArray;
 
-	tempSize = firstList.size_;
+	temp = firstList.size_;
 	firstList.size_ = secondList.size_;
-	secondList.size_ = tempSize;
+	secondList.size_ = temp;
 
-	temp = firstList.head_;
-	firstList.head_ = secondList.head_;
-	secondList.head_ = temp;
+	temp = firstList.capacity_;
+	firstList.capacity_ = secondList.capacity_;
+	secondList.capacity_ = temp;
 
-	temp = firstList.tail_;
-	firstList.tail_ = secondList.tail_;
-	secondList.tail_ = temp;
+	tempArray = firstList.getArray();
+	firstList.setArray(secondList.getArray());
+	secondList.setArray(tempArray);
 
 }
 
 #endif //LAB_LIST_H
-
