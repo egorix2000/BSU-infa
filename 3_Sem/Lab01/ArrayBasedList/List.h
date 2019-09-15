@@ -26,7 +26,6 @@ public:
 	T& front() const;
 	T& back() const;
 	T& getElement(int index) const;
-	T* getArray() const;
 	size_t getCapacity() const;
 	void clear();
 	void pushBack(const T value);
@@ -36,7 +35,6 @@ public:
 	void setSize(size_t newSize);
 	void setCapacity(size_t newCapacity);
 	void setElement(int index, const T& value);
-	void setArray(T* source);
 	void resize();
 
 	List<T>& operator+=(const List<T>& list);
@@ -62,17 +60,19 @@ template <class T>
 List<T>::List() {
 	array_ = nullptr;
 	size_ = 0;
-	capacity_ = DELTA_CAPACITY;
+	capacity_ = 0;
 }
 
 template <class T>
 List<T>::List(const List<T>& source) : List() {
 	size_ = source.size();
 	capacity_ = source.getCapacity();
-	array_ = new T(capacity_);
+	if (capacity_ > 0) {
+		array_ = new T[capacity_];
 
-	for (int i = 0; i < source.size(); i++) {
-		array_[i] = source[i];
+		for (int i = 0; i < source.size(); i++) {
+			array_[i] = source[i];
+		}
 	}
 }
 
@@ -129,43 +129,38 @@ T& List<T>::getElement(int index) const {
 	return array_[index];
 }
 
-
-template <class T>
-T* List<T>::getArray() const {
-	return array_;
-}
-
 template <class T>
 void List<T>::clear() {
-	if (array_) {
-		delete[] array_;
+	if (array_ != nullptr) {
+		delete [] array_;
 	}
+	array_ = nullptr;
 	size_ = 0;
 	capacity_ = 0;
 }
 
 template <class T>
 void List<T>::pushBack(const T value) {
-	size_++;
-	if (size_ > capacity_) {
+	if (size_+1 > capacity_) {
 		capacity_ += DELTA_CAPACITY;
 		this->resize();
 	}
-	array_[size_ - 1] = value;
+	array_[size_] = value;
+	size_++;
 }
 
 
 template <class T>
 void List<T>::pushFront(const T value) {
-	size_++;
-	if (size_ > capacity_) {
+	if (size_+1 > capacity_) {
 		capacity_ += DELTA_CAPACITY;
 		this->resize();
 	}
-	for (int i = size_ - 1; i > 0; i--) {
+	for (int i = size_; i > 0; i--) {
 		array_[i] = array_[i - 1];
 	}
 	array_[0] = value;
+	size_++;
 }
 
 template <class T>
@@ -201,18 +196,21 @@ void List<T>::setElement(int index, const T& value) {
 }
 
 template  <class T>
-void List<T>::setArray(T* source) {
-	array_ = source;
-}
-
-template  <class T>
 void List<T>::resize() {
 	int* oldArray = array_;
-	array_ = new T(capacity_);
-	for (int i = 0; i < size_; i++) {
-		array_[i] = oldArray[i];
+	if (capacity_ > 0) {
+		array_ = new T[capacity_];
+		for (int i = 0; i < size_; i++) {
+			array_[i] = oldArray[i];
+		}
 	}
-	delete [] oldArray;
+	else {
+		array_ = nullptr;
+	}
+	if (oldArray != nullptr) {
+		delete [] oldArray;
+		oldArray = nullptr;
+	}
 }
 
 template  <class T>
@@ -231,10 +229,15 @@ List<T>& List<T>::operator=(const List<T>& source) {
 	this->clear();
 	size_ = source.size();
 	capacity_ = source.getCapacity();
-	array_ = new T(capacity_);
+	if (capacity_ > 0) {
+		array_ = new T[capacity_];
 
-	for (int i = 0; i < source.size(); i++) {
-		array_[i] = source.getElement(i);
+		for (int i = 0; i < source.size(); i++) {
+			array_[i] = source.getElement(i);
+		}
+	}
+	else {
+		array_ = nullptr;
 	}
 	return *this;
 }
@@ -273,13 +276,17 @@ std::istream& operator>>(std::istream& stream, List<T>& list) {
 template <class T>
 const List<T> operator+(const List<T>& left, const List<T>& right) {
 	List<T> result;
-	result.setArray(new T(left.getCapacity() + right.getCapacity()));
-	for (int i = 0; i < left.size(); i++) {
-		result.setElement(i, left.getElement(i));
-	}
+	if (left.getCapacity() + right.getCapacity() > 0) {
+		for (int i = 0; i < left.size(); i++) {
+			result.pushBack(left.getElement(i));
+		}
 
-	for (int i = 0; i < right.size(); i++) {
-		result.setElement(left.size() + i, right.getElement(i));
+		for (int i = 0; i < right.size(); i++) {
+			result.pushBack(right.getElement(i));
+		}
+	}
+	else {
+		result.array_ = nullptr;
 	}
 
 	return result;
@@ -326,9 +333,9 @@ void swap(List<T>& firstList, List<T>& secondList) {
 	firstList.capacity_ = secondList.capacity_;
 	secondList.capacity_ = temp;
 
-	tempArray = firstList.getArray();
-	firstList.setArray(secondList.getArray());
-	secondList.setArray(tempArray);
+	tempArray = firstList.array_;
+	firstList.array_ = secondList.array_;
+	secondList.array_ = tempArray;
 
 }
 
