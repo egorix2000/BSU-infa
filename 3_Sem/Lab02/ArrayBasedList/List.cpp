@@ -42,16 +42,16 @@ List::ListIterator List::end() const {
     return List::ListIterator(this, size_);
 }
 
+void List::accept(Visitor &v) {
+    v.visit(*this);
+}
+
 size_t List::size() const {
 	return size_;
 }
 
 size_t List::getCapacity() const {
 	return capacity_;
-}
-
-bool List::isEmpty() const {
-	return size_ == 0;
 }
 
 int List::front() const {

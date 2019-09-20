@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <initializer_list>
+#include "Visitor.h"
 
 const int DELTA_CAPACITY = 30;
 
@@ -28,6 +29,7 @@ public:
 		friend bool operator==(const ListIterator& left, const ListIterator& right);
         friend bool operator!=(const ListIterator& left, const ListIterator& right);
 	};
+	friend class Visitor;
 
 	List();
 	List(const List& source);
@@ -36,8 +38,8 @@ public:
 	~List();
 	ListIterator begin() const;
 	ListIterator end() const;
+    void accept(Visitor &v);
 	size_t size() const;
-	bool isEmpty() const;
 	int front() const;
 	int back() const;
 	int getElement(int index) const;
