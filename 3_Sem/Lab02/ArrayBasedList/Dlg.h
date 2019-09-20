@@ -5,5 +5,7 @@
 #include <iostream>
 #include "resource.h"
 #include "List.h"
+#include "IsEmptyVisitor.h"
+
 INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow);

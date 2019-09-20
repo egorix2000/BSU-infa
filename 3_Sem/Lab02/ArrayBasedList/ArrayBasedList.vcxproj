@@ -89,7 +89,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -124,12 +124,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Dlg.cpp" />
+    <ClCompile Include="IsEmptyVisitor.cpp" />
+    <ClCompile Include="List.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dlg.h" />
+    <ClInclude Include="IsEmptyVisitor.h" />
     <ClInclude Include="List.h" />
-    <ClInclude Include="ListIterator.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

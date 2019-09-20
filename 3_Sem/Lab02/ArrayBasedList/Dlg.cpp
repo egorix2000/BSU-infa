@@ -2,9 +2,9 @@
 
 const int MAX_STRING_LENGTH = 100;
 
-List<int> listA, listB;
+List listA, listB;
 
-void updateList(HWND& hDlg, std::ostringstream& stream, List<int>& list, int id) {
+void updateList(HWND& hDlg, std::ostringstream& stream, List& list, int id) {
 	stream.str("");
 	stream.clear();
 	stream << list;
@@ -15,6 +15,7 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 	TCHAR value[MAX_STRING_LENGTH];
 	std::ostringstream ostream;
 	std::istringstream istream;
+	IsEmptyVisitor visitor;
 	switch (message) {
 	case WM_COMMAND:
 		switch (LOWORD(wParam)) {
@@ -24,7 +25,8 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 			updateList(hDlg, ostream, listB, ID_LIST_B_ELEMENTS);
 			break;
 		case ID_EMPTY_BUTTON:
-			if (listA.isEmpty()) {
+			listA.accept(visitor);
+			if (visitor.value) {
 				SetDlgItemText(hDlg, ID_EMPTY_TEXT, "True");
 			}
 			else {
