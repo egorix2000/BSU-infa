@@ -125,12 +125,15 @@
   <ItemGroup>
     <ClCompile Include="Dlg.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SumVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dlg.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="ListIterator.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SumVisitor.h" />
+    <ClInclude Include="Visitor.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="List.rc" />

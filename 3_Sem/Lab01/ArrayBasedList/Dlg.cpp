@@ -2,12 +2,13 @@
 
 const int MAX_STRING_LENGTH = 100;
 
-List<int> listA, listB;
+List<int> listA, listB, listSum;
 
 void updateList(HWND& hDlg, std::ostringstream& stream, List<int>& list, int id) {
 	stream.str("");
 	stream.clear();
-	stream << list;
+	ListIterator<int> it = list.iterator();
+	stream << it;
 	SetDlgItemText(hDlg, id, stream.str().c_str());
 }
 
@@ -57,10 +58,14 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 			SetDlgItemText(hDlg, ID_FRONT_TEXT, std::to_string(listA.front()).c_str());
 			break;
 		case ID_ADD_BUTTON:
+		{
 			ostream.str("");
 			ostream.clear();
-			ostream << listA + listB;
+			listSum = (listA + listB);
+			ListIterator<int> it = listSum.iterator();
+			ostream << it;
 			SetDlgItemText(hDlg, ID_ADD_TEXT, ostream.str().c_str());
+		}
 			break;
 		case ID_PUSH_BACK_BUTTON:
 			GetDlgItemText(hDlg, ID_PUSH_EDIT, value, MAX_STRING_LENGTH);
@@ -103,6 +108,11 @@ INT_PTR CALLBACK DlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) 
 			istream.str(value);
 			istream >> listB;
 			updateList(hDlg, ostream, listB, ID_LIST_B_ELEMENTS);
+			break;
+		case ID_ELEM_SUM_BUTTON:
+			SumVisitor v;
+			listA.accept(v);
+			SetDlgItemText(hDlg, ID_ELEM_SUM_TEXT, std::to_string(v.GetSum()).c_str());
 			break;
 		}
 		break;

@@ -19,6 +19,7 @@
 #define ID_PUSH_BACK_BUTTON             1016
 #define ID_PUSH_FRONT_BUTTON            1017
 #define ID_PUSH_EDIT                    1018
+#define ID_ELEM_SUM_BUTTON              1019
 #define ID_CHANGE_A_EDIT                1020
 #define ID_POP_BACK_BUTTON              1022
 #define ID_POP_FRONT_BUTTON             1023
@@ -32,6 +33,8 @@
 #define ID_CHANGE_A_BUTTON              1031
 #define ID_CHANGE_B_BUTTON              1032
 #define ID_CHANGE_B_EDIT                1033
+#define ID_FRONT_TEXT2                  1034
+#define ID_ELEM_SUM_TEXT                1034
 
 // Next default values for new objects
 // 
