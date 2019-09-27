@@ -1,40 +1,44 @@
 #ifndef LAB_LISTITERATOR_H
 #define LAB_LISTITERATOR_H
 
-#include "Node.h"
+#include "List.h"
 
 template <class T>
+class List;
+
+template <class U>
 class ListIterator {
 private:
-    Node<T>* current_;
+    ListIterator() {}
+    List<U>* list_;
+    int index_;
 public:
-    ListIterator(const Node<T>* current);
-    ListIterator<T>& operator++ ();
-    ListIterator<T>& operator-- ();
-    T& operator* ();
+    ListIterator(List<U>* list);
+    void next();
+    bool hasNext();
+    U& current();
 };
 
-
-template <class T>
-ListIterator<T>::ListIterator(const Node<T> *current) {
-    current_ = current;
+template <class U>
+ListIterator<U>::ListIterator(List<U>* list) {
+    this->list_ = list;
+    this->index_ = 0;
 }
 
-template <class T>
-ListIterator<T>& ListIterator<T>::operator++() {
-    current_ = current_->getNext();
-    return *this;
+template <class U>
+void ListIterator<U>::next() {
+    index_++;
 }
 
-template <class T>
-ListIterator<T>& ListIterator<T>::operator--() {
-    current_ = current_->getPrev();
-    return *this;
+template <class U>
+bool ListIterator<U>::hasNext() {
+    return (index_ < list_->size_);
 }
 
-template <class T>
-T& ListIterator<T>::operator*() {
-    return current_->getValue();
+template <class U>
+U& ListIterator<U>::current() {
+    return list_->array_[index_];
 }
+
 
 #endif //LAB_LISTITERATOR_H

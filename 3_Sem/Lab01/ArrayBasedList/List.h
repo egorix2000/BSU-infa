@@ -9,6 +9,9 @@
 
 const int DELTA_CAPACITY = 30;
 
+template <class U>
+class ListIterator;
+
 template <class T>
 class List {
 private:
@@ -25,6 +28,7 @@ public:
 	bool isEmpty() const;
 	T& front() const;
 	T& back() const;
+	ListIterator<T> iterator();
 	T& getElement(int index) const;
 	size_t getCapacity() const;
 	void clear();
@@ -42,7 +46,7 @@ public:
 	List<T>& operator=(List<T>&& source);
 
 	template <class K>
-	friend std::ostream& operator<<(std::ostream& stream, const List<K>& list);
+	friend std::ostream& operator<<(std::ostream& stream, ListIterator<K>& iterator);
 	template <class K>
 	friend std::istream& operator>>(std::istream& stream, List<K>& list);
 	template <class K>
@@ -53,6 +57,8 @@ public:
 	friend bool operator!=(const List<K>& left, const List<K>& right);
 	template <class K>
 	friend void swap(List<K>& firstList, List<K>& secondList);
+
+	template<class U> friend class ListIterator;
 };
 
 
@@ -122,6 +128,12 @@ T& List<T>::back() const {
 	if (size_ > 0) {
 		return array_[size_ - 1];
 	}
+}
+
+template <class T>
+ListIterator<T> List<T>::iterator() {
+	ListIterator<T> it = ListIterator<T>(this);
+	return it;
 }
 
 template <class T>
@@ -253,9 +265,10 @@ List<T>& List<T>::operator=(List<T>&& source) {
 }
 
 template  <class T>
-std::ostream& operator<<(std::ostream& stream, const List<T>& list) {
-	for (int i = 0; i < list.size(); i++) {
-		stream << list.getElement(i) << " ";
+std::ostream& operator<<(std::ostream& stream, ListIterator<T>& iterator) {
+	while(iterator.hasNext()) {
+		stream << iterator.current()<< " ";
+		iterator.next();
 	}
 	return stream;
 }
