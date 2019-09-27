@@ -7,6 +7,8 @@
 #include <sstream>
 #include <initializer_list>
 
+#include "Visitor.h"
+
 const int DELTA_CAPACITY = 30;
 
 template <class U>
@@ -29,6 +31,7 @@ public:
 	T& front() const;
 	T& back() const;
 	ListIterator<T> iterator();
+	void accept(Visitor &v);
 	T& getElement(int index) const;
 	size_t getCapacity() const;
 	void clear();
@@ -134,6 +137,16 @@ template <class T>
 ListIterator<T> List<T>::iterator() {
 	ListIterator<T> it = ListIterator<T>(this);
 	return it;
+}
+
+template <class T>
+void List<T>::accept(Visitor &v) {
+	ListIterator<T> iterator(this);
+
+	while (iterator.hasNext()) {
+		v.visit(iterator.current());
+		iterator.next();
+	}
 }
 
 template <class T>
