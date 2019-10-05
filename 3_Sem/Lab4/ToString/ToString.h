@@ -20,6 +20,6 @@ std::string ToString(const char* spacer, T arg)
 template <typename T, typename ... Args>
 std::string ToString(const char* spacer, T arg, Args ... args)
 {
-	auto func = [&](const char* spacer, Args ... args) {return ToString(spacer, args...); };
+	auto func = [&](const char* spacer, Args ... args) { return ToString(spacer, args...); };
 	return Converter(spacer, arg) + func(spacer, args...);
 }

@@ -1,0 +1,19 @@
+#include <iostream>
+#include "SumArgs.h"
+
+using namespace std;
+
+int main() {
+	short m = 13;
+	int n1 = 17;
+	int n2 = 23;
+	double x = 12.8;
+	double xSum = sumArgs(n1, 4.7, 1.5, 10, n2);
+	//double xSum = (x);
+
+	std::cout << "xSum = " << xSum << std::endl;
+
+	system("pause");
+
+	return 0;
+}
