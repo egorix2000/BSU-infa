@@ -123,17 +123,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Dlg.cpp" />
+    <ClCompile Include="ComplexNumber.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SumVisitor.cpp" />
+    <ClCompile Include="MaxVisitor.cpp" />
+    <ClCompile Include="MinVisitor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Dlg.h" />
+    <ClInclude Include="ComplexNumber.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="ListIterator.h" />
+    <ClInclude Include="MinVisitor.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="SumVisitor.h" />
+    <ClInclude Include="MaxVisitor.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Visitor.h" />
   </ItemGroup>

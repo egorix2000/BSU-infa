@@ -6,10 +6,13 @@
 #define ID_LIST_A_ELEMENTS              1001
 #define ID_PUSH_BACK_BUTTON             1016
 #define ID_PUSH_FRONT_BUTTON            1017
-#define ID_PUSH_EDIT                    1018
-#define ID_POP_BACK_BUTTON              1022
+#define ID_REAL_PUSH_EDIT               1018
+#define ID_RE_PUSH_EDIT                 1018
+#define ID_IM_PUSH_EDIT                 1019
 #define ID_POP_FRONT_BUTTON             1023
-#define ID_ELEM_SUM_TEXT                1034
+#define ID_ELEM_NUM_TEXT                1034
+#define ID_MAX_TEXT                     1035
+#define ID_MIN_TEXT                     1036
 
 // Next default values for new objects
 // 

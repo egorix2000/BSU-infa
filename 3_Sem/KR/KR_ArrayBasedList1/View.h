@@ -2,6 +2,9 @@
 #include <windows.h>
 #include <sstream>
 #include "Model.h"
+#include "ComplexNumber.h"
+#include "MaxVisitor.h"
+#include "MinVisitor.h"
 
 template <class T>
 class View
@@ -16,14 +19,31 @@ template <class T>
 void View<T>::update_view(Model<T>* model) {
 	//update list
 	std::ostringstream stream;
-	ListIterator<int> it = model->iterator();
+	ListIterator<ComplexNumber> it = model->iterator();
 	stream << it;
 	SetDlgItemText(hView_, ID_LIST_A_ELEMENTS, stream.str().c_str());
 
-	//update sum
-	SumVisitor v;
-	model->accept(v);
-	SetDlgItemText(hView_, ID_ELEM_SUM_TEXT, std::to_string(v.GetSum()).c_str());
+	//update number of elements
+	stream.str("");
+	stream.clear();
+	stream << model->getSize();
+	SetDlgItemText(hView_, ID_ELEM_NUM_TEXT, stream.str().c_str());
+
+	//update max
+	MaxVisitor vMax;
+	model->accept(vMax);
+	stream.str("");
+	stream.clear();
+	stream << vMax.GetMax();
+	SetDlgItemText(hView_, ID_MAX_TEXT, stream.str().c_str());
+
+	//update min
+	MinVisitor vMin;
+	model->accept(vMin);
+	stream.str("");
+	stream.clear();
+	stream << vMin.GetMin();
+	SetDlgItemText(hView_, ID_MIN_TEXT, stream.str().c_str());
 }
 
 template <class T>

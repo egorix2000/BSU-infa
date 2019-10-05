@@ -1,9 +1,10 @@
 #ifndef LAB_VISITOR_H
 #define LAB_VISITOR_H
+#include "ComplexNumber.h"
 
-class Visitor{
+class Visitor {
 public:
-    virtual void visit(int element) = 0;
+    virtual void visit(ComplexNumber element) = 0;
     virtual ~Visitor() = default;
 };
 

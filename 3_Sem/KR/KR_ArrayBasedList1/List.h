@@ -29,8 +29,8 @@ public:
 	void accept(Visitor &v);
 	void pushBack(const T value);
 	void pushFront(const T value);
-	void popBack();
 	void popFront();
+	size_t getSize();
 
 	template <class K>
 	friend std::ostream& operator<<(std::ostream& stream, ListIterator<K>& iterator);
@@ -110,13 +110,6 @@ void List<T>::pushFront(const T value) {
 }
 
 template <class T>
-void List<T>::popBack() {
-	if (size_ != 0) {
-		size_--;
-	}
-}
-
-template <class T>
 void List<T>::popFront() {
 	if (size_ != 0) {
 		for (int i = 0; i < size_ - 1; i++) {
@@ -126,9 +119,14 @@ void List<T>::popFront() {
 	}
 }
 
+template <class T>
+size_t List<T>::getSize() {
+	return size_;
+}
+
 template  <class T>
 void List<T>::resize() {
-	int* oldArray = array_;
+	T* oldArray = array_;
 	if (capacity_ > 0) {
 		array_ = new T[capacity_];
 		for (int i = 0; i < size_; i++) {
@@ -147,7 +145,7 @@ void List<T>::resize() {
 template  <class T>
 std::ostream& operator<<(std::ostream& stream, ListIterator<T>& iterator) {
 	while(iterator.hasNext()) {
-		stream << iterator.current()<< " ";
+		stream << iterator.current() << " ";
 		iterator.next();
 	}
 	return stream;

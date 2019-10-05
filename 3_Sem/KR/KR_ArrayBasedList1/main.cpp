@@ -1,5 +1,5 @@
 ﻿#include <windows.h>
-#include "Dlg.h"
+#include "Controller.h"
 
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow) {
 	HWND hDlg = CreateDialogParam(hInstance,
