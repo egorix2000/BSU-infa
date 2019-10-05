@@ -7,7 +7,6 @@
 class MaxVisitor : public Visitor {
 private:
 	ComplexNumber max_;
-	bool isMaxSet_;
 public:
 	MaxVisitor();
 	void visit(ComplexNumber element);

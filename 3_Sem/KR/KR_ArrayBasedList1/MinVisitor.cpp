@@ -1,15 +1,13 @@
 #include "MinVisitor.h"
 
 MinVisitor::MinVisitor() {
-	min_ = ComplexNumber();
-	isMinSet_ = false;
+	min_ = ComplexNumber(10000, 10000);
 }
 
 void MinVisitor::visit(ComplexNumber element) {
-	if (min_.getRe() > element.getRe() || !isMinSet_) {
+	if (min_.getRe() > element.getRe()) {
 		min_.setRe(element.getRe());
 		min_.setIm(element.getIm());
-		isMinSet_ = true;
 	}
 }
 

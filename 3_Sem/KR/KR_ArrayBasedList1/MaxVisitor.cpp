@@ -1,15 +1,13 @@
 #include "MaxVisitor.h"
 
 MaxVisitor::MaxVisitor() {
-	max_ = ComplexNumber();
-	isMaxSet_ = false;
+	max_ = ComplexNumber(0, 0);
 }
 
 void MaxVisitor::visit(ComplexNumber element) {
-	if (max_.getIm() < element.getIm() || !isMaxSet_) {
+	if (max_.getIm() < element.getIm()) {
 		max_.setRe(element.getRe());
 		max_.setIm(element.getIm());
-		isMaxSet_ = true;
 	}
 }
 
