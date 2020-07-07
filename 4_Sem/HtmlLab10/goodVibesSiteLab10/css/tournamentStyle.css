@@ -1,0 +1,128 @@
+body{
+	margin: 0;
+	background: rgba(238,238,238,1);
+}
+
+#tournaments{
+	margin-top: 100px;
+	font-size: 110%;
+	margin-left: 20%;
+	font-family: 'Tahoma';
+}
+
+.inline{
+	display: inline;
+}
+
+.span-total2{
+	display: inline;
+	margin-left: 1em;
+}
+
+.star{
+	margin-right: 0.2em;
+	width: 1em;
+	height: 1em;
+}
+
+#year{
+	margin-top: 30px;
+}
+
+.year-results{
+	margin-left: 0.5em;
+	display: inline;
+	color: #808080;
+	font-size: 90%;
+}
+
+.span-year2{
+	display: inline;
+	margin-left: 0.5em;
+}
+
+.tournamentMain{
+	display: table;
+	align-items: center;
+	vertical-align: middle;
+	width: 75%;
+	margin-left: 30px;
+	margin-top: 10px;
+}
+
+.starTournament{
+	vertical-align: top;
+	display: table-cell;
+	width: 40px;
+	padding-top: 10px;
+}
+
+.starTournamentImage{
+	width: 1em;
+}
+
+.tournament{
+	display: block;
+	align-items: center;
+	cursor: pointer;
+	font-size: 100%;
+	line-height:1.5em;
+	width: 100%;
+	height: 100%;
+}
+
+.tournament:hover{
+	background: rgba(230,230,230,1);
+}
+
+.tournamentName{
+	color: #0056C4;
+	border-bottom: 1px solid #CCEBFA;
+}
+
+.tournament-text{
+	display: table-cell;
+    vertical-align: middle;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.tournament-more{
+	display: none;
+}
+
+.more-content{
+	margin-left: 1.7em;
+}
+
+.more-info{
+	font-size: 80%;
+	margin-top: 10px;
+}
+
+.more-squad{
+	font-size: 80%;
+	margin-top: 10px;
+}
+
+.more-team-name{
+	font-weight: bold;
+}
+
+.more-players{
+	margin-left: 2em;
+	margin-top: 3px;
+}
+
+.more-image {
+	margin-top: 4px;	
+	margin-bottom: 20px;
+}
+
+.more-image img{
+	width: 45%;
+}
+
+.division{
+	font-size: 80%;
+}

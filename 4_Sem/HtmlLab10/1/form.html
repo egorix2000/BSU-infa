@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form</title>
+    <link rel="stylesheet" href="css/formStyle.css">
+</head>
+<body>
+<div class="section">
+    <div class="header">Форма:</div>
+    <form>
+        <input class="item" name="firstName" placeholder="Имя" type="text" required/><br/>
+        <input class="item" name="secondName" placeholder="Фамилия" type="text" required/><br/>
+        <div class="item" ><label for="year">Курс</label>
+            <select id="year">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select></br>
+        </div>
+        <div class="item">
+            <label>Ваше фото</label>
+            <input class="item" type="file" name="photo"><br/>
+        </div>
+        <div class="item">
+        	<input type="checkbox" id="money" name="money" value="Money">
+  			<label for="money"> Получаю стипендию</label>
+        </div>
+        <div class="item">
+            <label>Живете в общежитии?</label>
+            <input type="radio" name="type" value="1" required>Да</input>
+            <input type="radio" name="type" value="2" required>Нет</input><br/>
+        </div>
+        <textarea class="item" name="about" placeholder="Расскажите о себе"></textarea><br/>
+        <div class="item">
+            <button type="submit"><img class="send" src="images/submit.png"/></button>
+            <button type="reset"><img class="send" src="images/reset.png"/></button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

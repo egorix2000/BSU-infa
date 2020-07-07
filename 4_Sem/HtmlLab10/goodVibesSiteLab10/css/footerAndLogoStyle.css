@@ -1,0 +1,27 @@
+footer {
+	width: 100%;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    color: black;
+    background: rgba(200, 200, 200, 0.8); 
+    margin-top: 20px;
+}
+
+.mainFooter {
+	position: fixed;
+    left: 0; 
+    color: #DDDDDD;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(55, 59, 37, 0.8), rgba(55, 59, 37, 0));
+}
+
+.logo {
+    position: fixed;
+    left: 1%;
+    top: 1%;
+}
+
+.logo img {
+    width: 40%;
+}

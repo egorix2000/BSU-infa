@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	<title>Good Vibes</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="css/footerAndLogoStyle.css"/>
+</head>
+<body>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(window).on('load', function(){
+		    $(".nav-a").hover(function(){
+			    $(this).css("color", "white");
+			    $(this).css("border-bottom", "2px solid #DCDCDC");
+			    }, function(){
+			    $(this).css("color", "#F7F7F7");
+			    $(this).css("border-bottom", "none");
+			  });
+		});
+	</script>
+	
+	<!-- Main -->
+	<div id="main">
+		<div id="navigator">
+			<div id="items">
+				<div class="nav-item"><a class="nav-a" href="tournaments.html">Турниры</a></div>
+				<div class="nav-item"><a class="nav-a" href="players.html">Игроки</a></div>
+				<div class="nav-item"><a class="nav-a" href="gallery.html">Фото</a></div>
+			</div>
+		</div>
+		<div id="mainBottom">
+			<h1 class="wikititle">Good Vibes</h1>
+		</div>
+	</div>
+
+	<footer class="mainFooter">
+		&copy; 2020, Good Vibes. All rights reserved. Contact: goodvibes@gmail.com
+	</footer>
+
+</body>
+</html>

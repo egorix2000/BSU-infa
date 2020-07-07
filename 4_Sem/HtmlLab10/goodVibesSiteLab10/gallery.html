@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf8">
+	<title>Gallery</title>
+	<link rel="stylesheet" type="text/css" href="css/galleryStyle.css"/>
+	<link rel="stylesheet" href="js/baguetteBox.js-master/dist/baguetteBox.min.css">
+	<link rel="stylesheet" type="text/css" href="css/footerAndLogoStyle.css"/>
+
+</head>
+<body>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script src="js/masonry-docs/masonry.pkgd.min.js"></script>
+	<script src="js/baguetteBox.js-master/dist/baguetteBox.min.js"></script>
+
+	<script type="text/javascript">
+		window.onload = function() {
+  			baguetteBox.run('.grid');
+		}
+		$(window).on('load', function(){
+			$('.grid').masonry({
+			  itemSelector: '.grid-item',
+			  columnWidth: 270,
+			  gutter: 10,
+			});
+		});
+	</script>
+
+
+	<div class="logo">
+		<a href="index.html"><img src="images/logo.png" /></a>
+	</div>
+	<div id="photos">
+		<h2 id="photos-gallery">Фотографии</h2>
+		<div class="center">
+			<div class="grid">
+			  <div class="grid-item">
+			  	<a href="images/gallery/party.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/party.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/support.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/support.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item grid-item-2">
+			  	<a href="images/gallery/disk.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/disk.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/minsk.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/minsk.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/forehand.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/forehand.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/winter.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/winter.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/album.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/album.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/panda.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/panda.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/breakfast.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/breakfast.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/first.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/first.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/coach.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/coach.jpg">
+    			</a>
+			  </div>
+			  <div class="grid-item">
+			  	<a href="images/gallery/spring.jpg" data-caption="">
+			  		<img class="gallery-image" src="images/gallery/spring.jpg">
+    			</a>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		&copy; 2020, Good Vibes. All rights reserved. Contact: goodvibes@gmail.com
+	</footer>
+</body>
+</html>

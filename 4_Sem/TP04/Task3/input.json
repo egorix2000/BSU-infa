@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Meat",
+    "weight": 400
+  },
+  {
+    "name": "Pepper",
+    "weight": 300
+  },
+  {
+    "name": "Mushrooms",
+    "weight": 100
+  },
+  {
+    "name": "Sauce",
+    "weight": 30
+  },
+  {
+    "name": "Milk",
+    "weight": 100
+  }
+]
